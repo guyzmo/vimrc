@@ -23,9 +23,9 @@ let g:changelog_username = 'Guyzmo <guyzmo@m0g.net>'
 
 "sil !echo -ne "k $USER@$HOST:$PWD:vim % \\"
 
-""" Vundle {{{
+" Bundles {{{
 
-" Set up Vundle
+" Vundle {{{
 filetype off
 
 set rtp+=~/.vim/bundle/vundle/
@@ -34,41 +34,41 @@ Bundle 'gmarik/vundle'
 
 Bundle 'vim-scripts/YAPosting'
 
+" }}}
+
 " Bundles
 Bundle 'tmhedberg/matchit'
 Bundle 'tpope/vim-commentary'
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-repeat'
 Bundle 'tpope/vim-git'
+" Bundle Fugitive {{{
 Bundle 'tpope/vim-fugitive'
-
 map <Leader>gw :Gwrite<CR>
 map <Leader>gm :Grename<CR>
 map <Leader>gb :Gblame<CR>
 map <Leader>gc :Gcommit<CR>
-
+" }}}
+" Bundle GUndo {{{
 Bundle 'sjl/gundo.vim'
-
 nnoremap U :GundoToggle<CR>
 autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class,with
-
+" }}}
 " Bundle 'jelera/vim-javascript-syntax'
-
 Bundle 'msanders/snipmate.vim'
 Bundle 'reinh/vim-makegreen'
+" TaskList {{{
 Bundle 'vim-scripts/TaskList.vim'
-" TaskList
 map <leader>T <Plug>TaskList
-
+" }}}
 Bundle 'wincent/Command-T'
 Bundle 'Lokaltog/powerline'
-
+" Bundle vim-slime {{{
 Bundle 'jpalardy/vim-slime'
 let g:slime_paste_file = "$HOME/.vim/.slime_paste"
 let g:slime_target = "screen"
-
-" SYNTAX
-
+" }}}
+" Bundle Syntastic {{{
 Bundle 'scrooloose/syntastic'
 let g:syntastic_enable_signs=1
 let g:syntastic_auto_jump=1
@@ -81,20 +81,23 @@ let g:syntastic_mode_map = { 'mode': 'active',
                                \ 'active_filetypes': ['ruby', 'javascript'],
                                \ 'passive_filetypes': ['python'] }
 map <Leader>CT :SyntasticToggleMode<CR>
-
+" }}}
+" Bundle Tagbar {{{
 Bundle 'majutsushi/tagbar'
 map <Leader>B :TagbarToggle<CR> 
 let g:tagbar_type_javascript = {
             \ 'ctagsbin' : '/usr/local/bin/jsctags'
             \ }
-
-" CPP
+" Set options for ctags
+let g:ctags_path='./ctags' 
+let g:ctags_args='-I __declspec+'
+" }}}
+" Bundle Clang_complete {{{
 Bundle 'Rip-Rip/clang_complete'
-
-" PYTHON
+" }}}
 Bundle 'mkomitee/vim-gf-python'
+" Bundle Python mode {{{
 Bundle 'klen/python-mode'
-" python-mode {{{
 " :help ropevim.txt
 
 " Disable pylint checking every save
@@ -243,43 +246,45 @@ nmap <silent><Leader>Tm <Esc>:Pytest method<CR>
 nmap <silent><Leader>Tn <Esc>:Pytest next<CR>
 nmap <silent><Leader>Tp <Esc>:Pytest previous<CR>
 nmap <silent><Leader>Te <Esc>:Pytest error<CR>
-
-
-
 "" }}} python-mode
-
+" Bundle Rainbow parentheses {{{
 Bundle 'vim-scripts/Rainbow-Parentheses-Improved-and2'
 let g:rainbow_active = 1
 let g:rainbow_operators = 1
 let g:rainbow_guifgs = ['RoyalBlue3', 'DarkOrange3', 'DarkOrchid3', 'FireBrick',]
-
+" }}}
 Bundle 'kingbin/vim-arduino'
-
-Bundle 'https://github.com/majutsushi/tagbar'
-
+" Bundle Eclim {{{
+" Bundle '???'
+" ,i imports whatever is needed for current line
+"map ,i :JavaImport<cr>
+" ,d opens javadoc for statement in browser
+"ap ,d :JavaDocSearch -x declarations<cr>
+" ,<enter> searches context for statement
+"ap ,<cr> :JavaSearchContext<cr>
+" ,jv validates current java file
+"ap ,jv :Validate<cr>
+" ,jc shows corrections for the current line of java
+"ap ,jc :JavaCorrect<cr>
+" 'open' on OSX will open the url in the default browser without issue
+"et g:EclimBrowser='open'
+" }}}
 
 filetype plugin indent on     " required!
-
 """ }}}
-
-set viminfo='10,\"100,:20,%,n~/.viminfo 
+" Editing behaviour {{{
 
 " we use bash.. no no, I dont want
 set shell=zsh
 
 " suffixes that get lower priority when doing tab completion for filenames.
 set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
-
-" Editing behaviour {{{
 set viminfo='10,\"100,:20,%,n~/.viminfo 
 set hlsearch
-
 set nocompatible
 
 " allow backspacing over everything in insert mode
-" should be part of a default RedHat vimrc
 set backspace=2
-
 set so=4
 
 " i use vim to code mostly, so autoindent makes sense
@@ -296,7 +301,6 @@ set nowrap
 set textwidth=0
 set formatoptions=qrn1
 set colorcolumn=85
-
 set list
 set listchars=eol:$,trail:~,extends:⫸,precedes:⫷,tab:▸\ ,nbsp:␣
 
@@ -307,11 +311,9 @@ set backupdir=~/.vim/
 " write a .viminfo file, don't store more than 50 lines
 set viminfo='20,\"50
 
-" expand tabs to spaces.  makes sense if we want people with other editors
-" to see the file looking the same.
-set expandtab
-
 " various options for a tab stop of 4 spaces.
+" expand tabs to spaces.
+set expandtab
 set cinoptions=>4
 set shiftwidth=4
 set tabstop=4
@@ -530,39 +532,18 @@ nnoremap <leader>h2 yypvr-
 " Reselect pasted text
 nnoremap <leader>v V`]
 
-" Eclim settings
-" ,i imports whatever is needed for current line
-"map ,i :JavaImport<cr>
-" ,d opens javadoc for statement in browser
-"ap ,d :JavaDocSearch -x declarations<cr>
-" ,<enter> searches context for statement
-"ap ,<cr> :JavaSearchContext<cr>
-" ,jv validates current java file
-"ap ,jv :Validate<cr>
-" ,jc shows corrections for the current line of java
-"ap ,jc :JavaCorrect<cr>
-" 'open' on OSX will open the url in the default browser without issue
-"et g:EclimBrowser='open'
-
 au FileType python set omnifunc=pythoncomplete#Complete
 set completeopt=menuone,longest,preview
 
 " add sudo command
-"command! -bang W %!sudo tee > /dev/null %
-
 command! WW w ! sudo tee % > /dev/null
 command! W execute ':silent WW'
 
 " }}}
-
-" Set options for ctags
-let g:ctags_path='./ctags' 
-let g:ctags_args='-I __declspec+'
-
+" AutoCommands {{{
 filetype plugin on
 filetype plugin indent on
 
-" AutoCommands {{{
 if has("autocmd")
     " Mail
     augroup mail
@@ -675,7 +656,6 @@ if has("autocmd")
 
 endif " has ("autocmd")
 " }}}
-
 "Syntax highlighting {{{ 
 " i hate cyan comments :)
 hi Comment                        ctermfg=Black ctermbg=8    guifg=Gray80  guibg=grey12
