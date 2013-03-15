@@ -271,6 +271,7 @@ set shell=zsh
 set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
 
 " Editing behaviour {{{
+set viminfo='10,\"100,:20,%,n~/.viminfo 
 set hlsearch
 
 set nocompatible
@@ -323,7 +324,8 @@ set smarttab
 set noerrorbells
 
 " show matching brackets
-set showmatch
+"set showmatch
+"set matchtime=3
 set matchpairs=(:),{:},[:],<:>,":",':',«:»,/*:*/,""":""",''':'''
 
 " don't ignore case while searching
@@ -516,8 +518,8 @@ map <Leader>L  1G/Last update:\s*/e+1<CR>CYDATE<ESC>
 map <Leader>,L 1G/Last change:\s*/e+1<CR>CYDATE<ESC>
 
 " Compile the source
-map <Leader>cp :w<CR>:g++ % -O 
-map <Leader>cc :w<CR>:gcc % -O 
+map <Leader>cp :w<CR>:makeprg=g++ % -O<CR>:make<CR>
+map <Leader>cc :w<CR>:makeprg=gcc % -O<CR>:make<CR>
 map <Leader>cl :w<CR>:makeprg=latex<CR>:make<CR>
 map <Leader>cm :w<CR>:makeprg=make<CR>:make<CR>
 
