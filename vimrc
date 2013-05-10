@@ -5,7 +5,7 @@
 " Author:      G. Lejeune 
 " His last update: Sat Jul 17 17:20:17 CET 2000
 " Author:      PRATZ Bernard <bernard@pratz.net>
-" Last update: Fri Mar 15 17:10:31 CET 2013
+" Last update: Fri May 10 14:52:51 CEST 2013
 
 " Just another justifier
 " Version:    0.3
@@ -420,7 +420,6 @@ set history=200
 "set guifont=Courier\ 10\ Pitch\ 8 " Really tiny font, need good eyes or good screen or both ;)
 "set guifont=DejaVu\ Sans\ Mono:h9.00
 "set guifont=Andale\ Mono:h9
-set guifont=Menlo\ for\ Powerline:h7
 
 set encoding=utf-8 " Necessary to show Unicode glyphs
 set t_Co=256 " Explicitly tell Vim that the terminal supports 256 colors
@@ -448,8 +447,14 @@ if !has('gui_running')
     set t_Sb=^[[4%dm
   endif 
 else
-  python from powerline.ext.vim import source_plugin; source_plugin()
-  set transparency=10
+  " python from powerline.ext.vim import source_plugin; source_plugin()
+  set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
+  if has('macunix')
+    set guifont=Menlo\ for\ Powerline:h7
+    set transparency=10
+  else
+    set guifont=Menlo\ for\ Powerline\ 10
+  endif
 
   " show which mode we're in
   set noshowmode
