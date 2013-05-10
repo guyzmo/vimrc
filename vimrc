@@ -53,7 +53,18 @@ Bundle 'tpope/vim-fugitive'
 map <Leader>gw :Gwrite<CR>
 map <Leader>gm :Grename<CR>
 map <Leader>gb :Gblame<CR>
-map <Leader>gc :Gcommit<CR>
+
+if has('gui_running')
+  if has('macunix')
+    command! CI !PWD=%:p:h gitxr &
+  elseif has('unix')
+    command! CI !git-cola -r %:p:h &
+  endif
+  map <Leader>gc :CI<CR>
+else
+  map <Leader>gc :Gcommit<CR>
+endif
+
 " }}}
 " Bundle GUndo {{{
 Bundle 'sjl/gundo.vim'
