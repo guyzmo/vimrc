@@ -1,4 +1,4 @@
-" File:        $HOME/.vimrc
+﻿" File:        $HOME/.vimrc
 " Purpose:     Configuration file for VIM
 " Author:      Leon Breedt <leon@obsidian.co.za>
 " His last update: Sat Jul 03 13:02:07 SAST 1999
@@ -18,6 +18,8 @@ let mapleader = ","
 set pastetoggle=<F3>
 
 runtime /usr/share/vim/vim72/ftplugin/justify.vim
+runtime ftplugin/man.vim
+nnoremap K :Man <C-r><C-w><CR>
 
 let g:changelog_username = 'Guyzmo <guyzmo@m0g.net>'
 
@@ -32,11 +34,15 @@ set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 Bundle 'gmarik/vundle'
 
-Bundle 'vim-scripts/YAPosting'
+"Bundle 'vim-scripts/YAPosting'
+Bundle '/Users/guyzmo/Workspace/Perso/Codes/vim-yaposting/.git'
 
 " }}}
 
 " Bundles
+Bundle 'kchmck/vim-coffee-script'
+"Bundle 'vim-scripts/showmarks--Politz'
+Bundle 'tomtom/quickfixsigns_vim'
 Bundle 'tmhedberg/matchit'
 Bundle 'tpope/vim-commentary'
 Bundle 'tpope/vim-surround'
@@ -62,6 +68,8 @@ Bundle 'vim-scripts/TaskList.vim'
 map <leader>T <Plug>TaskList
 " }}}
 Bundle 'wincent/Command-T'
+nmap <Leader>bl :CommandTBuffer<CR>
+nmap <Leader>tf :CommandTFlush<CR>
 Bundle 'Lokaltog/powerline'
 " Bundle vim-slime {{{
 Bundle 'jpalardy/vim-slime'
@@ -162,8 +170,9 @@ let g:pymode_rope_extended_complete = 1
 let g:pymode_rope_autoimport_modules = ["os","shutil","datetime"]
 let g:pymode_rope_confirm_saving = 1
 let g:pymode_rope_global_prefix = "<C-x>p"
-let g:pymode_rope_local_prefix = "<Leader>r"
+let g:pymode_rope_local_prefix = "<Leader>PR"
 map <Leader>rh :help RopeKeys<CR>
+let g:pymode_breakpoint_key = '<leader>PB'
 let g:pymode_rope_vim_completion = 1
 let g:pymode_rope_guess_project = 1
 let g:pymode_rope_goto_def_newwin = ""
@@ -302,7 +311,7 @@ set textwidth=0
 set formatoptions=qrn1
 set colorcolumn=85
 set list
-set listchars=eol:$,trail:~,extends:⫸,precedes:⫷,tab:▸\ ,nbsp:␣
+set listchars=eol:¶,trail:~,extends:⫸,precedes:⫷,tab:▸\ ,nbsp:␣
 
 " backups are for wimps!  they also leave files with ~ extensions all over.
 set nobackup
@@ -390,6 +399,9 @@ set modelines=0
 
 " color scheme
 colorscheme murphy
+
+" swap files
+set directory=~/.vim/swapfiles
 
 " undo file
 set undofile
@@ -490,26 +502,26 @@ nmap <Leader>b8 :b8<CR>
 nmap <Leader>b9 :b9<CR>
 nmap <Leader>b0 :b0<CR>
 
-map <Leader>y<SPACE> :tabnext<CR>
-map <Leader>yn :tabnext<CR>
-map <Leader>yy :tabnext<CR>
-map <Leader>y<BACKSPACE> :tabprev<CR>
-map <Leader>yp :tabprev<CR>
-map <Leader>yn :tabnew<CR>
-map <Leader>yc :tabclose<CR> 
+"map <Leader>y<SPACE> :tabnext<CR>
+"map <Leader>yn :tabnext<CR>
+"map <Leader>yy :tabnext<CR>
+"map <Leader>y<BACKSPACE> :tabprev<CR>
+"map <Leader>yp :tabprev<CR>
+"map <Leader>yn :tabnew<CR>
+"map <Leader>yc :tabclose<CR> 
 
 "   Edit another file in the same directory as the current file 
 "   uses expression to extract path from current file's path 
 "  (thanks Douglas Potts) 
-map <Leader>ee :e <C-R>=expand("%:p:h") . "/" <CR>
+"map <Leader>ee :e <C-R>=expand("%:p:h") . "/" <CR>
 
-map <Leader>ev :e ~/.vimrc <CR>
-map <Leader>em :e ~/.muttrc <CR>
-map <Leader>ep :e ~/.procmailrc <CR>
-map <Leader>ez :e ~/.zshrc<CR>
+"map <Leader>ev :e ~/.vimrc <CR>
+"map <Leader>em :e ~/.muttrc <CR>
+"map <Leader>ep :e ~/.procmailrc <CR>
+"map <Leader>ez :e ~/.zshrc<CR>
 
 " split shortcuts
-map <Leader>s :hsplit<CR>
+map <Leader>sh :hsplit<CR>
 map <Leader>sv :vsplit<CR>
 
 " quickly edit files often edited
@@ -524,10 +536,6 @@ map <Leader>cp :w<CR>:makeprg=g++ % -O<CR>:make<CR>
 map <Leader>cc :w<CR>:makeprg=gcc % -O<CR>:make<CR>
 map <Leader>cl :w<CR>:makeprg=latex<CR>:make<CR>
 map <Leader>cm :w<CR>:makeprg=make<CR>:make<CR>
-
-" for markdown texts: adds a line of = under h1 titles
-nnoremap <leader>h1 yypvr= 
-nnoremap <leader>h2 yypvr- 
 
 " Reselect pasted text
 nnoremap <leader>v V`]
@@ -545,6 +553,14 @@ filetype plugin on
 filetype plugin indent on
 
 if has("autocmd")
+    " Markdown
+    augroup markdown
+    au!
+    " for markdown texts: adds a line of = under h1 titles
+    au FileType markdown nnoremap <leader>h1 yypVr= 
+    au FileType markdown nnoremap <leader>h2 yypVr- 
+augroup END
+
     " Mail
     augroup mail
     au!
@@ -568,10 +584,22 @@ if has("autocmd")
     augroup END
 
     " Javascript
+    function! JavaScriptFold() 
+        setl foldmethod=syntax
+        setl foldlevelstart=1
+        syn region foldBraces start=/^[^"'\/]*{[^"'\/}]*$/ end=/^[^{"'\/]*}[^"'\/]*$/ transparent fold keepend extend
+        function! FoldText()
+            return substitute("   ".getline(v:foldstart), '{.*', '{...}', '')
+        endfunction
+        setl foldtext=FoldText()
+    endfunction
     augroup js
     au!
-    au FileType javascript let javascript_fold=1
-    au FileType javascript runtime /usr/share/vim/vim63/syntax/javascript.vim
+    au FileType javascript runtime /usr/share/vim/vim72/ftplugin/javascript.vim
+    au FileType javascript runtime /usr/share/vim/vim72/syntax/javascript.vim
+    au FileType javascript runtime /usr/share/vim/vim72/indent/javascript.vim
+    "au FileType javascript call JavaScriptFold()
+    "au FileType javascript setl fen
     augroup END
 
     " for HTML texts
@@ -669,5 +697,8 @@ hi CursorLine      term=underline                                          guibg
 hi CursorColumn    term=reverse                                            guibg=Grey5
 hi ColorColumn     term=reverse                 ctermbg=4                  guibg=#250000
 hi RedundantSpaces term=standout                ctermbg=red                guibg=red
+		
+call matchadd("NonText", "$")
+call matchadd("NonText", "	")
 
 """}}}
