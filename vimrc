@@ -5,7 +5,7 @@
 " Author:      G. Lejeune 
 " His last update: Sat Jul 17 17:20:17 CET 2000
 " Author:      PRATZ Bernard <bernard@pratz.net>
-" Last update: Fri May 10 14:52:51 CEST 2013
+" Last update: Fri May 10 15:27:14 CEST 2013
 
 " Just another justifier
 " Version:    0.3
