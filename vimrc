@@ -40,6 +40,10 @@ Bundle '/Users/guyzmo/Workspace/Perso/Codes/vim-yaposting/.git'
 " }}}
 
 " Bundles
+let g:yankstack_map_keys = 0
+Bundle 'vim-scripts/yankstack'
+nmap <leader>y <Plug>yankstack_substitute_older_paste
+nmap <leader>Y <Plug>yankstack_substitute_older_paste 
 Bundle 'kchmck/vim-coffee-script'
 "Bundle 'vim-scripts/showmarks--Politz'
 Bundle 'tomtom/quickfixsigns_vim'
