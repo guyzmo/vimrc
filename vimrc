@@ -677,10 +677,9 @@ if has("autocmd")
 
     augroup changelog
     au!
-    au FileType changelog runtime /usr/share/vim/vim72/ftplugin/changelog.vim
+    au FileType changelog runtime /usr/share/vim/vim73/ftplugin/changelog.vim
     au FileType let g:changelog_username = 'Guyzmo <guyzmo@m0g.net>'
     augroup END
-
 
     au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif
 " C Files options {{{
