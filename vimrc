@@ -50,6 +50,7 @@ Bundle '/Users/guyzmo/Workspace/Projects/vim-bclose/.git'
 Bundle 'tomtom/quickfixsigns_vim'
 Bundle 'tmhedberg/matchit'
 Bundle 'tpope/vim-commentary'
+autocmd FileType c,cpp,cs,java setlocal commentstring=//\ %s
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-repeat'
 Bundle 'tpope/vim-git'
