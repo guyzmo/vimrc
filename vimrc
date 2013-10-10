@@ -542,6 +542,15 @@ nmap <Leader>b8 :b8<CR>
 nmap <Leader>b9 :b9<CR>
 nmap <Leader>b0 :b0<CR>
 
+" quickfix mappings
+nmap <Leader>qn :cnext<CR>
+nmap <Leader>qp :cprev<CR>
+nmap <Leader>qo :copen<CR>
+nmap <Leader>qc :cclose<CR>
+
+nmap <Leader>ln :lnext<CR>
+nmap <Leader>lp :lprev<CR>
+
 "map <Leader>y<SPACE> :tabnext<CR>
 "map <Leader>yn :tabnext<CR>
 "map <Leader>yy :tabnext<CR>
