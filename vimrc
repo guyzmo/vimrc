@@ -521,12 +521,12 @@ vnoremap <F1> <ESC>
 
 nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
 
-map <Leader>, @:
+"map <Leader>, @:
 
 nmap <Leader><SPACE> :bnext<CR>
 nmap <Leader>n :bnext<CR>
 nmap <Leader>p :bprev<CR>
-nmap <Leader>l :ls<CR>
+"nmap <Leader>l :ls<CR>
 
 nmap <Leader>ba :badd 
 " nmap <Leader>bd :bdel<CR>
