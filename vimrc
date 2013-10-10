@@ -688,6 +688,7 @@ if has("autocmd")
             au BufNewFile,BufRead *.pde     setf arduino
             au BufNewFile,BufRead *.ino     setf arduino
             au BufNewFile,BufRead *.C       setf cpp
+            au BufNewFile,BufRead *.h       setf cpp
     augroup END
 
         
