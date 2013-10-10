@@ -610,12 +610,13 @@ filetype plugin indent on
 
 if has("autocmd")
     " Markdown
+    au BufNewFile, BufRead *.md set filetype=markdown
     augroup markdown
     au!
     " for markdown texts: adds a line of = under h1 titles
     au FileType markdown nnoremap <leader>h1 yypVr= 
     au FileType markdown nnoremap <leader>h2 yypVr- 
-augroup END
+    augroup END
 
     " Mail
     augroup mail
