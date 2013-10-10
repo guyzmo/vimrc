@@ -96,7 +96,7 @@ let g:slime_target = "screen"
 " Bundle Syntastic {{{
 Bundle 'scrooloose/syntastic'
 let g:syntastic_enable_signs=1
-let g:syntastic_auto_jump=1
+let g:syntastic_auto_jump=0
 let g:syntastic_csslint_ignore="fallback-colors"
 let g:syntastic_error_symbol='✘'
 let g:syntastic_warning_symbol='⚠'
@@ -104,7 +104,7 @@ let g:syntastic_style_error_symbol="✗"
 let g:syntastic_style_warning_symbol="⚑"
 let g:syntastic_mode_map = { 'mode': 'active',
                                \ 'active_filetypes': ['ruby', 'javascript'],
-                               \ 'passive_filetypes': ['python'] }
+                               \ 'passive_filetypes': ['python', 'cpp', 'c'] }
 map <Leader>CT :SyntasticToggleMode<CR>
 " }}}
 " Bundle Tagbar {{{
@@ -118,8 +118,25 @@ let g:ctags_path='./ctags'
 let g:ctags_args='-I __declspec+'
 " }}}
 " Bundle Clang_complete {{{
-Bundle 'Rip-Rip/clang_complete'
+" Bundle 'Rip-Rip/clang_complete'
+" let g:clang_close_preview=1
+" let g:clang_use_library=1
+" let g:clang_library_path="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/"
+" let g:clang_complete_macros=1
+" let g:clang_complete_patterns=1
+" let g:clang_snippets=1
+" let g:clang_snippets_engine='clang_complete'
 " }}}
+" Bundle YouCompleteMe {{{
+Bundle 'Valloric/YouCompleteMe'
+let g:ycm_add_preview_to_completeopt = 1
+let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_key_list_select_completion = ['<C>n']
+let g:ycm_key_list_previous_completion = ['<C>-p']
+nnoremap gsd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+nnoremap gsD :YcmCompleter GoToDefinitionElseDeclaration<CR>
+" }}}
+
 Bundle 'mkomitee/vim-gf-python'
 " Bundle Python mode {{{
 Bundle 'klen/python-mode'
