@@ -577,6 +577,13 @@ map <Leader>cc :w<CR>:makeprg=gcc % -O<CR>:make<CR>
 map <Leader>cl :w<CR>:makeprg=latex<CR>:make<CR>
 map <Leader>cm :w<CR>:makeprg=make<CR>:make<CR>
 
+" 1/4 of the screen movement
+nnoremap <expr> zT 'zt'
+" XXX if flashes try with: winline()-winheight(0)/3 . <C-e> 
+" XXX try nnoremap <expr> zt winline()-winheight(0)/3>0? winline()-winheight(0)/3 . '<C-e>' : winline()-1 . '<C-e>'
+nnoremap <expr> zt 'zt' . winheight(0)/4 . '<c-y>'
+nnoremap <expr> zB 'zb' . winheight(0)/4 . '<c-e>'
+
 " Reselect pasted text
 nnoremap <leader>v V`]
 
