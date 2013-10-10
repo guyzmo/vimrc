@@ -45,6 +45,7 @@ Bundle 'vim-scripts/yankstack'
 nmap <leader>y <Plug>yankstack_substitute_older_paste
 nmap <leader>Y <Plug>yankstack_substitute_older_paste 
 Bundle 'kchmck/vim-coffee-script'
+Bundle '/Users/guyzmo/Workspace/Projects/vim-bclose/.git'
 "Bundle 'vim-scripts/showmarks--Politz'
 Bundle 'tomtom/quickfixsigns_vim'
 Bundle 'tmhedberg/matchit'
