@@ -529,7 +529,8 @@ nmap <Leader>p :bprev<CR>
 nmap <Leader>l :ls<CR>
 
 nmap <Leader>ba :badd 
-nmap <Leader>bd :bdel<CR>
+" nmap <Leader>bd :bdel<CR>
+nmap <Leader>bd <Plug>Kwbd
 nmap <Leader>b1 :b1<CR>
 nmap <Leader>b2 :b2<CR>
 nmap <Leader>b3 :b3<CR>
