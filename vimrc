@@ -561,7 +561,7 @@ nmap <Leader>b0 :b0<CR>
 "map <Leader>ez :e ~/.zshrc<CR>
 
 " split shortcuts
-map <Leader>sh :hsplit<CR>
+map <Leader>sh :split<CR>
 map <Leader>sv :vsplit<CR>
 
 " quickly edit files often edited
