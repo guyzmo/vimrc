@@ -2,17 +2,10 @@
 " Purpose:     Configuration file for VIM
 " Author:      Leon Breedt <leon@obsidian.co.za>
 " His last update: Sat Jul 03 13:02:07 SAST 1999
-" Author:      G. Lejeune 
+" Author:      G. Lejeune
 " His last update: Sat Jul 17 17:20:17 CET 2000
 " Author:      PRATZ Bernard <bernard@pratz.net>
-" Last update: Fri May 10 15:27:14 CEST 2013
-
-" Just another justifier
-" Version:    0.3
-" Maintainer: Kontra, Gergely <kgergely@mcl.hu>
-" GetLatestVimScripts: 177 2 :AutoInstall: MyJustify.vim
-" Improved by Charles E. Campbell, Jr.
-" Multibyte patch suggested by Teemu Likonen
+" Last update: Fri Nov 21 20:56:20 CET 2014
 
 let mapleader = ","
 set pastetoggle=<F3>
@@ -23,46 +16,73 @@ nnoremap K :Man <C-r><C-w><CR>
 
 let g:changelog_username = 'Guyzmo <guyzmo@m0g.net>'
 
-"sil !echo -ne "k $USER@$HOST:$PWD:vim % \\"
-
 " Bundles {{{
 
-" Vundle {{{
+" NeoBundle setup {{{
 filetype off
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-Bundle 'gmarik/vundle'
-
-"Bundle 'vim-scripts/YAPosting'
-Bundle '/Users/guyzmo/Workspace/Perso/Codes/vim-yaposting/.git'
+set runtimepath+=~/.vim/neobundle.vim/
+call neobundle#begin(expand('~/.local/vim/bundle'))
+NeoBundleFetch 'Shougo/neobundle.vim'
 
 " }}}
 
+"NeoBundle '/Users/guyzmo/Workspace/Projects/vim-yaposting/.git'
+
 " Bundles
-let g:yankstack_map_keys = 0
-Bundle 'vim-scripts/yankstack'
-nmap <leader>y <Plug>yankstack_substitute_older_paste
-nmap <leader>Y <Plug>yankstack_substitute_older_paste 
-Bundle 'kchmck/vim-coffee-script'
-Bundle '/Users/guyzmo/Workspace/Projects/vim-bclose/.git'
-"Bundle 'vim-scripts/showmarks--Politz'
-Bundle 'tomtom/quickfixsigns_vim'
-Bundle 'tmhedberg/matchit'
-Bundle 'tpope/vim-commentary'
-autocmd FileType c,cpp,cs,java setlocal commentstring=//\ %s
-Bundle 'tpope/vim-surround'
-Bundle 'tpope/vim-repeat'
-Bundle 'tpope/vim-git'
+
+"" General bundles
+
+" Bundle VimProc {{{
+
+NeoBundle 'Shougo/vimproc.vim', {
+    \ 'build' : {
+    \     'windows' : 'make -f make_mingw32.mak',
+    \     'cygwin' : 'make -f make_cygwin.mak',
+    \     'mac' : 'make -f make_mac.mak',
+    \     'unix' : 'make -f make_unix.mak',
+    \    },
+    \ }
+" }}}
+" Bundle Unite {{{
+NeoBundle 'Shougo/Unite.vim'
+let g:unite_source_history_yank_enable = 1
+"call unite#filters#matcher_default#use(['matcher_fuzzy'])
+nnoremap <leader>bl :<C-u>Unite -buffer-name=buffers -start-insert buffer<cr>
+nnoremap <leader>t  :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/async:!<cr>
+nnoremap <leader>f  :<C-u>Unite -no-split -buffer-name=files   -start-insert file<cr>
+nnoremap <leader>bo  :<C-u>Unite -no-split -buffer-name=outline -start-insert outline<cr>
+nnoremap <leader>y  :<C-u>Unite -no-split -buffer-name=yank    history/yank<cr>
+
+NeoBundle 'h1mesuke/unite-outline'
+
+" }}}
+" Bundle GrepCommands {{{
+"NeoBundle 'vim-scripts/Buffer-grep'
+NeoBundle 'vim-scripts/GrepCommands'
+nnoremap <leader>g<space> :BufGrep<CR>
+nnoremap <leader>gg :BufGrep //<Left>
+" }}}
+" bundle Airline {{{
+let g:airline_theme = 'wombat'
+let g:airline_powerline_fonts = 1 " I did compile the updated fonts!
+NeoBundle 'bling/vim-airline'
+" }}}
+NeoBundle 'moll/vim-bbye'
+NeoBundle 'godlygeek/tabular'
+" vim commentary {{{
+NeoBundle 'tpope/vim-commentary'
+" }}}
+NeoBundle 'tpope/vim-git'
 " Bundle Fugitive {{{
-Bundle 'tpope/vim-fugitive'
+NeoBundle 'tpope/vim-fugitive'
 map <Leader>gw :Gwrite<CR>
 map <Leader>gm :Grename<CR>
 map <Leader>gb :Gblame<CR>
 
 if has('gui_running')
   if has('macunix')
-    command! CI !PWD=%:p:h gitxr &
+    command! CI !PWD=%:p:h gitx &
   elseif has('unix')
     command! CI !git-cola -r %:p:h &
   endif
@@ -73,28 +93,22 @@ endif
 
 " }}}
 " Bundle GUndo {{{
-Bundle 'sjl/gundo.vim'
+NeoBundle 'sjl/gundo.vim'
 nnoremap U :GundoToggle<CR>
-autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class,with
 " }}}
-" Bundle 'jelera/vim-javascript-syntax'
-Bundle 'msanders/snipmate.vim'
-Bundle 'reinh/vim-makegreen'
+"NeoBundle 'vim-scripts/showmarks--Politz'
+NeoBundle 'tomtom/quickfixsigns_vim'
+NeoBundle 'tmhedberg/matchit'
+NeoBundle 'tpope/vim-surround'
+NeoBundle 'tpope/vim-repeat'
+NeoBundle 'msanders/snipmate.vim'
+NeoBundle 'reinh/vim-makegreen'
 " TaskList {{{
-Bundle 'vim-scripts/TaskList.vim'
+NeoBundle 'vim-scripts/TaskList.vim'
 map <leader>T <Plug>TaskList
 " }}}
-Bundle 'wincent/Command-T'
-nmap <Leader>bl :CommandTBuffer<CR>
-nmap <Leader>tf :CommandTFlush<CR>
-Bundle 'Lokaltog/powerline'
-" Bundle vim-slime {{{
-Bundle 'jpalardy/vim-slime'
-let g:slime_paste_file = "$HOME/.vim/.slime_paste"
-let g:slime_target = "screen"
-" }}}
 " Bundle Syntastic {{{
-Bundle 'scrooloose/syntastic'
+NeoBundle 'scrooloose/syntastic'
 let g:syntastic_enable_signs=1
 let g:syntastic_auto_jump=0
 let g:syntastic_csslint_ignore="fallback-colors"
@@ -107,28 +121,56 @@ let g:syntastic_mode_map = { 'mode': 'active',
                                \ 'passive_filetypes': ['python', 'cpp', 'c'] }
 map <Leader>CT :SyntasticToggleMode<CR>
 " }}}
-" Bundle Tagbar {{{
-Bundle 'majutsushi/tagbar'
-map <Leader>B :TagbarToggle<CR> 
-let g:tagbar_type_javascript = {
-            \ 'ctagsbin' : '/usr/local/bin/jsctags'
-            \ }
-" Set options for ctags
-let g:ctags_path='./ctags' 
-let g:ctags_args='-I __declspec+'
+" Bundle vim-slime {{{
+""" Plugin to send selection or paragraph to screen session
+NeoBundle 'jpalardy/vim-slime'
+let g:slime_paste_file = "$HOME/.local/vim/.slime_paste"
+let g:slime_target = "screen"
 " }}}
-" Bundle Clang_complete {{{
-" Bundle 'Rip-Rip/clang_complete'
-" let g:clang_close_preview=1
-" let g:clang_use_library=1
-" let g:clang_library_path="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/"
-" let g:clang_complete_macros=1
-" let g:clang_complete_patterns=1
-" let g:clang_snippets=1
-" let g:clang_snippets_engine='clang_complete'
+" Bundle Rainbow parentheses {{{
+NeoBundle 'luochen1990/rainbow'
+let g:rainbow_active = 1
+let g:rainbow_operators = 1
+let g:rainbow_guifgs = ['RoyalBlue3', 'DarkOrange3', 'DarkOrchid3', 'FireBrick',]
 " }}}
+
+" Markdown bundles
+
+" VIM Calendar {{{
+NeoBundleLazy 'mattn/calendar-vim', {'autoload':{'filetypes':['markdown']}}
+let g:calendar_keys = {'close': 'q', 'do_action': '<CR>', 'goto_today': 't', 'show_help': '?', 'redisplay': 'r', 'goto_next_month': '<', 'goto_prev_month': '>', 'goto_next_year': '+', 'goto_prev_year': '-'}
+let g:calendar_monday = 1
+let g:calendar_weeknm = 5
+" }}}
+" VIM Wiki {{{
+NeoBundleLazy 'vimwiki/vimwiki', {'autoload':{'filetypes':['markdown']}}
+let wiki_notes = {}
+let wiki_notes.path = '~/Documents/Perso/Notes/'
+let wiki_notes.html_path = '~/Documents/Perso/Notes/html/'
+let wiki_notes.syntax = 'markdown'
+let wiki_notes.ext = '.md'
+let wiki_notes.auto_export = 1
+let wiki_notes.nested_syntaxes = {'python': 'python', 'c++': 'cpp'}
+let g:vimwiki_list = [wiki_notes]
+let g:vimwiki_folding = 'syntax'
+" }}}
+
+" Language specific bundles
+
+NeoBundleLazy 'kchmck/vim-coffee-script', {'autoload':{'filetypes':['coffee']}}
+NeoBundleLazy 'derekwyatt/vim-scala', {'autoload':{'filetypes':['scala']}}
+NeoBundleLazy 'jelera/vim-javascript-syntax', {'autoload':{'filetypes':['javascript']}}
 " Bundle YouCompleteMe {{{
-Bundle 'Valloric/YouCompleteMe'
+NeoBundleLazy 'Valloric/YouCompleteMe', {
+    \ 'build' : {
+    \     'mac' : 'bash install.sh',
+    \     'unix' : 'bash install.sh',
+    \    },
+    \ 'autoload': {
+    \     'filetypes': ['c','cpp','javascript','python','ruby','java','zsh','bash','sh']
+    \    },
+    \ }
+
 let g:ycm_add_preview_to_completeopt = 1
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_key_list_select_completion = ['<C>n']
@@ -136,64 +178,52 @@ let g:ycm_key_list_previous_completion = ['<C>-p']
 nnoremap gsd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 nnoremap gsD :YcmCompleter GoToDefinitionElseDeclaration<CR>
 " }}}
-
-Bundle 'mkomitee/vim-gf-python'
+" Python {{{
+NeoBundleLazy 'mkomitee/vim-gf-python', {'autoload':{'filetypes':['python']}}
+" http://vimawesome.com/plugin/python-mode
 " Bundle Python mode {{{
-Bundle 'klen/python-mode'
+NeoBundleLazy 'klen/python-mode', {'autoload':{'filetypes':['python']}}
 " :help ropevim.txt
 
-" Disable pylint checking every save
-let g:pymode_lint_write = 1
+let g:pymode_doc = 1                                  "  Load show documentation plugin
+let g:pymode_doc_key = '<leader>PK'                   "  Key for show python documentation
+let g:pymode_run = 1                                  "  Load run code plugin
+let g:pymode_run_key = '<leader>PR'                   "  Key for run python code
+let g:pymode_lint_checker = 'pyflakes,pep8'
+let g:pymode_lint_ignore = 'E501,E121,E126,E127,E128' "  Skip errors and warnings (E.g. 'E501,W002', 'E2,W' (Skip all Warnings and Errors startswith E2) and etc..)
+let g:pymode_lint_select = ''                         "  E.g. 'E4,W' Select errors and warnings
+let g:pymode_lint_cwindow = 1                         "  Auto open cwindow if errors be finded
+let g:pymode_lint_jump = 0                            "  Auto jump on first error
+let g:pymode_lint_hold = 0                            "  Hold cursor in current window when quickfix is open
+let g:pymode_lint_signs = 1                           "  Place error signs
+let g:pymode_lint_minheight = 3                       "  Minimal height of pylint error window
+let g:pymode_lint_maxheight = 6                       "  Maximal height of pylint error window
+let g:pymode_rope = 1                                 "  Load rope plugin
+let g:pymode_rope_auto_project = 1                    "  Auto create and open ropeproject
+let g:pymode_rope_enable_autoimport = 1               "  Enable autoimport
 
-" Load show documentation plugin
-let g:pymode_doc = 1
-
-" Key for show python documentation
-let g:pymode_doc_key = '<leader>PK'
-
-" Load run code plugin
-let g:pymode_run = 1
-
-" Key for run python code
-let g:pymode_run_key = '<leader>PR'
-
-let g:pymode_lint_checker = "pyflakes,pep8"
-
-" Skip errors and warnings
-" E.g. "E501,W002", "E2,W" (Skip all Warnings and Errors startswith E2) and etc
-let g:pymode_lint_ignore = "E501,E121,E126,E127,E128"
-
-" Select errors and warnings
-" E.g. "E4,W"
-let g:pymode_lint_select = ""
-
-" Auto open cwindow if errors be finded
-let g:pymode_lint_cwindow = 1
-
-" Auto jump on first error
-let g:pymode_lint_jump = 0
-
-" Hold cursor in current window
-" when quickfix is open
-let g:pymode_lint_hold = 0
-
-" Place error signs
-let g:pymode_lint_signs = 1
-
-" Minimal height of pylint error window
-let g:pymode_lint_minheight = 3
-
-" Maximal height of pylint error window
-let g:pymode_lint_maxheight = 6
-
-" Load rope plugin
-let g:pymode_rope = 1
-
-" Auto create and open ropeproject
-let g:pymode_rope_auto_project = 1
-
-" Enable autoimport
-let g:pymode_rope_enable_autoimport = 1
+let g:pymode_folding = 1                                       "  Enable python folding
+let g:pymode_motion = 1
+let g:pymode_virtualenv = 1                                    "  Auto fix vim python paths if virtualenv enabled
+let g:pymode_paths = []                                        "  Additional python paths
+let g:pymode_breakpoint = 1                                    "  Load breakpoints plugin
+let g:pymode_breakpoint_key = '<leader>b'                      "  Key for set/unset breakpoint
+let g:pymode_utils_whitespaces = 1                             "  Autoremove unused whitespaces
+let g:pymode_indent = 1                                        "  Enable pymode indentation
+let g:pymode_options = 1                                       "  Set default pymode python options
+let g:pymode_syntax = 1                                        "  Enable pymode's custom syntax highlighting
+let g:pymode_syntax_all = 1                                    "  Enable all python highlightings
+let g:pymode_syntax_print_as_function = 1                      "  Highlight 'print' as function
+let g:pymode_syntax_indent_errors = g:pymode_syntax_all        "  Highlight indentation errors
+let g:pymode_syntax_space_errors = g:pymode_syntax_all         "  Highlight trailing spaces
+let g:pymode_syntax_string_formatting = g:pymode_syntax_all    "  Highlight string formatting
+let g:pymode_syntax_string_format = g:pymode_syntax_all        "  Highlight str.format syntax
+let g:pymode_syntax_string_templates = g:pymode_syntax_all     "  Highlight string.Template syntax
+let g:pymode_syntax_doctests = g:pymode_syntax_all             "  Highlight doc-tests
+let g:pymode_syntax_builtin_objs = g:pymode_syntax_all         "  Highlight builtin objects (__doc__, self, etc)
+let g:pymode_syntax_builtin_funcs = g:pymode_syntax_all        "  Highlight builtin functions
+let g:pymode_syntax_highlight_exceptions = g:pymode_syntax_all "  Highlight exceptions
+let g:pymode_syntax_slow_sync = 0                              "  For fast machines
 
 " Auto generate global cache
 let g:pymode_rope_autoimport_generate = 1
@@ -212,70 +242,6 @@ let g:pymode_rope_guess_project = 1
 let g:pymode_rope_goto_def_newwin = ""
 let g:pymode_rope_always_show_complete_menu = 0
 
-" Enable python folding
-let g:pymode_folding = 1
-
-let g:pymode_motion = 1
-
-" Auto fix vim python paths if virtualenv enabled
-let g:pymode_virtualenv = 1
-
-" Additional python paths
-let g:pymode_paths = []
-
-" Load breakpoints plugin
-let g:pymode_breakpoint = 1
-
-" Key for set/unset breakpoint
-let g:pymode_breakpoint_key = '<leader>b'
-
-" Autoremove unused whitespaces
-let g:pymode_utils_whitespaces = 1
-
-" Enable pymode indentation
-let g:pymode_indent = 1
-
-" Set default pymode python options
-let g:pymode_options = 1
-
-" Enable pymode's custom syntax highlighting
-let g:pymode_syntax = 1
-
-" Enable all python highlightings
-let g:pymode_syntax_all = 1
-
-" Highlight "print" as function
-let g:pymode_syntax_print_as_function = 0
-
-" Highlight indentation errors
-let g:pymode_syntax_indent_errors = g:pymode_syntax_all
-
-" Highlight trailing spaces
-let g:pymode_syntax_space_errors = g:pymode_syntax_all
-
-" Highlight string formatting
-let g:pymode_syntax_string_formatting = g:pymode_syntax_all
-
-" Highlight str.format syntax
-let g:pymode_syntax_string_format = g:pymode_syntax_all
-
-" Highlight string.Template syntax
-let g:pymode_syntax_string_templates = g:pymode_syntax_all
-
-" Highlight doc-tests
-let g:pymode_syntax_doctests = g:pymode_syntax_all
-
-" Highlight builtin objects (__doc__, self, etc)
-let g:pymode_syntax_builtin_objs = g:pymode_syntax_all
-
-" Highlight builtin functions
-let g:pymode_syntax_builtin_funcs = g:pymode_syntax_all
-
-" Highlight exceptions
-let g:pymode_syntax_highlight_exceptions = g:pymode_syntax_all
-
-" For fast machines
-let g:pymode_syntax_slow_sync = 0
 
 " rope
 map <leader>j :RopeGotoDefinition<CR>
@@ -290,30 +256,26 @@ nmap <silent><Leader>Tn <Esc>:Pytest next<CR>
 nmap <silent><Leader>Tp <Esc>:Pytest previous<CR>
 nmap <silent><Leader>Te <Esc>:Pytest error<CR>
 "" }}} python-mode
-" Bundle Rainbow parentheses {{{
-Bundle 'vim-scripts/Rainbow-Parentheses-Improved-and2'
-let g:rainbow_active = 1
-let g:rainbow_operators = 1
-let g:rainbow_guifgs = ['RoyalBlue3', 'DarkOrange3', 'DarkOrchid3', 'FireBrick',]
 " }}}
-Bundle 'kingbin/vim-arduino'
-" Bundle Eclim {{{
-" Bundle '???'
-" ,i imports whatever is needed for current line
-"map ,i :JavaImport<cr>
-" ,d opens javadoc for statement in browser
-"ap ,d :JavaDocSearch -x declarations<cr>
-" ,<enter> searches context for statement
-"ap ,<cr> :JavaSearchContext<cr>
-" ,jv validates current java file
-"ap ,jv :Validate<cr>
-" ,jc shows corrections for the current line of java
-"ap ,jc :JavaCorrect<cr>
+NeoBundleLazy 'kingbin/vim-arduino', {'autoload':{'filetypes':['arduino']}}
+" Bundle Eclim (Java) {{{
+NeoBundleLazy 'ervandew/eclim', {'autoload':{'filetypes':['java']}}
 " 'open' on OSX will open the url in the default browser without issue
-"et g:EclimBrowser='open'
+let g:EclimBrowser='open'
+let g:EclimCompletionMethod = 'omnifunc'
 " }}}
 
+"
+
+" NeoBundle Prologue {{{
+call neobundle#end()
+
 filetype plugin indent on     " required!
+
+NeoBundleCheck
+
+" }}}
+
 """ }}}
 " Editing behaviour {{{
 
@@ -322,7 +284,7 @@ set shell=zsh
 
 " suffixes that get lower priority when doing tab completion for filenames.
 set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
-set viminfo='10,\"100,:20,%,n~/.viminfo 
+set viminfo='10,\"100,:20,%,n~/.viminfo
 set hlsearch
 set nocompatible
 
@@ -393,7 +355,7 @@ set wildignore=.svn,CVS,.git,*.o,*.a,*.class,*.mo,*.la,*.so,*.obj,*.swp,*.jpg,*.
 """ }}}
 " Editor's interface {{{
 
-set cursorline 
+set cursorline
 set cursorcolumn
 au WinLeave * set nocursorline nocursorcolumn
 au WinEnter * set cursorline cursorcolumn
@@ -431,24 +393,21 @@ set hidden
 
 set modelines=0
 
-" color scheme
-colorscheme murphy
-
 " swap files
-set directory=~/.vim/swapfiles
+set directory=~/.local/vim/swapfiles
 
 " undo file
 set undofile
-set undodir=~/.vim/undofiles
+set undodir=~/.local/vim/undofiles
 set undolevels=2000
 set history=200
 
 "":help quickfix
-"set makeprg=jikes -nowarn -Xstdout +E % 
-"set errorformat=%f:%l:%c:%*\d:%*\d:%*\s%m 
+"set makeprg=jikes -nowarn -Xstdout +E %
+"set errorformat=%f:%l:%c:%*\d:%*\d:%*\s%m
 
 """ }}}
-" X11 interaction {{{ 
+" X11 interaction {{{
 
 "set guifont=Monospace\ 8
 "set guifont=Courier\ 10\ Pitch\ 8 " Really tiny font, need good eyes or good screen or both ;)
@@ -475,14 +434,12 @@ if !has('gui_running')
   set mouse=a
   set ttymouse=xterm
   set statusline=%t[%{strlen(&fenc)?&fenc:'none'},%{&ff}]%h%m%r%y%=%c,%l/%L\ %P\ %{fugitive#statusline()}
-  if &term =~ "xterm-debian" || &term =~ "xterm-xfree86" || &term =~ "xterm" 
+  if &term =~ "xterm-debian" || &term =~ "xterm-xfree86" || &term =~ "xterm"
     set t_Co=16
     set t_Sf=^[[3%dm
     set t_Sb=^[[4%dm
-  endif 
+  endif
 else
-  " python from powerline.ext.vim import source_plugin; source_plugin()
-  set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
   if has('macunix')
     set guifont=Menlo\ for\ Powerline:h7
     set transparency=10
@@ -498,7 +455,7 @@ endif
     """ }}}
 " Shortcuts {{{
 
-" Tune the cmdline with emacs mode 
+" Tune the cmdline with emacs mode
 nmap \n :setlocal number!<CR>
 nmap \p :set paste!<CR>
 nmap \t2 :set expandtab tabstop=2 shiftwidth=2 softtabstop=2<CR>
@@ -507,6 +464,10 @@ nmap \t8 :set expandtab tabstop=8 shiftwidth=8 softtabstop=4<CR>
 nmap \T2 :set noexpandtab tabstop=2 softtabstop=2 shiftwidth=2<CR>
 nmap \T4 :set noexpandtab tabstop=4 softtabstop=4 shiftwidth=4<CR>
 nmap \T8 :set noexpandtab tabstop=8 softtabstop=8 shiftwidth=8<CR>
+
+nmap <Leader>gr :grep -r  .<left><left>
+" nmap <leader>gv :vimgrep ** | copen <cr>
+" nmap <leader>gv :Bgrep
 
 cnoremap <C-A> <Home>
 cnoremap <C-E> <End>
@@ -523,33 +484,34 @@ nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
 
 "map <Leader>, @:
 
-nmap <Leader><SPACE> :bnext<CR>
-nmap <Leader>n :bnext<CR>
-nmap <Leader>p :bprev<CR>
+nnoremap <Leader><SPACE> :bnext<CR>
+nnoremap <Leader>n :bnext<CR>
+nnoremap <Leader>p :bprev<CR>
 "nmap <Leader>l :ls<CR>
 
-nmap <Leader>ba :badd 
+nnoremap <Leader>ba :badd
 " nmap <Leader>bd :bdel<CR>
-nmap <Leader>bd <Plug>Kwbd
-nmap <Leader>b1 :b1<CR>
-nmap <Leader>b2 :b2<CR>
-nmap <Leader>b3 :b3<CR>
-nmap <Leader>b4 :b4<CR>
-nmap <Leader>b5 :b5<CR>
-nmap <Leader>b6 :b6<CR>
-nmap <Leader>b7 :b7<CR>
-nmap <Leader>b8 :b8<CR>
-nmap <Leader>b9 :b9<CR>
-nmap <Leader>b0 :b0<CR>
+"nmap <Leader>bd <Plug>Kwbd
+nnoremap <Leader>,bd :Bdelete<CR>
+nnoremap <Leader>b1 :b1<CR>
+nnoremap <Leader>b2 :b2<CR>
+nnoremap <Leader>b3 :b3<CR>
+nnoremap <Leader>b4 :b4<CR>
+nnoremap <Leader>b5 :b5<CR>
+nnoremap <Leader>b6 :b6<CR>
+nnoremap <Leader>b7 :b7<CR>
+nnoremap <Leader>b8 :b8<CR>
+nnoremap <Leader>b9 :b9<CR>
+nnoremap <Leader>b0 :b0<CR>
 
 " quickfix mappings
-nmap <Leader>qn :cnext<CR>
-nmap <Leader>qp :cprev<CR>
-nmap <Leader>qo :copen<CR>
-nmap <Leader>qc :cclose<CR>
+nnoremap <Leader>qn :cnext<CR>
+nnoremap <Leader>qp :cprev<CR>
+nnoremap <Leader>qo :copen<CR>
+nnoremap <Leader>qc :cclose<CR>
 
-nmap <Leader>ln :lnext<CR>
-nmap <Leader>lp :lprev<CR>
+nnoremap <Leader>ln :lnext<CR>
+nnoremap <Leader>lp :lprev<CR>
 
 "map <Leader>y<SPACE> :tabnext<CR>
 "map <Leader>yn :tabnext<CR>
@@ -557,11 +519,11 @@ nmap <Leader>lp :lprev<CR>
 "map <Leader>y<BACKSPACE> :tabprev<CR>
 "map <Leader>yp :tabprev<CR>
 "map <Leader>yn :tabnew<CR>
-"map <Leader>yc :tabclose<CR> 
+"map <Leader>yc :tabclose<CR>
 
-"   Edit another file in the same directory as the current file 
-"   uses expression to extract path from current file's path 
-"  (thanks Douglas Potts) 
+"   Edit another file in the same directory as the current file
+"   uses expression to extract path from current file's path
+"  (thanks Douglas Potts)
 "map <Leader>ee :e <C-R>=expand("%:p:h") . "/" <CR>
 
 "map <Leader>ev :e ~/.vimrc <CR>
@@ -570,25 +532,25 @@ nmap <Leader>lp :lprev<CR>
 "map <Leader>ez :e ~/.zshrc<CR>
 
 " split shortcuts
-map <Leader>sh :split<CR>
-map <Leader>sv :vsplit<CR>
+nnoremap <Leader>sh :split<CR>
+nnoremap <Leader>sv :vsplit<CR>
 
 " quickly edit files often edited
 iab YDATE <C-R>=strftime("%a %b %d %T %Z %Y")<CR>
 
 "map <Leader>cc :!ctags -R -I --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
-map <Leader>L  1G/Last update:\s*/e+1<CR>CYDATE<ESC>
-map <Leader>,L 1G/Last change:\s*/e+1<CR>CYDATE<ESC>
+nnoremap <Leader>LU 1G/Last update:\s*/e+1<CR>CYDATE<ESC>
+nnoremap <Leader>LC 1G/Last change:\s*/e+1<CR>CYDATE<ESC>
 
 " Compile the source
-map <Leader>cp :w<CR>:makeprg=g++ % -O<CR>:make<CR>
-map <Leader>cc :w<CR>:makeprg=gcc % -O<CR>:make<CR>
-map <Leader>cl :w<CR>:makeprg=latex<CR>:make<CR>
-map <Leader>cm :w<CR>:makeprg=make<CR>:make<CR>
+nnoremap <Leader>cp :w<CR>:makeprg=g++ % -O<CR>:make<CR>
+nnoremap <Leader>cc :w<CR>:makeprg=gcc % -O<CR>:make<CR>
+nnoremap <Leader>cl :w<CR>:makeprg=latex<CR>:make<CR>
+nnoremap <Leader>cm :w<CR>:makeprg=make<CR>:make<CR>
 
 " 1/4 of the screen movement
 nnoremap <expr> zT 'zt'
-" XXX if flashes try with: winline()-winheight(0)/3 . <C-e> 
+" XXX if flashes try with: winline()-winheight(0)/3 . <C-e>
 " XXX try nnoremap <expr> zt winline()-winheight(0)/3>0? winline()-winheight(0)/3 . '<C-e>' : winline()-1 . '<C-e>'
 nnoremap <expr> zt 'zt' . winheight(0)/4 . '<c-y>'
 nnoremap <expr> zB 'zb' . winheight(0)/4 . '<c-e>'
@@ -600,8 +562,19 @@ au FileType python set omnifunc=pythoncomplete#Complete
 set completeopt=menuone,longest,preview
 
 " add sudo command
-command! WW w ! sudo tee % > /dev/null
-command! W execute ':silent WW'
+command! W w ! sudo tee % > /dev/null
+
+function! StripTrailingWhitespace()
+  if !&binary && &filetype != 'diff'
+    normal mz
+    normal Hmy
+    %s/\s\+$//e
+    normal 'yz<CR>
+    normal `z
+  endif
+endfunction
+
+nnoremap ,s<space> :call StripTrailingWhitespace()<CR>
 
 " }}}
 " AutoCommands {{{
@@ -609,39 +582,46 @@ filetype plugin on
 filetype plugin indent on
 
 if has("autocmd")
-    " Markdown
+    " restore cursor position
+    au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif
+    au BufNewFile,BufRead  modprobe.conf    set syntax=modconf
+    au BufWinLeave * call clearmatches()
+
+    " Markdown {{{
     au BufNewFile, BufRead *.md set filetype=markdown
     augroup markdown
-    au!
-    " for markdown texts: adds a line of = under h1 titles
-    au FileType markdown nnoremap <leader>h1 yypVr= 
-    au FileType markdown nnoremap <leader>h2 yypVr- 
+      au!
+      au CursorHold *.md update
+      " for markdown texts: adds a line of = under h1 titles
+      au FileType markdown nnoremap <leader>h1 yypVr=
+      au FileType markdown nnoremap <leader>h2 yypVr-
     augroup END
-
-    " Mail
+    " }}}
+    " Mail {{{
     augroup mail
-    au!
-    "au BufRead /tmp/mutt* source /home/guyzmo/.vim/after/ftplugin/yaposting.vim
+      au!
+      "au BufRead /tmp/mutt* source /home/guyzmo/.vim/after/ftplugin/yaposting.vim
     augroup END
-
-    " Shell files
+    " }}}
+    " Shell files {{{
     augroup shell
-    au!
-    au BufWritePost *.sh :!chmod u+x <afile>
-    au BufWritePost * if getline(1) =~ "^#!/bin/[a-z]*sh" | silent !chmod u+x <afile> | endif
-    au BufEnter *.sh if getline(1) == "" | :call setline(1, "#!/bin/sh") | endif
-    au BufEnter *.sh let g:is_posix = 1
+      au!
+      au BufWritePost *.sh :!chmod u+x <afile>
+      au BufWritePost * if getline(1) =~ "^#!/bin/[a-z]*sh" | silent !chmod u+x <afile> | endif
+      au BufEnter *.sh if getline(1) == "" | :call setline(1, "#!/bin/sh") | endif
+      au BufEnter *.sh let g:is_posix = 1
     augroup END
-
-    " Python
+    " }}}
+    " Python {{{
     augroup python
     au!
     au FileType python nnoremap <leader>ft Vatzf
     au BufEnter *.py if getline(1) == "" | :call setline(1, "#!/usr/bin/env python") | endif
+    au BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class,with
     augroup END
-
-    " Javascript
-    function! JavaScriptFold() 
+    " }}}
+    " Javascript {{{
+    function! JavaScriptFold()
         setl foldmethod=syntax
         setl foldlevelstart=1
         syn region foldBraces start=/^[^"'\/]*{[^"'\/}]*$/ end=/^[^{"'\/]*}[^"'\/]*$/ transparent fold keepend extend
@@ -651,58 +631,81 @@ if has("autocmd")
         setl foldtext=FoldText()
     endfunction
     augroup js
-    au!
-    au FileType javascript runtime /usr/share/vim/vim72/ftplugin/javascript.vim
-    au FileType javascript runtime /usr/share/vim/vim72/syntax/javascript.vim
-    au FileType javascript runtime /usr/share/vim/vim72/indent/javascript.vim
-    "au FileType javascript call JavaScriptFold()
-    "au FileType javascript setl fen
+        au!
+        au FileType javascript runtime /usr/share/vim/vim72/ftplugin/javascript.vim
+        au FileType javascript runtime /usr/share/vim/vim72/syntax/javascript.vim
+        au FileType javascript runtime /usr/share/vim/vim72/indent/javascript.vim
+        au FileType javascript  set smartindent
+        au FileType javascript call JavaScriptFold()
+        "au FileType javascript setl fen
     augroup END
-
-    " for HTML texts
+    " }}}
+    " for HTML texts {{{
     augroup html
-    au!
-    au FileType html nnoremap <leader>ft Vatzf
-    au FileType html let html_use_css = 1
-    au FileType html let use_xhtml = 1
-    au FileType html let html_ignore_folding = 1
-    au FileType html let html_use_encoding = 1
+        au!
+        au FileType html nnoremap <leader>ft Vatzf
+        au FileType html let html_use_css = 1
+        au FileType html let use_xhtml = 1
+        au FileType html let html_ignore_folding = 1
+        au FileType html let html_use_encoding = 1
     augroup END
-
-    " for CSS texts, CSS sorting
+    " }}}
+    " for CSS texts, CSS sorting {{{
     augroup css
-    au!
-    au FileType css nnoremap <leader>S ?{<CR>jV/^\s*\}?$<CR>k:sort<CR>:noh<CR> 
+        au!
+        au FileType css nnoremap <leader>S ?{<CR>jV/^\s*\}?$<CR>k:sort<CR>:noh<CR>
     augroup END
-
+    " }}}
+    " Scala {{{
+    augroup scala
+        au!
+        au FileType scala set smartindent
+    augroup END
+    " }}}
+    " Java {{{
+    augroup java
+        au!
+        au FileType java set smartindent
+    augroup END
+    " }}}
+    " Coffee script {{{
+    augroup coffee
+        au!
+        au FileType coffee 'vim-coffee-script'
+        au FileType coffee set smartindent
+    augroup END
+    " }}}
+    " ChangeLog {{{
     augroup changelog
     au!
     au FileType changelog runtime /usr/share/vim/vim73/ftplugin/changelog.vim
     au FileType let g:changelog_username = 'Guyzmo <guyzmo@m0g.net>'
     augroup END
-
-    au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif
+    "}}}
 " C Files options {{{
-    augroup filetypedetect
-            au BufNewFile,BufRead *.aadl    setf aadl
-            au BufNewFile,BufRead *.pde     setf arduino
-            au BufNewFile,BufRead *.ino     setf arduino
-            au BufNewFile,BufRead *.C       setf cpp
-            au BufNewFile,BufRead *.h       setf cpp
+    augroup cfiletypedetect
+        au!
+        au BufNewFile,BufRead *.aadl    setf aadl
+        au BufNewFile,BufRead *.pde     setf arduino
+        au BufNewFile,BufRead *.ino     setf arduino
+        au BufNewFile,BufRead *.C       setf cpp
+        au BufNewFile,BufRead *.h       setf cpp
     augroup END
 
-        
     " Set some sensible defaults for editing C-files
     augroup cprog
-    " Remove all cprog autocommands
-    au!
+        " Remove all cprog autocommands
+        au!
+        au FileType cpp,c set smartindent
+        " t-pope vim-commentary plugin
+        autocmd FileType c,cpp,cs,java setlocal commentstring=//\ %s
 
-    " When starting to edit a file:
-    "   For *.c and *.h files set formatting of comments and set C-indenting on.
-    "   For other files switch it off.
-    "   Don't change the order, it's important that the line with * comes first.
-    autocmd BufRead *       set formatoptions=tcql nocindent comments&
-    autocmd BufRead *.c,*.h set formatoptions=croql cindent comments=sr:/*,mb:*,el:*/,://
+        " When starting to edit a file:
+        "   For *.c and *.h files set formatting of comments and set C-indenting on.
+        "   For other files switch it off.
+        "   Don't change the order, it's important that the line with * comes first.
+        autocmd BufRead *       set formatoptions=tcql nocindent comments&
+        autocmd BufRead *.c,*.h set formatoptions=croql cindent comments=sr:/*,mb:*,el:*/,://
     augroup END
 
     " }}}
@@ -733,15 +736,20 @@ if has("autocmd")
 """ }}}
 " vimrc {{{
     augroup vimrc
-    au BufReadPre * setlocal foldmethod=marker
-    au BufWinEnter * if &fdm == 'indent' | setlocal foldmethod=manual | endif
-    au BufWritePost .vimrc source $MYVIMRC
+    au BufReadPre $MYVIMRC setlocal foldmethod=marker
+    au BufReadPre $MYVIMRC setlocal ft=vim
+    au BufWinEnter $MYVIMRC if &fdm == 'indent' | setlocal foldmethod=manual | endif
+    au BufWritePost $MYVIMRC source $MYVIMRC
     augroup END
 " }}}
 
 endif " has ("autocmd")
 " }}}
-"Syntax highlighting {{{ 
+"Syntax highlighting {{{
+
+" color scheme
+colorscheme murphy
+
 " i hate cyan comments :)
 hi Comment                        ctermfg=Black ctermbg=8    guifg=Gray80  guibg=grey12
 hi Folded                         ctermfg=Cyan  ctermbg=0    guifg=Cyan    guibg=grey12
@@ -754,8 +762,10 @@ hi CursorLine      term=underline                                          guibg
 hi CursorColumn    term=reverse                                            guibg=Grey5
 hi ColorColumn     term=reverse                 ctermbg=4                  guibg=#250000
 hi RedundantSpaces term=standout                ctermbg=red                guibg=red
-		
-call matchadd("NonText", "$")
-call matchadd("NonText", "	")
+hi TrailingSpaces  term=standout                ctermfg=red                guifg=red
+
+call matchadd('TrailingSpaces', '\s\s*$')
+call matchadd('NonText', '$')
+call matchadd('NonText', '	')
 
 """}}}
