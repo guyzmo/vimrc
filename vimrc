@@ -1,22 +1,26 @@
-﻿" File:        $HOME/.vimrc
+﻿" File:        $HOME/.vim/vimrc
 " Purpose:     Configuration file for VIM
-" Author:      Leon Breedt <leon@obsidian.co.za>
-" His last update: Sat Jul 03 13:02:07 SAST 1999
-" Author:      G. Lejeune
-" His last update: Sat Jul 17 17:20:17 CET 2000
+" Author:      Leon Breedt <leon@obsidian.co.za> (Sat Jul 03 13:02:07 SAST 1999)
+" Author:      G. Lejeune (Sat Jul 17 17:20:17 CET 2000)
 " Author:      PRATZ Bernard <bernard@pratz.net>
-" Last update: Fri Nov 21 20:56:20 CET 2014
+" Last update: Mon Nov 24 17:15:48 GMT 2014
 
 let mapleader = ","
 set pastetoggle=<F3>
 
-runtime /usr/share/vim/vim72/ftplugin/justify.vim
+" vim plugins
+runtime macros/justify.vim
 runtime ftplugin/man.vim
-nnoremap K :Man <C-r><C-w><CR>
-
-let g:changelog_username = 'Guyzmo <guyzmo@m0g.net>'
 
 " Bundles {{{
+
+" for better synchronization, I have only:
+"   ~/.vim/vimrc
+"   ~/.vim/neobundle.vim
+" and all the files specific to a machines are within:
+"   ~/.local/vim/bundle
+"   ~/.local/vim/swapfiles
+"   ~/.local/vim/undofiles
 
 " NeoBundle setup {{{
 filetype off
@@ -26,8 +30,6 @@ call neobundle#begin(expand('~/.local/vim/bundle'))
 NeoBundleFetch 'Shougo/neobundle.vim'
 
 " }}}
-
-"NeoBundle '/Users/guyzmo/Workspace/Projects/vim-yaposting/.git'
 
 " Bundles
 
@@ -47,21 +49,18 @@ NeoBundle 'Shougo/vimproc.vim', {
 " Bundle Unite {{{
 NeoBundle 'Shougo/Unite.vim'
 let g:unite_source_history_yank_enable = 1
-"call unite#filters#matcher_default#use(['matcher_fuzzy'])
+"call unite#filters#matcher_default#use(['matcher_fuzzy']) " XXX not working
 nnoremap <leader>bl :<C-u>Unite -buffer-name=buffers -start-insert buffer<cr>
 nnoremap <leader>t  :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/async:!<cr>
 nnoremap <leader>f  :<C-u>Unite -no-split -buffer-name=files   -start-insert file<cr>
 nnoremap <leader>bo  :<C-u>Unite -no-split -buffer-name=outline -start-insert outline<cr>
 nnoremap <leader>y  :<C-u>Unite -no-split -buffer-name=yank    history/yank<cr>
 
-NeoBundle 'h1mesuke/unite-outline'
-
 " }}}
 " Bundle GrepCommands {{{
-"NeoBundle 'vim-scripts/Buffer-grep'
 NeoBundle 'vim-scripts/GrepCommands'
-nnoremap <leader>g<space> :BufGrep<CR>
-nnoremap <leader>gg :BufGrep //<Left>
+nnoremap <leader>bg<space> :BufGrep<CR>
+nnoremap <leader>bg :BufGrep //<Left>
 " }}}
 " bundle Airline {{{
 let g:airline_theme = 'wombat'
@@ -128,10 +127,22 @@ let g:slime_paste_file = "$HOME/.local/vim/.slime_paste"
 let g:slime_target = "screen"
 " }}}
 " Bundle Rainbow parentheses {{{
-NeoBundle 'luochen1990/rainbow'
 let g:rainbow_active = 1
 let g:rainbow_operators = 1
-let g:rainbow_guifgs = ['RoyalBlue3', 'DarkOrange3', 'DarkOrchid3', 'FireBrick',]
+let g:rainbow_guifgs = ['RoyalBlue3', 'DarkOrange3', 'FireBrick3', 'Green1', 'DodgerBlue3', 'OrangeRed3', 'DeepPink3', 'SkyBlue3']
+NeoBundle 'oblitum/rainbow'
+" }}}
+" Bundle CamelCaseMotion {{{
+map <silent> -w <Plug>CamelCaseMotion_w
+map <silent> -b <Plug>CamelCaseMotion_b
+map <silent> -e <Plug>CamelCaseMotion_e
+omap <silent> i_ <Plug>CamelCaseMotion_iw
+xmap <silent> i_ <Plug>CamelCaseMotion_iw
+omap <silent> ib <Plug>CamelCaseMotion_ib
+xmap <silent> ib <Plug>CamelCaseMotion_ib
+omap <silent> ie <Plug>CamelCaseMotion_ie
+xmap <silent> ie <Plug>CamelCaseMotion_ie
+NeoBundle 'bkad/CamelCaseMotion'
 " }}}
 
 " Markdown bundles
@@ -157,9 +168,14 @@ let g:vimwiki_folding = 'syntax'
 
 " Language specific bundles
 
+NeoBundleLazy 'Shougo/unite-outline', {
+    \ 'autoload': {
+    \   'filetypes': ['c','cpp','javascript','python','ruby','java','zsh','bash','sh']
+    \   }
+    \ }
 NeoBundleLazy 'kchmck/vim-coffee-script', {'autoload':{'filetypes':['coffee']}}
 NeoBundleLazy 'derekwyatt/vim-scala', {'autoload':{'filetypes':['scala']}}
-NeoBundleLazy 'jelera/vim-javascript-syntax', {'autoload':{'filetypes':['javascript']}}
+" NeoBundleLazy 'jelera/vim-javascript-syntax', {'autoload':{'filetypes':['javascript']}}
 " Bundle YouCompleteMe {{{
 NeoBundleLazy 'Valloric/YouCompleteMe', {
     \ 'build' : {
@@ -409,6 +425,7 @@ set history=200
 """ }}}
 " X11 interaction {{{
 
+"" all my old favorites ;-)
 "set guifont=Monospace\ 8
 "set guifont=Courier\ 10\ Pitch\ 8 " Really tiny font, need good eyes or good screen or both ;)
 "set guifont=DejaVu\ Sans\ Mono:h9.00
@@ -480,8 +497,6 @@ inoremap <F1> <ESC>
 nnoremap <F1> <ESC>
 vnoremap <F1> <ESC>
 
-nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
-
 "map <Leader>, @:
 
 nnoremap <Leader><SPACE> :bnext<CR>
@@ -492,7 +507,8 @@ nnoremap <Leader>p :bprev<CR>
 nnoremap <Leader>ba :badd
 " nmap <Leader>bd :bdel<CR>
 "nmap <Leader>bd <Plug>Kwbd
-nnoremap <Leader>,bd :Bdelete<CR>
+nnoremap <Leader>bc :Bdelete<CR>
+nnoremap <Leader>bd :bdelete<CR>
 nnoremap <Leader>b1 :b1<CR>
 nnoremap <Leader>b2 :b2<CR>
 nnoremap <Leader>b3 :b3<CR>
@@ -510,48 +526,43 @@ nnoremap <Leader>qp :cprev<CR>
 nnoremap <Leader>qo :copen<CR>
 nnoremap <Leader>qc :cclose<CR>
 
+" location mappings
 nnoremap <Leader>ln :lnext<CR>
 nnoremap <Leader>lp :lprev<CR>
-
-"map <Leader>y<SPACE> :tabnext<CR>
-"map <Leader>yn :tabnext<CR>
-"map <Leader>yy :tabnext<CR>
-"map <Leader>y<BACKSPACE> :tabprev<CR>
-"map <Leader>yp :tabprev<CR>
-"map <Leader>yn :tabnew<CR>
-"map <Leader>yc :tabclose<CR>
+nnoremap <Leader>lo :lopen<CR>
+nnoremap <Leader>lc :lclose<CR>
 
 "   Edit another file in the same directory as the current file
 "   uses expression to extract path from current file's path
-"  (thanks Douglas Potts)
+"  (thanks Douglas Potts) [obsoleted by Unite bundle]
 "map <Leader>ee :e <C-R>=expand("%:p:h") . "/" <CR>
 
-"map <Leader>ev :e ~/.vimrc <CR>
-"map <Leader>em :e ~/.muttrc <CR>
-"map <Leader>ep :e ~/.procmailrc <CR>
-"map <Leader>ez :e ~/.zshrc<CR>
+map <Leader>ev :e ~/.vim/vimrc <CR>
+map <Leader>em :e ~/.muttrc <CR>
+map <Leader>ep :e ~/.procmailrc <CR>
+map <Leader>ez :e ~/.zshrc<CR>
 
 " split shortcuts
 nnoremap <Leader>sh :split<CR>
 nnoremap <Leader>sv :vsplit<CR>
 
-" quickly edit files often edited
+" insert
 iab YDATE <C-R>=strftime("%a %b %d %T %Z %Y")<CR>
 
-"map <Leader>cc :!ctags -R -I --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
-nnoremap <Leader>LU 1G/Last update:\s*/e+1<CR>CYDATE<ESC>
-nnoremap <Leader>LC 1G/Last change:\s*/e+1<CR>CYDATE<ESC>
+nmap <Leader>LU 1G/Last update:\s*/e+1<CR>CYDATE<ESC>
+nmap <Leader>LC 1G/Last change:\s*/e+1<CR>CYDATE<ESC>
 
 " Compile the source
 nnoremap <Leader>cp :w<CR>:makeprg=g++ % -O<CR>:make<CR>
 nnoremap <Leader>cc :w<CR>:makeprg=gcc % -O<CR>:make<CR>
 nnoremap <Leader>cl :w<CR>:makeprg=latex<CR>:make<CR>
 nnoremap <Leader>cm :w<CR>:makeprg=make<CR>:make<CR>
+"map <Leader>cc :!ctags -R -I --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 
 " 1/4 of the screen movement
 nnoremap <expr> zT 'zt'
-" XXX if flashes try with: winline()-winheight(0)/3 . <C-e>
-" XXX try nnoremap <expr> zt winline()-winheight(0)/3>0? winline()-winheight(0)/3 . '<C-e>' : winline()-1 . '<C-e>'
+" N.B. if flashes try with: winline()-winheight(0)/3 . <C-e>
+" N.B. try nnoremap <expr> zt winline()-winheight(0)/3>0? winline()-winheight(0)/3 . '<C-e>' : winline()-1 . '<C-e>'
 nnoremap <expr> zt 'zt' . winheight(0)/4 . '<c-y>'
 nnoremap <expr> zB 'zb' . winheight(0)/4 . '<c-e>'
 
@@ -574,7 +585,10 @@ function! StripTrailingWhitespace()
   endif
 endfunction
 
-nnoremap ,s<space> :call StripTrailingWhitespace()<CR>
+" mapping for stripping white spaces
+nnoremap <leader>s<space> :call StripTrailingWhitespace()<CR>
+"nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
+
 
 " }}}
 " AutoCommands {{{
@@ -632,9 +646,9 @@ if has("autocmd")
     endfunction
     augroup js
         au!
-        au FileType javascript runtime /usr/share/vim/vim72/ftplugin/javascript.vim
-        au FileType javascript runtime /usr/share/vim/vim72/syntax/javascript.vim
-        au FileType javascript runtime /usr/share/vim/vim72/indent/javascript.vim
+        au FileType javascript runtime ftplugin/javascript.vim
+        au FileType javascript runtime syntax/javascript.vim
+        au FileType javascript runtime indent/javascript.vim
         au FileType javascript  set smartindent
         au FileType javascript call JavaScriptFold()
         "au FileType javascript setl fen
@@ -678,7 +692,7 @@ if has("autocmd")
     " ChangeLog {{{
     augroup changelog
     au!
-    au FileType changelog runtime /usr/share/vim/vim73/ftplugin/changelog.vim
+    au FileType changelog runtime ftplugin/changelog.vim
     au FileType let g:changelog_username = 'Guyzmo <guyzmo@m0g.net>'
     augroup END
     "}}}
