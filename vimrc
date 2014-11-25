@@ -580,6 +580,7 @@ function! StripTrailingWhitespace()
     normal mz
     normal Hmy
     %s/\s\+$//e
+    let last_search_removed_from_history = histdel('s', -1)
     normal 'yz<CR>
     normal `z
   endif
