@@ -156,16 +156,22 @@ let g:calendar_monday = 1
 let g:calendar_weeknm = 5
 " }}}
 " VIM Wiki {{{
-NeoBundleLazy 'vimwiki/vimwiki', {'autoload':{'filetypes':['markdown']}}
+NeoBundleLazy 'vimwiki/vimwiki', {'augroup': 'markdown'}
+map <leader>ww :NeoBundleSource vimwiki<CR>:VimwikiIndex<CR>
 let wiki_notes = {}
 let wiki_notes.path = '~/Documents/Perso/Notes/'
 let wiki_notes.html_path = '~/Documents/Perso/Notes/html/'
 let wiki_notes.syntax = 'markdown'
 let wiki_notes.ext = '.md'
 let wiki_notes.auto_export = 1
-let wiki_notes.nested_syntaxes = {'python': 'python', 'c++': 'cpp'}
+let wiki_notes.nested_syntaxes = {'python': 'python', 'c++': 'cpp', 'latex': 'latex'}
 let g:vimwiki_list = [wiki_notes]
 let g:vimwiki_folding = 'syntax'
+" let g:vimwiki_ext2syntax = {'.md': 'markdown',
+"             \ '.mkd': 'markdown',
+"             \ '.wiki': 'media'}
+" }}}
+
 " }}}
 
 " Language specific bundles
@@ -475,7 +481,16 @@ else
 endif
 
     """ }}}
-" Shortcuts {{{
+" Mappings {{{
+
+" Yank current line in register y and run it as an ex command
+nnoremap <Leader>!e "yyy@y
+" Yank current line in register y and run it as a python command
+nnoremap <Leader>!p "yyy:let @y=":py3 ".@y<CR>@y<CR>
+" Yank current line in register y and run it as a ruby command
+nnoremap <Leader>!r "yyy:let @y=":ru ".@y<CR>@y<CR>
+" Yank current line in register y and run it as a shell command
+nnoremap <Leader>!s "yyy:let @y=":!".@y<CR>@y<CR>
 
 " Tune the cmdline with emacs mode
 nmap \n :setlocal number!<CR>
@@ -558,10 +573,10 @@ nmap <Leader>LU 1G/Last update:\s*/e+1<CR>CYDATE<ESC>
 nmap <Leader>LC 1G/Last change:\s*/e+1<CR>CYDATE<ESC>
 
 " Compile the source
-nnoremap <Leader>cp :w<CR>:makeprg=g++ % -O<CR>:make<CR>
-nnoremap <Leader>cc :w<CR>:makeprg=gcc % -O<CR>:make<CR>
-nnoremap <Leader>cl :w<CR>:makeprg=latex<CR>:make<CR>
-nnoremap <Leader>cm :w<CR>:makeprg=make<CR>:make<CR>
+nnoremap <Leader>cp :w<CR>:set makeprg=g++ % -O<CR>:make<CR>
+nnoremap <Leader>cc :w<CR>:set makeprg=gcc % -O<CR>:make<CR>
+nnoremap <Leader>cl :update<CR>:set makeprg=pdflatex %<CR>:make<CR>
+nnoremap <Leader>cm :w<CR>:set makeprg=make<CR>:make<CR>
 "map <Leader>cc :!ctags -R -I --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 
 " 1/4 of the screen movement
@@ -608,7 +623,26 @@ if has("autocmd")
     au BufWinLeave * call clearmatches()
 
     " Markdown {{{
-    au BufNewFile, BufRead *.md set filetype=markdown
+    " http://code.google.com/p/vimwiki/issues/detail?id=384
+    au BufNewFile,BufRead *.md set filetype=markdown
+    function! s:MDSettings()
+        "inoremap <buffer> <Leader>n \note[item]{}<Esc>i
+        noremap <buffer> <Leader>ch :!pandoc
+                    \ --template ~/Documents/Templates/beamer.tpl
+                    \ --from markdown "%" -t beamer -o "%<.pdf"<CR>
+        noremap <buffer> <Leader>cl :!pandoc
+                    \ --template ~/Documents/Templates/latex.tpl
+                    \ --from markdown "%" -t latex -o "%<.pdf"<CR>
+        noremap <buffer> <Leader>cL :!pandoc
+                    \ --template ~/Documents/Templates/lettre.tpl
+                    \ --from markdown "%" -t latex -o "%<.pdf"<CR>
+        noremap <buffer> <Leader>ch :!pandoc
+                    \ --template ~/Documents/Templates/html.tpl
+                    \ --from markdown "%" -t html -o "%<.html"<CR>
+        noremap <buffer> <Leader>cv :!qlmanage -p "%<.pdf" 2>&1 >/dev/null &<CR>
+        noremap <buffer> <Leader>co :!open -a Preview "%<.pdf" 2>&1 >/dev/null &<CR>
+    endfunction
+
     augroup markdown
       au!
       au CursorHold *.md update
@@ -627,9 +661,15 @@ if has("autocmd")
     augroup shell
       au!
       au BufWritePost *.sh :!chmod u+x <afile>
+      au FileType markdown set noswapfile
       au BufWritePost * if getline(1) =~ "^#!/bin/[a-z]*sh" | silent !chmod u+x <afile> | endif
       au BufEnter *.sh if getline(1) == "" | :call setline(1, "#!/bin/sh") | endif
       au BufEnter *.sh let g:is_posix = 1
+      au FileType markdown nmap <C-]> <Plug>VimwikiFollowLink
+      au FileType markdown vmap <C-]> <Plug>VimwikiNormalizeLinkVisualCR
+      au FileType markdown nmap <C-[> <Plug>VimwikiGoBackLink
+      au BufRead,BufNewFile *.md setfiletype markdown
+      au FileType markdown :call <SID>MDSettings()
     augroup END
     " }}}
     " Python {{{
