@@ -172,6 +172,20 @@ let g:vimwiki_folding = 'syntax'
 "             \ '.wiki': 'media'}
 " }}}
 
+" Project Management
+
+" Bundle Task Juggler {{{
+
+NeoBundle 'guyzmo/vim-taskjuggler', {
+    \  'build' : {
+    \    'mac': 'sh install.sh',
+    \    'unix': 'sh install.sh'
+    \  },
+    \  'autoload': {
+    \    'filetypes': ['tjp', 'taskjuggler', 'tj3']
+    \  }
+    \ }
+
 " }}}
 
 " Language specific bundles
