@@ -138,6 +138,8 @@ map <silent> -b <Plug>CamelCaseMotion_b
 map <silent> -e <Plug>CamelCaseMotion_e
 omap <silent> i_ <Plug>CamelCaseMotion_iw
 xmap <silent> i_ <Plug>CamelCaseMotion_iw
+omap <silent> i- <Plug>CamelCaseMotion_iw
+xmap <silent> i- <Plug>CamelCaseMotion_iw
 omap <silent> ib <Plug>CamelCaseMotion_ib
 xmap <silent> ib <Plug>CamelCaseMotion_ib
 omap <silent> ie <Plug>CamelCaseMotion_ie
