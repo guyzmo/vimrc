@@ -201,76 +201,79 @@ NeoBundleLazy 'mkomitee/vim-gf-python', {'autoload':{'filetypes':['python']}}
 NeoBundleLazy 'klen/python-mode', {'autoload':{'filetypes':['python']}}
 " :help ropevim.txt
 
-let g:pymode_doc = 1                                  "  Load show documentation plugin
-let g:pymode_doc_key = '<leader>PK'                   "  Key for show python documentation
-let g:pymode_run = 1                                  "  Load run code plugin
-let g:pymode_run_key = '<leader>PR'                   "  Key for run python code
-let g:pymode_lint_checker = 'pyflakes,pep8'
-let g:pymode_lint_ignore = 'E501,E121,E126,E127,E128' "  Skip errors and warnings (E.g. 'E501,W002', 'E2,W' (Skip all Warnings and Errors startswith E2) and etc..)
-let g:pymode_lint_select = ''                         "  E.g. 'E4,W' Select errors and warnings
-let g:pymode_lint_cwindow = 1                         "  Auto open cwindow if errors be finded
-let g:pymode_lint_jump = 0                            "  Auto jump on first error
-let g:pymode_lint_hold = 0                            "  Hold cursor in current window when quickfix is open
-let g:pymode_lint_signs = 1                           "  Place error signs
-let g:pymode_lint_minheight = 3                       "  Minimal height of pylint error window
-let g:pymode_lint_maxheight = 6                       "  Maximal height of pylint error window
-let g:pymode_rope = 1                                 "  Load rope plugin
-let g:pymode_rope_auto_project = 1                    "  Auto create and open ropeproject
-let g:pymode_rope_enable_autoimport = 1               "  Enable autoimport
+augroup pythonmode
+    au!
+    au FileType python let g:pymode_doc = 1                                  "  Load show documentation plugin
+    au FileType python let g:pymode_run = 1                                  "  Load run code plugin
+    au FileType python let g:pymode_lint_checker = 'pyflakes,pep8'
+    au FileType python let g:pymode_lint_ignore = 'E501,E121,E126,E127,E128' "  Skip errors and warnings (E.g. 'E501,W002', 'E2,W' (Skip all Warnings and Errors startswith E2) and etc..)
+    au FileType python let g:pymode_lint_select = ''                         "  E.g. 'E4,W' Select errors and warnings
+    au FileType python let g:pymode_lint_cwindow = 1                         "  Auto open cwindow if errors be finded
+    au FileType python let g:pymode_lint_jump = 0                            "  Auto jump on first error
+    au FileType python let g:pymode_lint_hold = 1                            "  Hold cursor in current window when quickfix is open
+    au FileType python let g:pymode_lint_signs = 1                           "  Place error signs
+    au FileType python let g:pymode_lint_minheight = 3                       "  Minimal height of pylint error window
+    au FileType python let g:pymode_lint_maxheight = 6                       "  Maximal height of pylint error window
+    au FileType python let g:pymode_rope = 1                                 "  Load rope plugin
+    au FileType python let g:pymode_rope_auto_project = 1                    "  Auto create and open ropeproject
+    au FileType python let g:pymode_rope_enable_autoimport = 1               "  Enable autoimport
 
-let g:pymode_folding = 1                                       "  Enable python folding
-let g:pymode_motion = 1
-let g:pymode_virtualenv = 1                                    "  Auto fix vim python paths if virtualenv enabled
-let g:pymode_paths = []                                        "  Additional python paths
-let g:pymode_breakpoint = 1                                    "  Load breakpoints plugin
-let g:pymode_breakpoint_key = '<leader>b'                      "  Key for set/unset breakpoint
-let g:pymode_utils_whitespaces = 1                             "  Autoremove unused whitespaces
-let g:pymode_indent = 1                                        "  Enable pymode indentation
-let g:pymode_options = 1                                       "  Set default pymode python options
-let g:pymode_syntax = 1                                        "  Enable pymode's custom syntax highlighting
-let g:pymode_syntax_all = 1                                    "  Enable all python highlightings
-let g:pymode_syntax_print_as_function = 1                      "  Highlight 'print' as function
-let g:pymode_syntax_indent_errors = g:pymode_syntax_all        "  Highlight indentation errors
-let g:pymode_syntax_space_errors = g:pymode_syntax_all         "  Highlight trailing spaces
-let g:pymode_syntax_string_formatting = g:pymode_syntax_all    "  Highlight string formatting
-let g:pymode_syntax_string_format = g:pymode_syntax_all        "  Highlight str.format syntax
-let g:pymode_syntax_string_templates = g:pymode_syntax_all     "  Highlight string.Template syntax
-let g:pymode_syntax_doctests = g:pymode_syntax_all             "  Highlight doc-tests
-let g:pymode_syntax_builtin_objs = g:pymode_syntax_all         "  Highlight builtin objects (__doc__, self, etc)
-let g:pymode_syntax_builtin_funcs = g:pymode_syntax_all        "  Highlight builtin functions
-let g:pymode_syntax_highlight_exceptions = g:pymode_syntax_all "  Highlight exceptions
-let g:pymode_syntax_slow_sync = 0                              "  For fast machines
+    au FileType python let g:pymode_folding = 1                                       "  Enable python folding
+    au FileType python let g:pymode_motion = 1
+    au FileType python let g:pymode_virtualenv = 1                                    "  Auto fix vim python paths if virtualenv enabled
+    au FileType python let g:pymode_paths = []                                        "  Additional python paths
+    au FileType python let g:pymode_breakpoint = 1                                    "  Load breakpoints plugin
+    au FileType python let g:pymode_utils_whitespaces = 1                             "  Autoremove unused whitespaces
+    au FileType python let g:pymode_indent = 1                                        "  Enable pymode indentation
+    au FileType python let g:pymode_options = 1                                       "  Set default pymode python options
+    au FileType python let g:pymode_syntax = 1                                        "  Enable pymode's custom syntax highlighting
+    au FileType python let g:pymode_syntax_all = 1                                    "  Enable all python highlightings
+    au FileType python let g:pymode_syntax_print_as_function = 1                      "  Highlight 'print' as function
+    au FileType python let g:pymode_syntax_indent_errors = g:pymode_syntax_all        "  Highlight indentation errors
+    au FileType python let g:pymode_syntax_space_errors = g:pymode_syntax_all         "  Highlight trailing spaces
+    au FileType python let g:pymode_syntax_string_formatting = g:pymode_syntax_all    "  Highlight string formatting
+    au FileType python let g:pymode_syntax_string_format = g:pymode_syntax_all        "  Highlight str.format syntax
+    au FileType python let g:pymode_syntax_string_templates = g:pymode_syntax_all     "  Highlight string.Template syntax
+    au FileType python let g:pymode_syntax_doctests = g:pymode_syntax_all             "  Highlight doc-tests
+    au FileType python let g:pymode_syntax_builtin_objs = g:pymode_syntax_all         "  Highlight builtin objects (__doc__, self, etc)
+    au FileType python let g:pymode_syntax_builtin_funcs = g:pymode_syntax_all        "  Highlight builtin functions
+    au FileType python let g:pymode_syntax_highlight_exceptions = g:pymode_syntax_all "  Highlight exceptions
+    au FileType python let g:pymode_syntax_slow_sync = 0                              "  For fast machines
 
-" Auto generate global cache
-let g:pymode_rope_autoimport_generate = 1
-let g:pymode_rope_autoimport_underlineds = 0
-let g:pymode_rope_codeassist_maxfixes = 10
-let g:pymode_rope_sorted_completions = 1
-let g:pymode_rope_extended_complete = 1
-let g:pymode_rope_autoimport_modules = ["os","shutil","datetime"]
-let g:pymode_rope_confirm_saving = 1
-let g:pymode_rope_global_prefix = "<C-x>p"
-let g:pymode_rope_local_prefix = "<Leader>PR"
-map <Leader>rh :help RopeKeys<CR>
-let g:pymode_breakpoint_key = '<leader>PB'
-let g:pymode_rope_vim_completion = 1
-let g:pymode_rope_guess_project = 1
-let g:pymode_rope_goto_def_newwin = ""
-let g:pymode_rope_always_show_complete_menu = 0
+    au FileType python " Auto generate global cache
+    au FileType python let g:pymode_rope_autoimport_generate = 1
+    au FileType python let g:pymode_rope_autoimport_underlineds = 0
+    au FileType python let g:pymode_rope_codeassist_maxfixes = 10
+    au FileType python let g:pymode_rope_sorted_completions = 1
+    au FileType python let g:pymode_rope_extended_complete = 1
+    au FileType python let g:pymode_rope_autoimport_modules = ["os","shutil","datetime","sys"]
+    au FileType python let g:pymode_rope_confirm_saving = 1
+    au FileType python let g:pymode_rope_global_prefix = "<C-x>p"
+    au FileType python let g:pymode_rope_local_prefix = "<Leader>PR"
+    au FileType python map <Leader>rh :help RopeKeys<CR>
+    au FileType python let g:pymode_rope_vim_completion = 1
+    au FileType python let g:pymode_rope_guess_project = 1
+    au FileType python let g:pymode_rope_goto_def_newwin = ""
+    au FileType python let g:pymode_rope_always_show_complete_menu = 0
 
+    au FileType python let g:pymode_doc_key = '<leader>PK'                   "  Keyor show python documentation
+    au FileType python let g:pymode_run_key = '<leader>PX'                   "  Key for run python code
+    au FileType python let g:pymode_breakpoint_key = '<leader>PB'                     "  Key for set/unset breakpoint
 
-" rope
-map <leader>j :RopeGotoDefinition<CR>
-map <leader>r :RopeRename<CR>
+    " au FileType python " rope
+    " au FileType python map gd :RopeGotoDefinition<CR>
+    " au FileType python map <leader>Pr :RopeRename<CR>
 
-" Execute the tests
-nmap <silent><Leader>Tf <Esc>:Pytest file<CR>
-nmap <silent><Leader>Tc <Esc>:Pytest class<CR>
-nmap <silent><Leader>Tm <Esc>:Pytest method<CR>
-" cycle through test errors
-nmap <silent><Leader>Tn <Esc>:Pytest next<CR>
-nmap <silent><Leader>Tp <Esc>:Pytest previous<CR>
-nmap <silent><Leader>Te <Esc>:Pytest error<CR>
+    " au FileType python " Execute the tests
+    " au FileType python map <Leader>RTf <Esc>:Pytest file<CR>
+    " au FileType python map <Leader>RTc <Esc>:Pytest class<CR>
+    " au FileType python map <Leader>RTm <Esc>:Pytest method<CR>
+    " au FileType python " cycle through test errors
+    " au FileType python map <Leader>RTn <Esc>:Pytest next<CR>
+    " au FileType python map <Leader>RTp <Esc>:Pytest previous<CR>
+    " au FileType python map <Leader>RTe <Esc>:Pytest error<CR>
+augroup END
+
 "" }}} python-mode
 " }}}
 NeoBundleLazy 'kingbin/vim-arduino', {'autoload':{'filetypes':['arduino']}}
