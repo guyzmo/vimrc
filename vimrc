@@ -6,6 +6,7 @@
 " Last update: Mon Nov 24 17:15:48 GMT 2014
 
 let mapleader = ","
+let maplocalleader = ","
 set pastetoggle=<F3>
 
 " vim plugins
@@ -49,13 +50,16 @@ NeoBundle 'Shougo/vimproc.vim', {
 " Bundle Unite {{{
 NeoBundle 'Shougo/Unite.vim'
 let g:unite_source_history_yank_enable = 1
-"call unite#filters#matcher_default#use(['matcher_fuzzy']) " XXX not working
 nnoremap <leader>bl :<C-u>Unite -buffer-name=buffers -start-insert buffer<cr>
 nnoremap <leader>t  :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/async:!<cr>
 nnoremap <leader>f  :<C-u>Unite -no-split -buffer-name=files   -start-insert file<cr>
 nnoremap <leader>bo  :<C-u>Unite -no-split -buffer-name=outline -start-insert outline<cr>
 nnoremap <leader>y  :<C-u>Unite -no-split -buffer-name=yank    history/yank<cr>
 
+NeoBundle 'soh335/unite-qflist'
+nnoremap <leader>ql  :<C-u>Unite -buffer-name=quickfix qflist<cr>
+
+"call unite#filters#matcher_default#use(['matcher_fuzzy']) " XXX not working
 " }}}
 " Bundle GrepCommands {{{
 NeoBundle 'vim-scripts/GrepCommands'
@@ -100,14 +104,14 @@ NeoBundle 'tomtom/quickfixsigns_vim'
 NeoBundle 'tmhedberg/matchit'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'tpope/vim-repeat'
-NeoBundle 'msanders/snipmate.vim'
+"NeoBundle 'msanders/snipmate.vim'
 NeoBundle 'reinh/vim-makegreen'
 " TaskList {{{
 NeoBundle 'vim-scripts/TaskList.vim'
 map <leader>T <Plug>TaskList
 " }}}
 " Bundle Syntastic {{{
-NeoBundle 'scrooloose/syntastic'
+NeoBundleLazy 'scrooloose/syntastic', {'autoload':{'filetypes':['python','javascript','cpp','c','ruby']}}
 let g:syntastic_enable_signs=1
 let g:syntastic_auto_jump=0
 let g:syntastic_csslint_ignore="fallback-colors"
@@ -116,7 +120,7 @@ let g:syntastic_warning_symbol='⚠'
 let g:syntastic_style_error_symbol="✗"
 let g:syntastic_style_warning_symbol="⚑"
 let g:syntastic_mode_map = { 'mode': 'active',
-                               \ 'active_filetypes': ['ruby', 'javascript'],
+                               \ 'active_filetypes': ['javascript','ruby'],
                                \ 'passive_filetypes': ['python', 'cpp', 'c'] }
 map <Leader>CT :SyntasticToggleMode<CR>
 " }}}
@@ -144,10 +148,14 @@ omap <silent> ib <Plug>CamelCaseMotion_ib
 xmap <silent> ib <Plug>CamelCaseMotion_ib
 omap <silent> ie <Plug>CamelCaseMotion_ie
 xmap <silent> ie <Plug>CamelCaseMotion_ie
+
+map <silent> <C-Right> <Plug>CamelCaseMotion_e
+map <silent> <C-Left> <Plug>CamelCaseMotion_b
+
 NeoBundle 'bkad/CamelCaseMotion'
 " }}}
 
-" Markdown bundles
+" Markdown bundles {{{
 
 " VIM Calendar {{{
 NeoBundleLazy 'mattn/calendar-vim', {'autoload':{'filetypes':['markdown']}}
@@ -156,7 +164,12 @@ let g:calendar_monday = 1
 let g:calendar_weeknm = 5
 " }}}
 " VIM Wiki {{{
-NeoBundleLazy 'vimwiki/vimwiki', {'augroup': 'markdown'}
+NeoBundleLazy 'vimwiki/vimwiki', {
+            \   'augroup': 'markdown', 
+            \   'autoload': {
+            \     'filetypes': ['markdown', 'mkd', 'vimwiki', 'pandoc']
+            \   }
+            \ }
 map <leader>ww :NeoBundleSource vimwiki<CR>:VimwikiIndex<CR>
 let wiki_notes = {}
 let wiki_notes.path = '~/Documents/Perso/Notes/'
@@ -166,10 +179,43 @@ let wiki_notes.ext = '.md'
 let wiki_notes.auto_export = 1
 let wiki_notes.nested_syntaxes = {'python': 'python', 'c++': 'cpp', 'latex': 'latex'}
 let g:vimwiki_list = [wiki_notes]
-let g:vimwiki_folding = 'syntax'
+let g:vimwiki_folding = ''
 " let g:vimwiki_ext2syntax = {'.md': 'markdown',
 "             \ '.mkd': 'markdown',
 "             \ '.wiki': 'media'}
+" }}}
+
+" Vim pandoc {{{
+let g:pandoc#folding#fold_yaml=1
+let g:pandoc#folding#level=4
+let g:pandoc#folding#level=4
+let g:pandoc#custom_open="/usr/bin/open"
+let g:pandoc#default_langs=["english", "french"]
+let g:pandoc#modules#disabled=["bibliographies"]
+let g:pandoc#command#custom_open = "OSXOpen"
+
+function! OSXOpen(file)
+    return "open ". a:file
+endfunction
+
+function! XOpen(file)
+    return "xdg-open ". a:file
+endfunction
+
+NeoBundleLazy 'vim-pandoc/vim-pandoc', {
+            \   'augroup': 'markdown', 
+            \   'autoload': {
+            \     'filetypes': ['markdown', 'mkd', 'vimwiki', 'pandoc']
+            \   }
+            \ }
+NeoBundleLazy 'vim-pandoc/vim-pandoc-syntax', {
+            \   'augroup': 'markdown', 
+            \   'autoload': {
+            \     'filetypes': ['markdown', 'mkd', 'vimwiki', 'pandoc']
+            \   }
+            \ }
+" }}}
+
 " }}}
 
 " Project Management
@@ -182,7 +228,7 @@ NeoBundle 'guyzmo/vim-taskjuggler', {
     \    'unix': 'sh install.sh'
     \  },
     \  'autoload': {
-    \    'filetypes': ['tjp', 'taskjuggler', 'tj3']
+    \    'filetypes': ['tji', 'tjp', 'taskjuggler', 'tj3']
     \  }
     \ }
 
@@ -190,6 +236,12 @@ NeoBundle 'guyzmo/vim-taskjuggler', {
 
 " Language specific bundles
 
+NeoBundle 'vim-scripts/filetype.vim'
+NeoBundleLazy 'vim-scripts/applescript.vim', {
+    \ 'autoload': {
+    \   'filetypes': ['applescript']
+    \   }
+    \ }
 NeoBundleLazy 'Shougo/unite-outline', {
     \ 'autoload': {
     \   'filetypes': ['c','cpp','javascript','python','ruby','java','zsh','bash','sh']
@@ -205,7 +257,7 @@ NeoBundleLazy 'Valloric/YouCompleteMe', {
     \     'unix' : 'bash install.sh',
     \    },
     \ 'autoload': {
-    \     'filetypes': ['c','cpp','javascript','python','ruby','java','zsh','bash','sh']
+    \     'filetypes': ['c','cpp','javascript','python','java','zsh','bash','sh','tji','tjp','taskjuggler','tj3','ruby']
     \    },
     \ }
 
@@ -297,6 +349,11 @@ augroup pythonmode
 augroup END
 
 "" }}} python-mode
+" }}}
+" Ruby Bundle {{{
+NeoBundleLazy 'vim-ruby/vim-ruby', {'autoload':{'filetypes':['ruby','eruby']}}
+NeoBundleLazy 'tpope/vim-rails.git', {'autoload':{'filetypes':['ruby','eruby']}}
+NeoBundleLazy 'tpope/vim-bundler.git', {'autoload':{'filetypes':['ruby','eruby']}}
 " }}}
 NeoBundleLazy 'kingbin/vim-arduino', {'autoload':{'filetypes':['arduino']}}
 " Bundle Eclim (Java) {{{
@@ -641,18 +698,26 @@ if has("autocmd")
     au BufNewFile,BufRead *.md set filetype=markdown
     function! s:MDSettings()
         "inoremap <buffer> <Leader>n \note[item]{}<Esc>i
-        noremap <buffer> <Leader>ch :!pandoc
-                    \ --template ~/Documents/Templates/beamer.tpl
-                    \ --from markdown "%" -t beamer -o "%<.pdf"<CR>
-        noremap <buffer> <Leader>cl :!pandoc
-                    \ --template ~/Documents/Templates/latex.tpl
+
+        PandocTemplate save specs pdf --atx-headers --chapters --template ~/Documents/Templates/document.tpl.latex
+        PandocTemplate save letter pdf --atx-headers --chapters --template ~/Documents/Templates/letter.tpl.latex
+
+        " nnoremap <buffer> <Leader>cs :Pandoc! #specs
+        " nnoremap <buffer> <Leader>cl :Pandoc! #letter
+
+        " noremap <buffer> <Leader>cp :!pandoc
+        "             \ --template ~/Documents/Templates/beamer.tpl.latex
+        "             \ --from markdown "%" -t beamer -o "%<.pdf"<CR>
+        noremap <buffer> <Leader>cd :!pandoc --atx-headers --chapters
+                    \ --template ~/Documents/Templates/document.tpl.latex
                     \ --from markdown "%" -t latex -o "%<.pdf"<CR>
-        noremap <buffer> <Leader>cL :!pandoc
-                    \ --template ~/Documents/Templates/lettre.tpl
-                    \ --from markdown "%" -t latex -o "%<.pdf"<CR>
-        noremap <buffer> <Leader>ch :!pandoc
-                    \ --template ~/Documents/Templates/html.tpl
-                    \ --from markdown "%" -t html -o "%<.html"<CR>
+
+        noremap <buffer> <Leader>cl :!pandoc --atx-headers
+                     \ --template ~/Documents/Templates/lettre.tpl.latex
+                     \ --from markdown "%" -t latex -o "%<.pdf"<CR>
+        " noremap <buffer> <Leader>ch :!pandoc --atx-headers
+        "             \ --template ~/Documents/Templates/html.tpl.html
+        "             \ --from markdown "%" -t html -o "%<.html"<CR>
         noremap <buffer> <Leader>cv :!qlmanage -p "%<.pdf" 2>&1 >/dev/null &<CR>
         noremap <buffer> <Leader>co :!open -a Preview "%<.pdf" 2>&1 >/dev/null &<CR>
     endfunction
@@ -661,8 +726,20 @@ if has("autocmd")
       au!
       au CursorHold *.md update
       " for markdown texts: adds a line of = under h1 titles
-      au FileType markdown nnoremap <leader>h1 yypVr=
-      au FileType markdown nnoremap <leader>h2 yypVr-
+      au FileType markdown set noswapfile
+      au FileType markdown nmap <leader>st :TOC<CR>
+      au FileType markdown nmap ,] <Plug>VimwikiFollowLink
+      au FileType markdown vmap ,] <Plug>VimwikiNormalizeLinkVisualCR
+      au FileType markdown nmap ,[ <Plug>VimwikiGoBackLink
+      au FileType markdown nmap g] <Plug>VimwikiFollowLink
+      au FileType markdown vmap g] <Plug>VimwikiNormalizeLinkVisualCR
+      au FileType markdown nmap g[ <Plug>VimwikiGoBackLink
+      au FileType markdown nmap g[ <Plug>VimwikiGoBackLink
+      au FileType markdown nmap <Leader>wn <Plug>VimwikiNextLink
+      au FileType markdown nmap <Leader>wp <Plug>VimwikiPrevLink
+
+      "au BufRead,BufNewFile *.md setfiletype markdown
+      au FileType markdown :call <SID>MDSettings()
     augroup END
     " }}}
     " Mail {{{
@@ -675,15 +752,9 @@ if has("autocmd")
     augroup shell
       au!
       au BufWritePost *.sh :!chmod u+x <afile>
-      au FileType markdown set noswapfile
       au BufWritePost * if getline(1) =~ "^#!/bin/[a-z]*sh" | silent !chmod u+x <afile> | endif
       au BufEnter *.sh if getline(1) == "" | :call setline(1, "#!/bin/sh") | endif
       au BufEnter *.sh let g:is_posix = 1
-      au FileType markdown nmap <C-]> <Plug>VimwikiFollowLink
-      au FileType markdown vmap <C-]> <Plug>VimwikiNormalizeLinkVisualCR
-      au FileType markdown nmap <C-[> <Plug>VimwikiGoBackLink
-      au BufRead,BufNewFile *.md setfiletype markdown
-      au FileType markdown :call <SID>MDSettings()
     augroup END
     " }}}
     " Python {{{
@@ -693,6 +764,18 @@ if has("autocmd")
     au BufEnter *.py if getline(1) == "" | :call setline(1, "#!/usr/bin/env python") | endif
     au BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class,with
     augroup END
+    " }}}
+    " Ruby {{{
+    "autocmd FileType ruby,eruby setl omnifunc=syntaxcompelete#Complete
+    autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
+    autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
+    autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
+    autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
+    autocmd FileType ruby,eruby set expandtab tabstop=2 shiftwidth=2 softtabstop=2
+    autocmd FileType ruby,eruby set foldmethod=syntax
+    " }}}
+    " TaskJuggler {{{
+    autocmd FileType tji,tjp,taskjuggler,tj3 let g:ycm_collect_identifiers_from_tags_files = 1
     " }}}
     " Javascript {{{
     function! JavaScriptFold()
@@ -732,8 +815,9 @@ if has("autocmd")
     " }}}
     " Scala {{{
     augroup scala
-        au!
-        au FileType scala set smartindent
+      au!
+      au FileType scala set smartindent
+      au FileType scala set expandtab tabstop=2 shiftwidth=2 softtabstop=2
     augroup END
     " }}}
     " Java {{{
@@ -810,10 +894,10 @@ if has("autocmd")
 """ }}}
 " vimrc {{{
     augroup vimrc
-    au BufReadPre $MYVIMRC setlocal foldmethod=marker
-    au BufReadPre $MYVIMRC setlocal ft=vim
-    au BufWinEnter $MYVIMRC if &fdm == 'indent' | setlocal foldmethod=manual | endif
-    au BufWritePost $MYVIMRC source $MYVIMRC
+    au BufReadPre $MYVIMRC,$HOME/.vim/vimrc,$HOME/.vimrc setlocal foldmethod=marker
+    au BufReadPre $MYVIMRC,$HOME/.vim/vimrc,$HOME/.vimrc setlocal ft=vim
+    au BufWinEnter $MYVIMRC,$HOME/.vim/vimrc,$HOME/.vimrc if &fdm == 'indent' | setlocal foldmethod=manual | endif
+    au BufWritePost $MYVIMRC,$HOME/.vim/vimrc,$HOME/.vimrc source $MYVIMRC
     augroup END
 " }}}
 
