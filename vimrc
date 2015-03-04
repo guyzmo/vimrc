@@ -262,13 +262,17 @@ NeoBundleLazy 'kchmck/vim-coffee-script', {'autoload':{'filetypes':['coffee']}}
 NeoBundleLazy 'derekwyatt/vim-scala', {'autoload':{'filetypes':['scala']}}
 " NeoBundleLazy 'jelera/vim-javascript-syntax', {'autoload':{'filetypes':['javascript']}}
 " Bundle YouCompleteMe {{{
+let g:neobundle#install_process_timeout = 1800
 NeoBundleLazy 'Valloric/YouCompleteMe', {
     \ 'build' : {
-    \     'mac' : 'bash install.sh',
-    \     'unix' : 'bash install.sh',
+     \     'mac' : './install.sh --clang-completer --system-libclang',
+     \     'unix' : './install.sh --clang-completer --system-libclang',
+     \     'windows' : './install.sh --clang-completer --system-libclang',
+     \     'cygwin' : './install.sh --clang-completer --system-libclang'
     \    },
     \ 'autoload': {
-    \     'filetypes': ['c','cpp','javascript','python','java','zsh','bash','sh','tji','tjp','taskjuggler','tj3','ruby']
+    \     'filetypes': ['c','cpp','javascript','python','java','zsh',
+    \                   'bash','sh','tji','tjp','taskjuggler','tj3','ruby']
     \    },
     \ }
 
@@ -276,7 +280,7 @@ let g:ycm_add_preview_to_completeopt = 1
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_key_list_select_completion = ['<C>n']
 let g:ycm_key_list_previous_completion = ['<C>-p']
-nnoremap gsd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+nnoremap gsd :YcmCompleter GoTo<CR>
 nnoremap gsD :YcmCompleter GoToDefinitionElseDeclaration<CR>
 " }}}
 " Python {{{
