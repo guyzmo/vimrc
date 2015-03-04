@@ -176,7 +176,7 @@ let g:calendar_weeknm = 5
 " }}}
 " VIM Wiki {{{
 NeoBundleLazy 'vimwiki/vimwiki', {
-            \   'augroup': 'markdown', 
+            \   'augroup': 'markdown',
             \   'autoload': {
             \     'filetypes': ['markdown', 'mkd', 'vimwiki', 'pandoc']
             \   }
@@ -214,13 +214,13 @@ function! XOpen(file)
 endfunction
 
 NeoBundleLazy 'vim-pandoc/vim-pandoc', {
-            \   'augroup': 'markdown', 
+            \   'augroup': 'markdown',
             \   'autoload': {
             \     'filetypes': ['markdown', 'mkd', 'vimwiki', 'pandoc']
             \   }
             \ }
 NeoBundleLazy 'vim-pandoc/vim-pandoc-syntax', {
-            \   'augroup': 'markdown', 
+            \   'augroup': 'markdown',
             \   'autoload': {
             \     'filetypes': ['markdown', 'mkd', 'vimwiki', 'pandoc']
             \   }
