@@ -23,6 +23,17 @@ runtime ftplugin/man.vim
 "   ~/.local/vim/swapfiles
 "   ~/.local/vim/undofiles
 
+" check and build .local directories
+if !!finddir(".local/vim/bundle", $HOME)
+    call mkdir ($HOME . "/.local/vim/bundle", "p")
+endif
+if !!finddir(".local/vim/undofiles", $HOME)
+    call mkdir ($HOME . "/.local/vim/undofiles", "p")
+endif
+if !!finddir(".local/vim/swapfiles", $HOME)
+    call mkdir ($HOME . "/.local/vim/swapfiles", "p")
+endif
+
 " NeoBundle setup {{{
 filetype off
 
