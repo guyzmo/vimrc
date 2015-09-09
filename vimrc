@@ -284,9 +284,9 @@ augroup pythonmode
     au FileType python let g:pymode_lint_signs = 1                           "  Place error signs
     au FileType python let g:pymode_lint_minheight = 3                       "  Minimal height of pylint error window
     au FileType python let g:pymode_lint_maxheight = 6                       "  Maximal height of pylint error window
-    au FileType python let g:pymode_rope = 1                                 "  Load rope plugin
-    au FileType python let g:pymode_rope_auto_project = 1                    "  Auto create and open ropeproject
-    au FileType python let g:pymode_rope_enable_autoimport = 1               "  Enable autoimport
+    au FileType python let g:pymode_rope = 0                                 "  Load rope plugin
+    au FileType python let g:pymode_rope_auto_project = 0                    "  Auto create and open ropeproject
+    au FileType python let g:pymode_rope_enable_autoimport = 0               "  Enable autoimport
 
     au FileType python let g:pymode_folding = 1                                       "  Enable python folding
     au FileType python let g:pymode_motion = 1
@@ -311,18 +311,18 @@ augroup pythonmode
     au FileType python let g:pymode_syntax_slow_sync = 0                              "  For fast machines
 
     au FileType python " Auto generate global cache
-    au FileType python let g:pymode_rope_autoimport_generate = 1
+    au FileType python let g:pymode_rope_autoimport_generate = 0
     au FileType python let g:pymode_rope_autoimport_underlineds = 0
-    au FileType python let g:pymode_rope_codeassist_maxfixes = 10
-    au FileType python let g:pymode_rope_sorted_completions = 1
-    au FileType python let g:pymode_rope_extended_complete = 1
+    au FileType python let g:pymode_rope_codeassist_maxfixes = 0
+    au FileType python let g:pymode_rope_sorted_completions = 0
+    au FileType python let g:pymode_rope_extended_complete = 0
     au FileType python let g:pymode_rope_autoimport_modules = ["os","shutil","datetime","sys"]
-    au FileType python let g:pymode_rope_confirm_saving = 1
+    au FileType python let g:pymode_rope_confirm_saving = 0
     au FileType python let g:pymode_rope_global_prefix = "<C-x>p"
     au FileType python let g:pymode_rope_local_prefix = "<Leader>PR"
     au FileType python map <Leader>rh :help RopeKeys<CR>
-    au FileType python let g:pymode_rope_vim_completion = 1
-    au FileType python let g:pymode_rope_guess_project = 1
+    au FileType python let g:pymode_rope_vim_completion = 0
+    au FileType python let g:pymode_rope_guess_project = 0
     au FileType python let g:pymode_rope_goto_def_newwin = ""
     au FileType python let g:pymode_rope_always_show_complete_menu = 0
 
