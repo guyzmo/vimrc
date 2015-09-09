@@ -13,7 +13,7 @@ set pastetoggle=<F3>
 runtime macros/justify.vim
 runtime ftplugin/man.vim
 
-" Bundles {{{
+" Bundles {{{1
 
 " for better synchronization, I have only:
 "   ~/.vim/vimrc
@@ -34,31 +34,29 @@ if !!finddir(".local/vim/swapfiles", $HOME)
     call mkdir ($HOME . "/.local/vim/swapfiles", "p")
 endif
 
-" NeoBundle setup {{{
+" NeoBundle setup {{{2
 filetype off
 
 set runtimepath+=~/.vim/neobundle.vim/
 call neobundle#begin(expand('~/.local/vim/bundle'))
 NeoBundleFetch 'Shougo/neobundle.vim'
 
-" }}}
 
 " Bundles
 
 "" General bundles
 
-" Bundle VimProc {{{
+" Bundle VimProc {{{2
 
 NeoBundle 'Shougo/vimproc.vim', {
-    \ 'build' : {
-    \     'windows' : 'make -f make_mingw32.mak',
-    \     'cygwin' : 'make -f make_cygwin.mak',
-    \     'mac' : 'make -f make_mac.mak',
-    \     'unix' : 'make -f make_unix.mak',
-    \    },
-    \ }
-" }}}
-" Bundle Unite {{{
+            \ 'build' : {
+            \     'windows' : 'make -f make_mingw32.mak',
+            \     'cygwin' : 'make -f make_cygwin.mak',
+            \     'mac' : 'make -f make_mac.mak',
+            \     'unix' : 'make -f make_unix.mak',
+            \    },
+            \ }
+" Bundle Unite {{{2
 NeoBundle 'Shougo/Unite.vim'
 let g:unite_source_history_yank_enable = 1
 nnoremap <leader>bl :<C-u>Unite -buffer-name=buffers -start-insert buffer<cr>
@@ -71,45 +69,39 @@ NeoBundle 'soh335/unite-qflist'
 nnoremap <leader>ql  :<C-u>Unite -buffer-name=quickfix qflist<cr>
 
 "call unite#filters#matcher_default#use(['matcher_fuzzy']) " XXX not working
-" }}}
-" Bundle GrepCommands {{{
+" Bundle GrepCommands {{{2
 NeoBundle 'vim-scripts/GrepCommands'
 nnoremap <leader>bg<space> :BufGrep<CR>
 nnoremap <leader>bg :BufGrep //<Left>
-" }}}
-" bundle Airline {{{
+" bundle Airline {{{2
 let g:airline_theme = 'wombat'
 let g:airline_powerline_fonts = 1 " I did compile the updated fonts!
 NeoBundle 'bling/vim-airline'
-" }}}
 NeoBundle 'moll/vim-bbye'
 NeoBundle 'godlygeek/tabular'
-" vim commentary {{{
+" vim commentary {{{2
 NeoBundle 'tpope/vim-commentary'
-" }}}
 NeoBundle 'tpope/vim-git'
-" Bundle Fugitive {{{
+" Bundle Fugitive {{{2
 NeoBundle 'tpope/vim-fugitive'
 map <Leader>gw :Gwrite<CR>
 map <Leader>gm :Grename<CR>
 map <Leader>gb :Gblame<CR>
 
 if has('gui_running')
-  if has('macunix')
-    command! CI !PWD=%:p:h gitx &
-  elseif has('unix')
-    command! CI !git-cola -r %:p:h &
-  endif
-  map <Leader>gc :CI<CR>
+    if has('macunix')
+        command! CI !PWD=%:p:h gitx &
+    elseif has('unix')
+        command! CI !git-cola -r %:p:h &
+    endif
+    map <Leader>gc :CI<CR>
 else
-  map <Leader>gc :Gcommit<CR>
+    map <Leader>gc :Gcommit<CR>
 endif
 
-" }}}
-" Bundle GUndo {{{
+" Bundle GUndo {{{2
 NeoBundle 'sjl/gundo.vim'
 nnoremap U :GundoToggle<CR>
-" }}}
 "NeoBundle 'vim-scripts/showmarks--Politz'
 NeoBundle 'tomtom/quickfixsigns_vim'
 NeoBundle 'tmhedberg/matchit'
@@ -117,11 +109,10 @@ NeoBundle 'tpope/vim-surround'
 NeoBundle 'tpope/vim-repeat'
 "NeoBundle 'msanders/snipmate.vim'
 NeoBundle 'reinh/vim-makegreen'
-" TaskList {{{
+" TaskList {{{2
 NeoBundle 'vim-scripts/TaskList.vim'
 map <leader>T <Plug>TaskList
-" }}}
-" Bundle Syntastic {{{
+" Bundle Syntastic {{{2
 NeoBundleLazy 'scrooloose/syntastic', {'autoload':{'filetypes':['python','javascript','cpp','c','ruby']}}
 let g:syntastic_enable_signs=1
 let g:syntastic_auto_jump=0
@@ -131,23 +122,20 @@ let g:syntastic_warning_symbol='⚠'
 let g:syntastic_style_error_symbol="✗"
 let g:syntastic_style_warning_symbol="⚑"
 let g:syntastic_mode_map = { 'mode': 'active',
-                               \ 'active_filetypes': ['javascript','ruby'],
-                               \ 'passive_filetypes': ['python', 'cpp', 'c'] }
+            \ 'active_filetypes': ['javascript','ruby'],
+            \ 'passive_filetypes': ['python', 'cpp', 'c'] }
 map <Leader>CT :SyntasticToggleMode<CR>
-" }}}
-" Bundle vim-slime {{{
+" Bundle vim-slime {{{2
 """ Plugin to send selection or paragraph to screen session
 NeoBundle 'jpalardy/vim-slime'
 let g:slime_paste_file = "$HOME/.local/vim/.slime_paste"
 let g:slime_target = "screen"
-" }}}
-" Bundle Rainbow parentheses {{{
+" Bundle Rainbow parentheses {{{2
 let g:rainbow_active = 1
 let g:rainbow_operators = 1
 let g:rainbow_guifgs = ['RoyalBlue3', 'DarkOrange3', 'FireBrick3', 'Green1', 'DodgerBlue3', 'OrangeRed3', 'DeepPink3', 'SkyBlue3']
 NeoBundle 'oblitum/rainbow'
-" }}}
-" Bundle CamelCaseMotion {{{
+" Bundle CamelCaseMotion {{{2
 map <silent> -w <Plug>CamelCaseMotion_w
 map <silent> -b <Plug>CamelCaseMotion_b
 map <silent> -e <Plug>CamelCaseMotion_e
@@ -164,17 +152,15 @@ map <silent> <C-Right> <Plug>CamelCaseMotion_e
 map <silent> <C-Left> <Plug>CamelCaseMotion_b
 
 NeoBundle 'bkad/CamelCaseMotion'
-" }}}
 
-" Markdown bundles {{{
+" Markdown bundles {{{2
 
-" VIM Calendar {{{
+" VIM Calendar {{{2
 NeoBundleLazy 'mattn/calendar-vim', {'autoload':{'filetypes':['markdown']}}
 let g:calendar_keys = {'close': 'q', 'do_action': '<CR>', 'goto_today': 't', 'show_help': '?', 'redisplay': 'r', 'goto_next_month': '<', 'goto_prev_month': '>', 'goto_next_year': '+', 'goto_prev_year': '-'}
 let g:calendar_monday = 1
 let g:calendar_weeknm = 5
-" }}}
-" VIM Wiki {{{
+" VIM Wiki {{{2
 NeoBundleLazy 'vimwiki/vimwiki', {
             \   'augroup': 'markdown',
             \   'autoload': {
@@ -194,9 +180,8 @@ let g:vimwiki_folding = ''
 " let g:vimwiki_ext2syntax = {'.md': 'markdown',
 "             \ '.mkd': 'markdown',
 "             \ '.wiki': 'media'}
-" }}}
 
-" Vim pandoc {{{
+" Vim pandoc {{{2
 let g:pandoc#folding#fold_yaml=1
 let g:pandoc#folding#level=4
 let g:pandoc#folding#level=4
@@ -225,56 +210,53 @@ NeoBundleLazy 'vim-pandoc/vim-pandoc-syntax', {
             \     'filetypes': ['markdown', 'mkd', 'vimwiki', 'pandoc']
             \   }
             \ }
-" }}}
 
-" }}}
 
 " Project Management
 
-" Bundle Task Juggler {{{
+" Bundle Task Juggler {{{2
 
 NeoBundle 'guyzmo/vim-taskjuggler', {
-    \  'build' : {
-    \    'mac': 'sh install.sh',
-    \    'unix': 'sh install.sh'
-    \  },
-    \  'autoload': {
-    \    'filetypes': ['tji', 'tjp', 'taskjuggler', 'tj3']
-    \  }
-    \ }
+            \  'build' : {
+            \    'mac': 'sh install.sh',
+            \    'unix': 'sh install.sh'
+            \  },
+            \  'autoload': {
+            \    'filetypes': ['tji', 'tjp', 'taskjuggler', 'tj3']
+            \  }
+            \ }
 
-" }}}
 
 " Language specific bundles
 
 NeoBundle 'vim-scripts/filetype.vim'
 NeoBundleLazy 'vim-scripts/applescript.vim', {
-    \ 'autoload': {
-    \   'filetypes': ['applescript']
-    \   }
-    \ }
+            \ 'autoload': {
+            \   'filetypes': ['applescript']
+            \   }
+            \ }
 NeoBundleLazy 'Shougo/unite-outline', {
-    \ 'autoload': {
-    \   'filetypes': ['c','cpp','javascript','python','ruby','java','zsh','bash','sh']
-    \   }
-    \ }
+            \ 'autoload': {
+            \   'filetypes': ['c','cpp','javascript','python','ruby','java','zsh','bash','sh']
+            \   }
+            \ }
 NeoBundleLazy 'kchmck/vim-coffee-script', {'autoload':{'filetypes':['coffee']}}
 NeoBundleLazy 'derekwyatt/vim-scala', {'autoload':{'filetypes':['scala']}}
 " NeoBundleLazy 'jelera/vim-javascript-syntax', {'autoload':{'filetypes':['javascript']}}
-" Bundle YouCompleteMe {{{
-let g:neobundle#install_process_timeout = 1800
-NeoBundleLazy 'Valloric/YouCompleteMe', {
-    \ 'build' : {
-     \     'mac' : './install.sh --clang-completer --system-libclang',
-     \     'unix' : './install.sh --clang-completer --system-libclang',
-     \     'windows' : './install.sh --clang-completer --system-libclang',
-     \     'cygwin' : './install.sh --clang-completer --system-libclang'
-    \    },
-    \ 'autoload': {
-    \     'filetypes': ['c','cpp','javascript','python','java','zsh',
-    \                   'bash','sh','tji','tjp','taskjuggler','tj3','ruby']
-    \    },
-    \ }
+" Bundle YouCompleteMe {{{2
+" let g:neobundle#install_process_timeout = 1800
+" NeoBundleLazy 'Valloric/YouCompleteMe', {
+"     \ 'build' : {
+"      \     'mac' : './install.sh --clang-completer --system-libclang',
+"      \     'unix' : './install.sh --clang-completer --system-libclang',
+"      \     'windows' : './install.sh --clang-completer --system-libclang',
+"      \     'cygwin' : './install.sh --clang-completer --system-libclang'
+"     \    },
+"     \ 'autoload': {
+"     \     'filetypes': ['c','cpp','javascript','python','java','zsh',
+"     \                   'bash','sh','tji','tjp','taskjuggler','tj3','ruby']
+"     \    },
+"     \ }
 
 let g:ycm_add_preview_to_completeopt = 1
 let g:ycm_autoclose_preview_window_after_completion = 1
@@ -282,11 +264,10 @@ let g:ycm_key_list_select_completion = ['<C>n']
 let g:ycm_key_list_previous_completion = ['<C>-p']
 nnoremap gsd :YcmCompleter GoTo<CR>
 nnoremap gsD :YcmCompleter GoToDefinitionElseDeclaration<CR>
-" }}}
-" Python {{{
+" Python {{{2
 NeoBundleLazy 'mkomitee/vim-gf-python', {'autoload':{'filetypes':['python']}}
 " http://vimawesome.com/plugin/python-mode
-" Bundle Python mode {{{
+" Bundle Python mode {{{3
 NeoBundleLazy 'klen/python-mode', {'autoload':{'filetypes':['python']}}
 " :help ropevim.txt
 
@@ -363,34 +344,28 @@ augroup pythonmode
     " au FileType python map <Leader>RTe <Esc>:Pytest error<CR>
 augroup END
 
-"" }}} python-mode
-" }}}
-" Ruby Bundle {{{
+" Ruby Bundle {{{3
 NeoBundleLazy 'vim-ruby/vim-ruby', {'autoload':{'filetypes':['ruby','eruby']}}
 NeoBundleLazy 'tpope/vim-rails.git', {'autoload':{'filetypes':['ruby','eruby']}}
 NeoBundleLazy 'tpope/vim-bundler.git', {'autoload':{'filetypes':['ruby','eruby']}}
-" }}}
 NeoBundleLazy 'kingbin/vim-arduino', {'autoload':{'filetypes':['arduino']}}
 " Bundle Eclim (Java) {{{
 NeoBundleLazy 'ervandew/eclim', {'autoload':{'filetypes':['java']}}
 " 'open' on OSX will open the url in the default browser without issue
 let g:EclimBrowser='open'
 let g:EclimCompletionMethod = 'omnifunc'
-" }}}
 
 "
 
-" NeoBundle Prologue {{{
+" NeoBundle Prologue {{{2
 call neobundle#end()
 
 filetype plugin indent on     " required!
 
 NeoBundleCheck
 
-" }}}
 
-""" }}}
-" Editing behaviour {{{
+" Editing behaviour {{{1
 
 " we use bash.. no no, I dont want
 set shell=zsh
@@ -465,8 +440,7 @@ set joinspaces
 set wildmenu
 set wildignore=.svn,CVS,.git,*.o,*.a,*.class,*.mo,*.la,*.so,*.obj,*.swp,*.jpg,*.png,*.xpm,*.gif
 
-""" }}}
-" Editor's interface {{{
+" Editor's interface {{{1
 
 set cursorline
 set cursorcolumn
@@ -519,8 +493,7 @@ set history=200
 "set makeprg=jikes -nowarn -Xstdout +E %
 "set errorformat=%f:%l:%c:%*\d:%*\d:%*\s%m
 
-""" }}}
-" X11 interaction {{{
+" X11 interaction {{{1
 
 "" all my old favorites ;-)
 "set guifont=Monospace\ 8
@@ -539,35 +512,34 @@ set guicursor+=n-v-c:blinkon0
 set guicursor+=i:blinkwait10
 
 if !has('gui_running')
-  set nocursorcolumn
-  " show which mode we're in
-  set showmode
-  set t_Co=16
-  set t_Sf=[3%dm
-  set t_Sb=[4%dm
-  set mouse=a
-  set ttymouse=xterm
-  set statusline=%t[%{strlen(&fenc)?&fenc:'none'},%{&ff}]%h%m%r%y%=%c,%l/%L\ %P\ %{fugitive#statusline()}
-  if &term =~ "xterm-debian" || &term =~ "xterm-xfree86" || &term =~ "xterm"
+    set nocursorcolumn
+    " show which mode we're in
+    set showmode
     set t_Co=16
-    set t_Sf=^[[3%dm
-    set t_Sb=^[[4%dm
-  endif
+    set t_Sf=[3%dm
+    set t_Sb=[4%dm
+    set mouse=a
+    set ttymouse=xterm
+    set statusline=%t[%{strlen(&fenc)?&fenc:'none'},%{&ff}]%h%m%r%y%=%c,%l/%L\ %P\ %{fugitive#statusline()}
+    if &term =~ "xterm-debian" || &term =~ "xterm-xfree86" || &term =~ "xterm"
+        set t_Co=16
+        set t_Sf=^[[3%dm
+        set t_Sb=^[[4%dm
+    endif
 else
-  if has('macunix')
-    set guifont=Menlo\ for\ Powerline:h7
-    set transparency=10
-  else
-    set guifont=Menlo\ for\ Powerline\ 10
-  endif
+    if has('macunix')
+        set guifont=Menlo\ for\ Powerline:h7
+        set transparency=10
+    else
+        set guifont=Menlo\ for\ Powerline\ 10
+    endif
 
-  " show which mode we're in
-  set noshowmode
-  set t_Co=16
+    " show which mode we're in
+    set noshowmode
+    set t_Co=16
 endif
 
-    """ }}}
-" Mappings {{{
+" Mappings {{{1
 
 " Yank current line in register y and run it as an ex command
 nnoremap <Leader>!e "yyy@y
@@ -697,8 +669,7 @@ nnoremap <leader>s<space> :call StripTrailingWhitespace()<CR>
 "nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
 
 
-" }}}
-" AutoCommands {{{
+" AutoCommands {{{1
 filetype plugin on
 filetype plugin indent on
 
@@ -708,7 +679,7 @@ if has("autocmd")
     au BufNewFile,BufRead  modprobe.conf    set syntax=modconf
     au BufWinLeave * call clearmatches()
 
-    " Markdown {{{
+    " Markdown {{{2
     " http://code.google.com/p/vimwiki/issues/detail?id=384
     au BufNewFile,BufRead *.md set filetype=markdown
     function! s:MDSettings()
@@ -756,14 +727,12 @@ if has("autocmd")
       "au BufRead,BufNewFile *.md setfiletype markdown
       au FileType markdown :call <SID>MDSettings()
     augroup END
-    " }}}
-    " Mail {{{
+    " Mail {{{2
     augroup mail
       au!
       "au BufRead /tmp/mutt* source /home/guyzmo/.vim/after/ftplugin/yaposting.vim
     augroup END
-    " }}}
-    " Shell files {{{
+    " Shell files {{{2
     augroup shell
       au!
       au BufWritePost *.sh :!chmod u+x <afile>
@@ -771,16 +740,14 @@ if has("autocmd")
       au BufEnter *.sh if getline(1) == "" | :call setline(1, "#!/bin/sh") | endif
       au BufEnter *.sh let g:is_posix = 1
     augroup END
-    " }}}
-    " Python {{{
+    " Python {{{2
     augroup python
     au!
     au FileType python nnoremap <leader>ft Vatzf
     au BufEnter *.py if getline(1) == "" | :call setline(1, "#!/usr/bin/env python") | endif
     au BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class,with
     augroup END
-    " }}}
-    " Ruby {{{
+    " Ruby {{{2
     "autocmd FileType ruby,eruby setl omnifunc=syntaxcompelete#Complete
     autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
     autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
@@ -788,11 +755,9 @@ if has("autocmd")
     autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
     autocmd FileType ruby,eruby set expandtab tabstop=2 shiftwidth=2 softtabstop=2
     autocmd FileType ruby,eruby set foldmethod=syntax
-    " }}}
-    " TaskJuggler {{{
+    " TaskJuggler {{{2
     autocmd FileType tji,tjp,taskjuggler,tj3 let g:ycm_collect_identifiers_from_tags_files = 1
-    " }}}
-    " Javascript {{{
+    " Javascript {{{2
     function! JavaScriptFold()
         setl foldmethod=syntax
         setl foldlevelstart=1
@@ -811,8 +776,7 @@ if has("autocmd")
         au FileType javascript call JavaScriptFold()
         "au FileType javascript setl fen
     augroup END
-    " }}}
-    " for HTML texts {{{
+    " for HTML texts {{{2
     augroup html
         au!
         au FileType html nnoremap <leader>ft Vatzf
@@ -821,41 +785,35 @@ if has("autocmd")
         au FileType html let html_ignore_folding = 1
         au FileType html let html_use_encoding = 1
     augroup END
-    " }}}
-    " for CSS texts, CSS sorting {{{
+    " for CSS texts, CSS sorting {{{2
     augroup css
         au!
         au FileType css nnoremap <leader>S ?{<CR>jV/^\s*\}?$<CR>k:sort<CR>:noh<CR>
     augroup END
-    " }}}
-    " Scala {{{
+    " Scala {{{2
     augroup scala
       au!
       au FileType scala set smartindent
       au FileType scala set expandtab tabstop=2 shiftwidth=2 softtabstop=2
     augroup END
-    " }}}
-    " Java {{{
+    " Java {{{2
     augroup java
         au!
         au FileType java set smartindent
     augroup END
-    " }}}
-    " Coffee script {{{
+    " Coffee script {{{2
     augroup coffee
         au!
         au FileType coffee 'vim-coffee-script'
         au FileType coffee set smartindent
     augroup END
-    " }}}
-    " ChangeLog {{{
+    " ChangeLog {{{2
     augroup changelog
     au!
     au FileType changelog runtime ftplugin/changelog.vim
     au FileType let g:changelog_username = 'Guyzmo <guyzmo@m0g.net>'
     augroup END
-    "}}}
-" C Files options {{{
+" C Files options {{{2
     augroup cfiletypedetect
         au!
         au BufNewFile,BufRead *.aadl    setf aadl
@@ -881,8 +839,7 @@ if has("autocmd")
         autocmd BufRead *.c,*.h set formatoptions=croql cindent comments=sr:/*,mb:*,el:*/,://
     augroup END
 
-    " }}}
-" bzip2 options {{{
+" bzip2 options {{{2
     augroup bzip2
     " Remove all bzip2 autocommands
     au!
@@ -906,19 +863,16 @@ if has("autocmd")
     autocmd FileAppendPost                *.bz2 !mv <afile> <afile>:r
     autocmd FileAppendPost                *.bz2 !bzip2 -9 --repetitive-best <afile>:r
     augroup END
-""" }}}
-" vimrc {{{
+" vimrc {{{2
     augroup vimrc
     au BufReadPre $MYVIMRC,$HOME/.vim/vimrc,$HOME/.vimrc setlocal foldmethod=marker
     au BufReadPre $MYVIMRC,$HOME/.vim/vimrc,$HOME/.vimrc setlocal ft=vim
     au BufWinEnter $MYVIMRC,$HOME/.vim/vimrc,$HOME/.vimrc if &fdm == 'indent' | setlocal foldmethod=manual | endif
     au BufWritePost $MYVIMRC,$HOME/.vim/vimrc,$HOME/.vimrc source $MYVIMRC
     augroup END
-" }}}
 
 endif " has ("autocmd")
-" }}}
-"Syntax highlighting {{{
+"Syntax highlighting {{{1
 
 " color scheme
 colorscheme murphy
@@ -929,16 +883,15 @@ hi Folded                         ctermfg=Cyan  ctermbg=0    guifg=Cyan    guibg
 hi FoldColumn                     ctermfg=Cyan  ctermbg=0    guifg=Cyan    guibg=grey12
 hi SignColumn      term=standout  ctermfg=11    ctermbg=8    guifg=Cyan    guibg=#222222
 hi Pmenu                                        ctermbg=Grey               guibg=DarkSlateGrey
-hi NonText                        ctermfg=8                  guifg=#111155
 hi SpecialKey                     ctermfg=8                  guifg=#111155
 hi CursorLine      term=underline                                          guibg=Grey5
 hi CursorColumn    term=reverse                                            guibg=Grey5
 hi ColorColumn     term=reverse                 ctermbg=4                  guibg=#250000
 hi RedundantSpaces term=standout                ctermbg=red                guibg=red
+hi NonText                        ctermfg=8                  guifg=#111155
 hi TrailingSpaces  term=standout                ctermfg=red                guifg=red
 
 call matchadd('TrailingSpaces', '\s\s*$')
 call matchadd('NonText', '$')
 call matchadd('NonText', '	')
 
-"""}}}
