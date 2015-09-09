@@ -153,6 +153,10 @@ map <silent> <C-Left> <Plug>CamelCaseMotion_b
 
 NeoBundle 'bkad/CamelCaseMotion'
 
+" Bundle Editor Config {{{2
+
+NeoBundle 'editorconfig/editorconfig-vim'
+
 " Markdown bundles {{{2
 
 " VIM Calendar {{{2
