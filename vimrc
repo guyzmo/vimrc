@@ -115,6 +115,17 @@ NeoBundle 'reinh/vim-makegreen'
 " TaskList {{{2
 NeoBundle 'vim-scripts/TaskList.vim'
 map <leader>T <Plug>TaskList
+" EnhancedJumps {{{2
+nmap <Leader>o  <Plug>EnhancedJumpsRemoteOlder
+nmap <Leader>i  <Plug>EnhancedJumpsRemoteNewer 
+nmap <Plug>DisableEnhancedJumpsOlder <Plug>EnhancedJumpsOlder
+nmap <Plug>DisableEnhancedJumpsNewer <Plug>EnhancedJumpsNewer
+nmap <Plug>DisableEnhancedJumpsLocalOlder  <Plug>EnhancedJumpsLocalOlder
+nmap <Plug>DisableEnhancedJumpsLocalNewer  <Plug>EnhancedJumpsLocalNewer
+nmap <Plug>DisableEnhancedJumpsFarFallbackChangeNewer  <Plug>EnhancedJumpsFarFallbackChangeNewer
+nmap <Plug>DisableEnhancedJumpsFarFallbackChangeOlder  <Plug>EnhancedJumpsFarFallbackChangeOlder
+NeoBundle 'RobertAudi/ingo-library'
+NeoBundle 'vim-scripts/EnhancedJumps'
 " Bundle Syntastic {{{2
 NeoBundleLazy 'scrooloose/syntastic', {'autoload':{'filetypes':['python','javascript','cpp','c','ruby']}}
 let g:syntastic_enable_signs=1
