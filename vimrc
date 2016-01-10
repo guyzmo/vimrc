@@ -164,6 +164,10 @@ NeoBundle 'tpope/vim-abolish'
 
 NeoBundle 'editorconfig/editorconfig-vim'
 
+" Bundle Sunburst colorscheme
+
+NeoBundle 'zanloy/vim-colors-sunburst'
+
 " Markdown bundles {{{2
 
 " VIM Calendar {{{2
@@ -886,10 +890,13 @@ endif " has ("autocmd")
 "Syntax highlighting {{{1
 
 " color scheme
-colorscheme murphy
+" colorscheme murphy
+colorscheme sunburst
 
 " i hate cyan comments :)
-hi Comment                        ctermfg=Black ctermbg=8    guifg=Gray80  guibg=grey12
+hi Comment                        ctermfg=Black ctermbg=8    guifg=Grey80  guibg=grey12
+"hi Normal                                                    guifg=white
+"hi Constant                                                  guifg=lightgreen
 hi Folded                         ctermfg=Cyan  ctermbg=0    guifg=Cyan    guibg=grey12
 hi FoldColumn                     ctermfg=Cyan  ctermbg=0    guifg=Cyan    guibg=grey12
 hi SignColumn      term=standout  ctermfg=11    ctermbg=8    guifg=Cyan    guibg=#222222
