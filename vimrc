@@ -625,6 +625,11 @@ nnoremap <Leader>lp :lprev<CR>
 nnoremap <Leader>lo :lopen<CR>
 nnoremap <Leader>lc :lclose<CR>
 
+" fold mappings
+nnoremap <Leader>fmm :set foldmethod=marker<CR>
+nnoremap <Leader>fms :set foldmethod=syntax<CR>
+nnoremap <Leader>fmi :set foldmethod=indent<CR>
+
 "   Edit another file in the same directory as the current file
 "   uses expression to extract path from current file's path
 "  (thanks Douglas Potts) [obsoleted by Unite bundle]
