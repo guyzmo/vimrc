@@ -158,6 +158,7 @@ map <silent> <C-Right> <Plug>CamelCaseMotion_e
 map <silent> <C-Left> <Plug>CamelCaseMotion_b
 
 NeoBundle 'bkad/CamelCaseMotion'
+NeoBundle 'tpope/vim-abolish'
 
 " Bundle Editor Config {{{2
 
