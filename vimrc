@@ -139,9 +139,9 @@ let g:rainbow_operators = 1
 let g:rainbow_guifgs = ['RoyalBlue3', 'DarkOrange3', 'FireBrick3', 'Green1', 'DodgerBlue3', 'OrangeRed3', 'DeepPink3', 'SkyBlue3']
 NeoBundle 'oblitum/rainbow'
 " Bundle CamelCaseMotion {{{2
-map <silent> -w <Plug>CamelCaseMotion_w
-map <silent> -b <Plug>CamelCaseMotion_b
-map <silent> -e <Plug>CamelCaseMotion_e
+"map <silent> w <Plug>CamelCaseMotion_w
+map <silent> b <Plug>CamelCaseMotion_b
+map <silent> e <Plug>CamelCaseMotion_e
 omap <silent> i_ <Plug>CamelCaseMotion_iw
 xmap <silent> i_ <Plug>CamelCaseMotion_iw
 omap <silent> i- <Plug>CamelCaseMotion_iw
