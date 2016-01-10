@@ -598,10 +598,8 @@ nnoremap <Leader>p :bprev<CR>
 "nmap <Leader>l :ls<CR>
 
 nnoremap <Leader>ba :badd
-" nmap <Leader>bd :bdel<CR>
-"nmap <Leader>bd <Plug>Kwbd
-nnoremap <Leader>bc :Bdelete<CR>
-nnoremap <Leader>bd :bdelete<CR>
+nnoremap <Leader>bc :Bdelete<CR> " do not close window
+nnoremap <Leader>bd :bdelete<CR> " close window
 nnoremap <Leader>b1 :b1<CR>
 nnoremap <Leader>b2 :b2<CR>
 nnoremap <Leader>b3 :b3<CR>
