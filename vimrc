@@ -130,6 +130,9 @@ let g:syntastic_mode_map = { 'mode': 'active',
 map <Leader>CT :SyntasticToggleMode<CR>
 " Bundle vim-slime {{{2
 """ Plugin to send selection or paragraph to screen session
+xmap <leader>s <Plug>SlimeRegionSend
+nmap <leader>s <Plug>SlimeMotionSend
+nmap <leader>sc <Plug>SlimeConfig
 NeoBundle 'jpalardy/vim-slime'
 let g:slime_paste_file = "$HOME/.local/vim/.slime_paste"
 let g:slime_target = "screen"
