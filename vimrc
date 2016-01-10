@@ -110,7 +110,7 @@ NeoBundle 'tpope/vim-repeat'
 "NeoBundle 'msanders/snipmate.vim'
 NeoBundle 'kana/vim-operator-user'
 NeoBundle 'kana/vim-operator-replace'
-nmap _ <Plug>(operator-replace)
+nmap - <Plug>(operator-replace)
 NeoBundle 'reinh/vim-makegreen'
 " TaskList {{{2
 NeoBundle 'vim-scripts/TaskList.vim'
