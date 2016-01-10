@@ -59,7 +59,10 @@ NeoBundle 'Shougo/vimproc.vim', {
 " Bundle Unite {{{2
 NeoBundle 'Shougo/Unite.vim'
 let g:unite_source_history_yank_enable = 1
+ " show buffer list
 nnoremap <leader>bl :<C-u>Unite -buffer-name=buffers -start-insert buffer<cr>
+" switch to alternate buffer
+nnoremap <Leader>bb :<C-u>Unite -buffer-name=buffers -start-insert buffer<cr><cr>
 " close buffer list when escaping in normal mode
 autocmd FileType unite nmap <buffer> <nowait> <esc> <Plug>(unite_exit)
 nnoremap <leader>t  :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/async:!<cr>
