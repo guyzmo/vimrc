@@ -105,7 +105,7 @@ if has('gui_running')
     if has('macunix')
         command! CI !PWD=%:p:h gitx &
     elseif has('unix')
-        command! CI !git-cola -r %:p:h &
+        command! CI !gitg --activity commit %:p:h
     endif
     map <Leader>gc :CI<CR>
 else
