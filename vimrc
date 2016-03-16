@@ -937,7 +937,8 @@ hi CursorColumn    term=reverse                                            guibg
 hi ColorColumn     term=reverse                 ctermbg=4                  guibg=#250000
 hi RedundantSpaces term=standout                ctermbg=red                guibg=red
 hi NonText                        ctermfg=8                  guifg=#111155
-hi TrailingSpaces  term=standout                ctermfg=red                guifg=red
+hi TrailingSpaces  term=standout                ctermfg=red  guifg=red
+hi Search                                                                  guibg=#666600
 
 call matchadd('TrailingSpaces', '\s\s*$')
 call matchadd('NonText', '$')
