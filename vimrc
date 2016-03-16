@@ -81,7 +81,8 @@ nnoremap <leader>bg :BufGrep //<Left>
 " bundle Airline {{{2
 let g:airline_theme = 'wombat'
 let g:airline_powerline_fonts = 1 " I did compile the updated fonts!
-NeoBundle 'bling/vim-airline'
+NeoBundle 'vim-airline/vim-airline-themes'
+NeoBundle 'vim-airline/vim-airline'
 NeoBundle 'moll/vim-bbye'
 NeoBundle 'godlygeek/tabular'
 " vim commentary {{{2
