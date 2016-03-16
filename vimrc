@@ -300,6 +300,8 @@ let g:ycm_key_list_select_completion = ['<C>n']
 let g:ycm_key_list_previous_completion = ['<C>-p']
 nnoremap gsd :YcmCompleter GoTo<CR>
 nnoremap gsD :YcmCompleter GoToDefinitionElseDeclaration<CR>
+" Bundle HTML5 {{{2
+NeoBundleLazy 'othree/html5.vim', {'autoload':{'filetypes':['html']}}
 " Python {{{2
 NeoBundleLazy 'mkomitee/vim-gf-python', {'autoload':{'filetypes':['python']}}
 " http://vimawesome.com/plugin/python-mode
