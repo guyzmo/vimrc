@@ -360,7 +360,7 @@ augroup pythonmode
     au FileType python let g:pymode_rope_completion_bind = '<C-Space>'
     " autoimport
     au FileType python let g:pymode_rope_autoimport = 1
-    au FileType python let g:pymode_rope_autoimport_modules = ['os', 'sys', 'shutil', 'datetime', 'time', 'subprocess'])
+    au FileType python let g:pymode_rope_autoimport_modules = ['os', 'sys', 'shutil', 'datetime', 'time', 'subprocess']
     au FileType python let g:pymode_rope_autoimport_import_after_complete = 1
     " go to definition
     au FileType python let g:pymode_rope_goto_definition_bind = 'gd'
