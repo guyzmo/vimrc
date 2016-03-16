@@ -98,6 +98,8 @@ map <Leader>gw :Gwrite<CR>
 map <Leader>gm :Grename<CR>
 map <Leader>gb :Gblame<CR>
 
+set diffopt=filler,vertical
+
 if has('gui_running')
     if has('macunix')
         command! CI !PWD=%:p:h gitx &
