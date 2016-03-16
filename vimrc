@@ -265,6 +265,7 @@ NeoBundle 'guyzmo/vim-taskjuggler', {
 
 " Language specific bundles
 
+NeoBundleLazy 'MarcWeber/vim-addon-nix', {'autoload':{'filetypes':['nix']}}
 NeoBundle 'vim-scripts/filetype.vim'
 NeoBundleLazy 'vim-scripts/applescript.vim', {
             \ 'autoload': {
@@ -731,6 +732,11 @@ if has("autocmd")
     au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif
     au BufNewFile,BufRead  modprobe.conf    set syntax=modconf
     au BufWinLeave * call clearmatches()
+
+    " nix {{{2
+    augroup nix
+      autocmd BufRead,BufNewFile *.nix setlocal ft=nix
+    augroup END
 
     " Markdown {{{2
     " http://code.google.com/p/vimwiki/issues/detail?id=384
