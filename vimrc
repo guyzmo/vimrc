@@ -311,66 +311,74 @@ NeoBundleLazy 'klen/python-mode', {'autoload':{'filetypes':['python']}}
 
 augroup pythonmode
     au!
-    au FileType python let g:pymode_doc = 1                                  "  Load show documentation plugin
-    au FileType python let g:pymode_run = 1                                  "  Load run code plugin
-    au FileType python let g:pymode_lint_checker = 'pyflakes,pep8'
-    au FileType python let g:pymode_lint_ignore = 'E501,E121,E126,E127,E128' "  Skip errors and warnings (E.g. 'E501,W002', 'E2,W' (Skip all Warnings and Errors startswith E2) and etc..)
-    au FileType python let g:pymode_lint_select = ''                         "  E.g. 'E4,W' Select errors and warnings
-    au FileType python let g:pymode_lint_cwindow = 1                         "  Auto open cwindow if errors be finded
-    au FileType python let g:pymode_lint_jump = 0                            "  Auto jump on first error
-    au FileType python let g:pymode_lint_hold = 1                            "  Hold cursor in current window when quickfix is open
-    au FileType python let g:pymode_lint_signs = 1                           "  Place error signs
-    au FileType python let g:pymode_lint_minheight = 3                       "  Minimal height of pylint error window
-    au FileType python let g:pymode_lint_maxheight = 6                       "  Maximal height of pylint error window
-    au FileType python let g:pymode_rope = 0                                 "  Load rope plugin
-    au FileType python let g:pymode_rope_auto_project = 0                    "  Auto create and open ropeproject
-    au FileType python let g:pymode_rope_enable_autoimport = 0               "  Enable autoimport
-
-    au FileType python let g:pymode_folding = 1                                       "  Enable python folding
+    au FileType python let g:pymode = 1
+    au FileType python let g:pymode_warnings = 0
+    au FileType python let g:pymode_trim_whitespaces = 1
+    au FileType python let g:pymode_options = 1
+    au FileType python let g:pymode_options_max_line_length = 80
+    au FileType python let g:pymode_options_colorcolumn = 1
+    au FileType python let g:pymode_options_colorcolumn = 1
+    au FileType python let g:pymode_python = 'python3'
+    au FileType python let g:pymode_indent = 1
+    au FileType python let g:pymode_folding = 1
     au FileType python let g:pymode_motion = 1
-    au FileType python let g:pymode_virtualenv = 1                                    "  Auto fix vim python paths if virtualenv enabled
-    au FileType python let g:pymode_paths = []                                        "  Additional python paths
-    au FileType python let g:pymode_breakpoint = 1                                    "  Load breakpoints plugin
-    au FileType python let g:pymode_utils_whitespaces = 1                             "  Autoremove unused whitespaces
-    au FileType python let g:pymode_indent = 1                                        "  Enable pymode indentation
-    au FileType python let g:pymode_options = 1                                       "  Set default pymode python options
-    au FileType python let g:pymode_syntax = 1                                        "  Enable pymode's custom syntax highlighting
-    au FileType python let g:pymode_syntax_all = 1                                    "  Enable all python highlightings
-    au FileType python let g:pymode_syntax_print_as_function = 1                      "  Highlight 'print' as function
-    au FileType python let g:pymode_syntax_indent_errors = g:pymode_syntax_all        "  Highlight indentation errors
-    au FileType python let g:pymode_syntax_space_errors = g:pymode_syntax_all         "  Highlight trailing spaces
-    au FileType python let g:pymode_syntax_string_formatting = g:pymode_syntax_all    "  Highlight string formatting
-    au FileType python let g:pymode_syntax_string_format = g:pymode_syntax_all        "  Highlight str.format syntax
-    au FileType python let g:pymode_syntax_string_templates = g:pymode_syntax_all     "  Highlight string.Template syntax
-    au FileType python let g:pymode_syntax_doctests = g:pymode_syntax_all             "  Highlight doc-tests
-    au FileType python let g:pymode_syntax_builtin_objs = g:pymode_syntax_all         "  Highlight builtin objects (__doc__, self, etc)
-    au FileType python let g:pymode_syntax_builtin_funcs = g:pymode_syntax_all        "  Highlight builtin functions
-    au FileType python let g:pymode_syntax_highlight_exceptions = g:pymode_syntax_all "  Highlight exceptions
-    au FileType python let g:pymode_syntax_slow_sync = 0                              "  For fast machines
-
-    au FileType python " Auto generate global cache
-    au FileType python let g:pymode_rope_autoimport_generate = 0
-    au FileType python let g:pymode_rope_autoimport_underlineds = 0
-    au FileType python let g:pymode_rope_codeassist_maxfixes = 0
-    au FileType python let g:pymode_rope_sorted_completions = 0
-    au FileType python let g:pymode_rope_extended_complete = 0
-    au FileType python let g:pymode_rope_autoimport_modules = ["os","shutil","datetime","sys"]
-    au FileType python let g:pymode_rope_confirm_saving = 0
-    au FileType python let g:pymode_rope_global_prefix = "<C-x>p"
-    au FileType python let g:pymode_rope_local_prefix = "<Leader>PR"
-    au FileType python map <Leader>rh :help RopeKeys<CR>
-    au FileType python let g:pymode_rope_vim_completion = 0
-    au FileType python let g:pymode_rope_guess_project = 0
-    au FileType python let g:pymode_rope_goto_def_newwin = ""
-    au FileType python let g:pymode_rope_always_show_complete_menu = 0
-
-    au FileType python let g:pymode_doc_key = '<leader>PK'                   "  Keyor show python documentation
-    au FileType python let g:pymode_run_key = '<leader>PX'                   "  Key for run python code
-    au FileType python let g:pymode_breakpoint_key = '<leader>PB'                     "  Key for set/unset breakpoint
-
-    " au FileType python " rope
-    " au FileType python map gd :RopeGotoDefinition<CR>
-    " au FileType python map <leader>Pr :RopeRename<CR>
+    au FileType python let g:pymode_virtualenv = 0 " XXX virtualenv is disabled!
+    " run and debug
+    au FileType python let g:pymode_run = 1
+    au FileType python let g:pymode_run_bind = '<leader>r'
+    au FileType python let g:pymode_breakpoint = 1
+    au FileType python let g:pymode_breakpoint_bind = '<leader>b'
+    " linting
+    au FileType python let g:pymode_lint = 1
+    au FileType python let g:pymode_lint_on_write = 1
+    au FileType python let g:pymode_lint_unmodified = 0
+    au FileType python let g:pymode_lint_on_fly = 0
+    au FileType python let g:pymode_lint_message = 1
+    au FileType python let g:pymode_lint_checkers = ['pyflakes', 'pep8', 'mccabe']
+    au FileType python let g:pymode_lint_ignore = 'E501,E121,E126,E127,E128' "  Skip errors and warnings (E.g. 'E501,W002', 'E2,W' (Skip all Warnings and Errors startswith E2) and etc..)
+    " au FileType python let g:pymode_lint_select = "E501,W0011,W430"
+    au FileType python let g:pymode_lint_cwindow = 1
+    au FileType python let g:pymode_lint_signs = 1
+    " use symbols here XXX
+    au FileType python let g:pymode_lint_todo_symbol = 'WW'
+    au FileType python let g:pymode_lint_comment_symbol = 'CC'
+    au FileType python let g:pymode_lint_visual_symbol = 'RR'
+    au FileType python let g:pymode_lint_error_symbol = 'EE'
+    au FileType python let g:pymode_lint_info_symbol = 'II'
+    au FileType python let g:pymode_lint_pyflakes_symbol = 'FF'
+    " ROPE stuff
+    au FileType python let g:pymode_rope = 1
+    au FileType python let g:pymode_rope_lookup_project = 0
+    au FileType python let g:pymode_rope_show_doc_bind = ',K'
+    au FileType python let g:pymode_rope_regenerate_on_write = 1 " XXX save action!
+    " completion
+    au FileType python let g:pymode_rope_completion = 1
+    au FileType python let g:pymode_rope_complete_on_dot = 1
+    au FileType python let g:pymode_rope_completion_bind = '<C-Space>'
+    " autoimport
+    au FileType python let g:pymode_rope_autoimport = 1
+    au FileType python let g:pymode_rope_autoimport_modules = ['os', 'sys', 'shutil', 'datetime', 'time', 'subprocess'])
+    au FileType python let g:pymode_rope_autoimport_import_after_complete = 1
+    " go to definition
+    au FileType python let g:pymode_rope_goto_definition_bind = 'gd'
+    au FileType python let g:pymode_rope_goto_definition_cmd = '' " could be new or vnew, but replacing buffer is as good!
+    " refactoring
+    let g:pymode_rope_rename_module_bind = ',rm'
+    let g:pymode_rope_organize_imports_bind = ',rio'
+    let g:pymode_rope_autoimport_bind = ',ria'
+    let g:pymode_rope_module_to_package_bind = ',rmp'
+    let g:pymode_rope_extract_method_bind = ',rem'
+    let g:pymode_rope_extract_variable_bind = ',rev'
+    let g:pymode_rope_use_function_bind = ',ruf'
+    let g:pymode_rope_move_bind = ',rmm'
+    let g:pymode_rope_change_signature_bind = ',rcs'
+    au FileType python map <Leader>ru :PymodeRopeUndo
+    au FileType python map <Leader>r<C-r> :PymodeRopeRedo
+    " syntax
+    let g:pymode_syntax = 1
+    let g:pymode_syntax_slow_sync = 1
+    let g:pymode_syntax_all = 1
+    let g:pymode_syntax_print_as_function = 1
 
     " au FileType python " Execute the tests
     " au FileType python map <Leader>RTf <Esc>:Pytest file<CR>
