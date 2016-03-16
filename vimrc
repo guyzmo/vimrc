@@ -688,6 +688,10 @@ nnoremap <expr> zB 'zb' . winheight(0)/4 . '<c-e>'
 " Reselect pasted text
 nnoremap <leader>v V`]
 
+map <leader>?h :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+            \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+            \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+
 au FileType python set omnifunc=pythoncomplete#Complete
 set completeopt=menuone,longest,preview
 
