@@ -87,6 +87,11 @@ NeoBundle 'godlygeek/tabular'
 " vim commentary {{{2
 NeoBundle 'tpope/vim-commentary'
 NeoBundle 'tpope/vim-git'
+
+" vim sleuth (detect indent) {{{2
+
+NeoBundle 'tpope/vim-sleuth'
+
 " Bundle Fugitive {{{2
 NeoBundle 'tpope/vim-fugitive'
 map <Leader>gw :Gwrite<CR>
