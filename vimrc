@@ -93,11 +93,16 @@ NeoBundle 'tpope/vim-git'
 
 NeoBundle 'tpope/vim-sleuth'
 
+" Bundle vimagit {{{2
+
+NeoBundle 'jreybert/vimagit'
+map <Leader>gg :Magit<CR>
+
 " Bundle Fugitive {{{2
-NeoBundle 'tpope/vim-fugitive'
-map <Leader>gw :Gwrite<CR>
-map <Leader>gm :Grename<CR>
-map <Leader>gb :Gblame<CR>
+" NeoBundle 'tpope/vim-fugitive'
+" map <Leader>gw :Gwrite<CR>
+" map <Leader>gm :Grename<CR>
+" map <Leader>gb :Gblame<CR>
 
 set diffopt=filler,vertical
 
