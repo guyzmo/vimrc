@@ -601,6 +601,12 @@ endif
 
 " Mappings {{{1
 
+" Map :wv to :w for when I mistype
+cnoreabbrev <expr> wv ((getcmdtype() is# ':' && getcmdline() is# 'wv')?('w'):('wv'))
+
+nmap Q @@
+nmap ,/ :noh<CR>
+
 " Yank current line in register y and run it as an ex command
 nnoremap <Leader>!e "yyy@y
 " Yank current line in register y and run it as a python command
