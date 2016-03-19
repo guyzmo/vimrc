@@ -189,6 +189,11 @@ map <silent> <C-Left> <Plug>CamelCaseMotion_b
 NeoBundle 'bkad/CamelCaseMotion'
 NeoBundle 'tpope/vim-abolish'
 
+" Bundle Large File
+
+let g:LargeFile = 512
+NeoBundle 'vim-scripts/LargeFile'
+
 " Bundle Editor Config {{{2
 
 NeoBundle 'editorconfig/editorconfig-vim'
