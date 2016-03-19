@@ -937,10 +937,9 @@ if has("autocmd")
     augroup END
 " vimrc {{{2
     augroup vimrc
-    au BufReadPre   $MYVIMRC,$HOME/.config/vim-config/vimrc,$HOME/.vim/vimrc,$HOME/.vimrc setlocal foldmethod=marker
-    au BufReadPre   $MYVIMRC,$HOME/.config/vim-config/vimrc,$HOME/.vim/vimrc,$HOME/.vimrc setlocal ft=vim
-    au BufWinEnter  $MYVIMRC,$HOME/.config/vim-config/vimrc,$HOME/.vim/vimrc,$HOME/.vimrc if &fdm == 'indent' | setlocal foldmethod=manual | endif
-    au BufWritePost $MYVIMRC,$HOME/.config/vim-config/vimrc,$HOME/.vim/vimrc,$HOME/.vimrc source $MYVIMRC
+    au BufReadPre   vimrc,.vimrc setlocal foldmethod=marker
+    au BufReadPre   vimrc,.vimrc setlocal ft=vim
+    au BufWritePost vimrc,.vimrc source %
     augroup END
 
 endif " has ("autocmd")
