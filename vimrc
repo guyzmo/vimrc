@@ -619,12 +619,12 @@ nnoremap <Leader>!s "yyy:let @y=":!".@y<CR>@y<CR>
 " Tune the cmdline with emacs mode
 nmap \n :setlocal number!<CR>
 nmap \p :set paste!<CR>
-nmap \t2 :set expandtab tabstop=2 shiftwidth=2 softtabstop=2<CR>
-nmap \t4 :set expandtab tabstop=4 shiftwidth=4 softtabstop=4<CR>
-nmap \t8 :set expandtab tabstop=8 shiftwidth=8 softtabstop=4<CR>
-nmap \T2 :set noexpandtab tabstop=2 softtabstop=2 shiftwidth=2<CR>
-nmap \T4 :set noexpandtab tabstop=4 softtabstop=4 shiftwidth=4<CR>
-nmap \T8 :set noexpandtab tabstop=8 softtabstop=8 shiftwidth=8<CR>
+nmap ,t2 :set expandtab tabstop=2 shiftwidth=2 softtabstop=2<CR>
+nmap ,t4 :set expandtab tabstop=4 shiftwidth=4 softtabstop=4<CR>
+nmap ,t8 :set expandtab tabstop=8 shiftwidth=8 softtabstop=4<CR>
+nmap ,T2 :set noexpandtab tabstop=2 softtabstop=2 shiftwidth=2<CR>
+nmap ,T4 :set noexpandtab tabstop=4 softtabstop=4 shiftwidth=4<CR>
+nmap ,T8 :set noexpandtab tabstop=8 softtabstop=8 shiftwidth=8<CR>
 
 nmap <Leader>gr :grep -r  .<left><left>
 " nmap <leader>gv :vimgrep ** | copen <cr>
