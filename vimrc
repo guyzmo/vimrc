@@ -3,429 +3,15 @@
 " Author:      Leon Breedt <leon@obsidian.co.za> (Sat Jul 03 13:02:07 SAST 1999)
 " Author:      G. Lejeune (Sat Jul 17 17:20:17 CET 2000)
 " Author:      PRATZ Bernard <bernard@pratz.net>
-" Last update: Mon Nov 24 17:15:48 GMT 2014
+" Last update: Sun Mar 20 19:23:02 CET 2016
+
+" General behaviour config{{{1 
 
 let mapleader = ","
 let maplocalleader = ","
 set pastetoggle=<F3>
 
-" vim plugins
-runtime macros/justify.vim
-runtime ftplugin/man.vim
-
-" Bundles {{{1
-
-" for better synchronization, I have only:
-"   ~/.vim/vimrc
-"   ~/.vim/neobundle.vim
-" and all the files specific to a machines are within:
-"   ~/.local/vim/bundle
-"   ~/.local/vim/swapfiles
-"   ~/.local/vim/undofiles
-
-" check and build .local directories
-if !!finddir(".local/vim/bundle", $HOME)
-    call mkdir ($HOME . "/.local/vim/bundle", "p")
-endif
-if !!finddir(".local/vim/undofiles", $HOME)
-    call mkdir ($HOME . "/.local/vim/undofiles", "p")
-endif
-if !!finddir(".local/vim/swapfiles", $HOME)
-    call mkdir ($HOME . "/.local/vim/swapfiles", "p")
-endif
-
-" NeoBundle setup {{{2
-filetype off
-
-set runtimepath+=~/.vim/neobundle.vim/
-call neobundle#begin(expand('~/.local/vim/bundle'))
-NeoBundleFetch 'Shougo/neobundle.vim'
-
-
-" Bundles
-
-"" General bundles
-
-" Bundle VimProc {{{2
-
-NeoBundle 'Shougo/vimproc.vim', {
-            \ 'build' : {
-            \     'windows' : 'make -f make_mingw32.mak',
-            \     'cygwin' : 'make -f make_cygwin.mak',
-            \     'mac' : 'make -f make_mac.mak',
-            \     'unix' : 'make -f make_unix.mak',
-            \    },
-            \ }
-" Bundle Unite {{{2
-NeoBundle 'Shougo/Unite.vim'
-let g:unite_source_history_yank_enable = 1
- " show buffer list
-nnoremap <leader>bl :<C-u>Unite -buffer-name=buffers -start-insert buffer<cr>
-" switch to alternate buffer
-nnoremap <Leader>bb :<C-u>Unite -buffer-name=buffers -start-insert buffer<cr><cr>
-" close buffer list when escaping in normal mode
-autocmd FileType unite nmap <buffer> <nowait> <esc> <Plug>(unite_exit)
-nnoremap <leader>t  :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/async:!<cr>
-nnoremap <leader>f  :<C-u>Unite -no-split -buffer-name=files   -start-insert file<cr>
-nnoremap <leader>bo  :<C-u>Unite -no-split -buffer-name=outline -start-insert outline<cr>
-nnoremap <leader>y  :<C-u>Unite -no-split -buffer-name=yank    history/yank<cr>
-
-NeoBundle 'soh335/unite-qflist'
-nnoremap <leader>ql  :<C-u>Unite -buffer-name=quickfix qflist<cr>
-
-"call unite#filters#matcher_default#use(['matcher_fuzzy']) " XXX not working
-" Bundle GrepCommands {{{2
-NeoBundle 'vim-scripts/GrepCommands'
-nnoremap <leader>bg<space> :BufGrep<CR>
-nnoremap <leader>bg :BufGrep //<Left>
-" bundle Airline {{{2
-let g:airline_theme = 'wombat'
-let g:airline_powerline_fonts = 1 " I did compile the updated fonts!
-NeoBundle 'vim-airline/vim-airline-themes'
-NeoBundle 'vim-airline/vim-airline'
-NeoBundle 'moll/vim-bbye'
-NeoBundle 'godlygeek/tabular'
-" vim commentary {{{2
-NeoBundle 'tpope/vim-commentary'
-NeoBundle 'tpope/vim-git'
-
-" vim sleuth (detect indent) {{{2
-
-NeoBundle 'tpope/vim-sleuth'
-
-" Bundle vimagit {{{2
-
-NeoBundle 'jreybert/vimagit'
-map <Leader>gg :Magit<CR>
-
-" Bundle Fugitive {{{2
-" NeoBundle 'tpope/vim-fugitive'
-" map <Leader>gw :Gwrite<CR>
-" map <Leader>gm :Grename<CR>
-" map <Leader>gb :Gblame<CR>
-
-set diffopt=filler,vertical
-
-if has('gui_running')
-    if has('macunix')
-        command! CI !PWD=%:p:h gitx &
-    elseif has('unix')
-        command! CI !gitg --activity commit %:p:h
-    endif
-    map <Leader>gc :CI<CR>
-else
-    map <Leader>gc :Gcommit<CR>
-endif
-
-" Bundle GUndo {{{2
-NeoBundle 'sjl/gundo.vim'
-nnoremap U :GundoToggle<CR>
-"NeoBundle 'vim-scripts/showmarks--Politz'
-NeoBundle 'tomtom/quickfixsigns_vim'
-NeoBundle 'tmhedberg/matchit'
-NeoBundle 'tpope/vim-surround'
-NeoBundle 'tpope/vim-repeat'
-"NeoBundle 'msanders/snipmate.vim'
-NeoBundle 'kana/vim-operator-user'
-NeoBundle 'kana/vim-operator-replace'
-nmap - <Plug>(operator-replace)
-NeoBundle 'reinh/vim-makegreen'
-" TaskList {{{2
-NeoBundle 'vim-scripts/TaskList.vim'
-map <leader>T <Plug>TaskList
-" EnhancedJumps {{{2
-nmap <Leader>o  <Plug>EnhancedJumpsRemoteOlder
-nmap <Leader>i  <Plug>EnhancedJumpsRemoteNewer 
-nmap <Plug>DisableEnhancedJumpsOlder <Plug>EnhancedJumpsOlder
-nmap <Plug>DisableEnhancedJumpsNewer <Plug>EnhancedJumpsNewer
-nmap <Plug>DisableEnhancedJumpsLocalOlder  <Plug>EnhancedJumpsLocalOlder
-nmap <Plug>DisableEnhancedJumpsLocalNewer  <Plug>EnhancedJumpsLocalNewer
-nmap <Plug>DisableEnhancedJumpsFarFallbackChangeNewer  <Plug>EnhancedJumpsFarFallbackChangeNewer
-nmap <Plug>DisableEnhancedJumpsFarFallbackChangeOlder  <Plug>EnhancedJumpsFarFallbackChangeOlder
-NeoBundle 'RobertAudi/ingo-library'
-NeoBundle 'vim-scripts/EnhancedJumps'
-" Bundle Syntastic {{{2
-NeoBundleLazy 'scrooloose/syntastic', {'autoload':{'filetypes':['python','javascript','cpp','c','ruby']}}
-let g:syntastic_enable_signs=1
-let g:syntastic_auto_jump=0
-let g:syntastic_csslint_ignore="fallback-colors"
-let g:syntastic_error_symbol='✘'
-let g:syntastic_warning_symbol='⚠'
-let g:syntastic_style_error_symbol="✗"
-let g:syntastic_style_warning_symbol="⚑"
-let g:syntastic_mode_map = { 'mode': 'active',
-            \ 'active_filetypes': ['javascript','ruby'],
-            \ 'passive_filetypes': ['python', 'cpp', 'c'] }
-map <Leader>CT :SyntasticToggleMode<CR>
-" Bundle vim-slime {{{2
-""" Plugin to send selection or paragraph to screen session
-xmap <leader>s <Plug>SlimeRegionSend
-nmap <leader>s <Plug>SlimeMotionSend
-nmap <leader>sc <Plug>SlimeConfig
-NeoBundle 'jpalardy/vim-slime'
-let g:slime_paste_file = "$HOME/.local/vim/.slime_paste"
-let g:slime_target = "screen"
-" Bundle Rainbow parentheses {{{2
-let g:rainbow_active = 1
-let g:rainbow_operators = 1
-let g:rainbow_guifgs = ['RoyalBlue3', 'DarkOrange3', 'FireBrick3', 'Green1', 'DodgerBlue3', 'OrangeRed3', 'DeepPink3', 'SkyBlue3']
-NeoBundle 'oblitum/rainbow'
-" Bundle CamelCaseMotion {{{2
-"map <silent> w <Plug>CamelCaseMotion_w
-map <silent> b <Plug>CamelCaseMotion_b
-map <silent> e <Plug>CamelCaseMotion_e
-omap <silent> i_ <Plug>CamelCaseMotion_iw
-xmap <silent> i_ <Plug>CamelCaseMotion_iw
-omap <silent> i- <Plug>CamelCaseMotion_iw
-xmap <silent> i- <Plug>CamelCaseMotion_iw
-omap <silent> ib <Plug>CamelCaseMotion_ib
-xmap <silent> ib <Plug>CamelCaseMotion_ib
-omap <silent> ie <Plug>CamelCaseMotion_ie
-xmap <silent> ie <Plug>CamelCaseMotion_ie
-
-map <silent> <C-Right> <Plug>CamelCaseMotion_e
-map <silent> <C-Left> <Plug>CamelCaseMotion_b
-
-NeoBundle 'bkad/CamelCaseMotion'
-NeoBundle 'tpope/vim-abolish'
-
-" Bundle Large File
-
-let g:LargeFile = 512
-NeoBundle 'vim-scripts/LargeFile'
-
-" Bundle Editor Config {{{2
-
-NeoBundle 'editorconfig/editorconfig-vim'
-
-" Bundle Sunburst colorscheme
-
-NeoBundle 'zanloy/vim-colors-sunburst'
-
-" Markdown bundles {{{2
-
-" VIM Calendar {{{2
-NeoBundleLazy 'mattn/calendar-vim', {'autoload':{'filetypes':['markdown']}}
-let g:calendar_keys = {'close': 'q', 'do_action': '<CR>', 'goto_today': 't', 'show_help': '?', 'redisplay': 'r', 'goto_next_month': '<', 'goto_prev_month': '>', 'goto_next_year': '+', 'goto_prev_year': '-'}
-let g:calendar_monday = 1
-let g:calendar_weeknm = 5
-" VIM Wiki {{{2
-NeoBundleLazy 'vimwiki/vimwiki', {
-            \   'augroup': 'markdown',
-            \   'autoload': {
-            \     'filetypes': ['markdown', 'mkd', 'vimwiki', 'pandoc']
-            \   }
-            \ }
-map <leader>ww :NeoBundleSource vimwiki<CR>:VimwikiIndex<CR>
-let wiki_notes = {}
-let wiki_notes.path = '~/Documents/Perso/Notes/'
-let wiki_notes.html_path = '~/Documents/Perso/Notes/html/'
-let wiki_notes.syntax = 'markdown'
-let wiki_notes.ext = '.md'
-let wiki_notes.auto_export = 1
-let wiki_notes.nested_syntaxes = {'python': 'python', 'c++': 'cpp', 'latex': 'latex'}
-let g:vimwiki_list = [wiki_notes]
-let g:vimwiki_folding = ''
-" let g:vimwiki_ext2syntax = {'.md': 'markdown',
-"             \ '.mkd': 'markdown',
-"             \ '.wiki': 'media'}
-
-" Vim pandoc {{{2
-let g:pandoc#folding#fold_yaml=1
-let g:pandoc#folding#level=4
-let g:pandoc#folding#level=4
-let g:pandoc#custom_open="/usr/bin/open"
-let g:pandoc#default_langs=["english", "french"]
-let g:pandoc#modules#disabled=["bibliographies"]
-let g:pandoc#command#custom_open = "OSXOpen"
-
-function! OSXOpen(file)
-    return "open ". a:file
-endfunction
-
-function! XOpen(file)
-    return "xdg-open ". a:file
-endfunction
-
-NeoBundleLazy 'vim-pandoc/vim-pandoc', {
-            \   'augroup': 'markdown',
-            \   'autoload': {
-            \     'filetypes': ['markdown', 'mkd', 'vimwiki', 'pandoc']
-            \   }
-            \ }
-NeoBundleLazy 'vim-pandoc/vim-pandoc-syntax', {
-            \   'augroup': 'markdown',
-            \   'autoload': {
-            \     'filetypes': ['markdown', 'mkd', 'vimwiki', 'pandoc']
-            \   }
-            \ }
-
-
-" Project Management
-
-" Bundle Task Juggler {{{2
-
-NeoBundle 'guyzmo/vim-taskjuggler', {
-            \  'build' : {
-            \    'mac': 'sh install.sh',
-            \    'unix': 'sh install.sh'
-            \  },
-            \  'autoload': {
-            \    'filetypes': ['tji', 'tjp', 'taskjuggler', 'tj3']
-            \  }
-            \ }
-
-
-" Language specific bundles
-
-NeoBundleLazy 'MarcWeber/vim-addon-nix', {'autoload':{'filetypes':['nix']}}
-NeoBundle 'vim-scripts/filetype.vim'
-NeoBundleLazy 'vim-scripts/applescript.vim', {
-            \ 'autoload': {
-            \   'filetypes': ['applescript']
-            \   }
-            \ }
-NeoBundleLazy 'Shougo/unite-outline', {
-            \ 'autoload': {
-            \   'filetypes': ['c','cpp','javascript','python','ruby','java','zsh','bash','sh']
-            \   }
-            \ }
-NeoBundleLazy 'kchmck/vim-coffee-script', {'autoload':{'filetypes':['coffee']}}
-NeoBundleLazy 'derekwyatt/vim-scala', {'autoload':{'filetypes':['scala']}}
-" NeoBundleLazy 'jelera/vim-javascript-syntax', {'autoload':{'filetypes':['javascript']}}
-" Bundle YouCompleteMe {{{2
-" let g:neobundle#install_process_timeout = 1800
-" NeoBundleLazy 'Valloric/YouCompleteMe', {
-"     \ 'build' : {
-"      \     'mac' : './install.sh --clang-completer --system-libclang',
-"      \     'unix' : './install.sh --clang-completer --system-libclang',
-"      \     'windows' : './install.sh --clang-completer --system-libclang',
-"      \     'cygwin' : './install.sh --clang-completer --system-libclang'
-"     \    },
-"     \ 'autoload': {
-"     \     'filetypes': ['c','cpp','javascript','python','java','zsh',
-"     \                   'bash','sh','tji','tjp','taskjuggler','tj3','ruby']
-"     \    },
-"     \ }
-
-let g:ycm_add_preview_to_completeopt = 1
-let g:ycm_autoclose_preview_window_after_completion = 1
-let g:ycm_key_list_select_completion = ['<C>n']
-let g:ycm_key_list_previous_completion = ['<C>-p']
-nnoremap gsd :YcmCompleter GoTo<CR>
-nnoremap gsD :YcmCompleter GoToDefinitionElseDeclaration<CR>
-" Bundle HTML5 {{{2
-NeoBundleLazy 'othree/html5.vim', {'autoload':{'filetypes':['html']}}
-" Python {{{2
-NeoBundleLazy 'mkomitee/vim-gf-python', {'autoload':{'filetypes':['python']}}
-" http://vimawesome.com/plugin/python-mode
-" Bundle Python mode {{{3
-NeoBundleLazy 'klen/python-mode', {'autoload':{'filetypes':['python']}}
-" :help ropevim.txt
-
-augroup pythonmode
-    au!
-    au FileType python let g:pymode = 1
-    au FileType python let g:pymode_warnings = 0
-    au FileType python let g:pymode_trim_whitespaces = 1
-    au FileType python let g:pymode_options = 1
-    au FileType python let g:pymode_options_max_line_length = 80
-    au FileType python let g:pymode_options_colorcolumn = 1
-    au FileType python let g:pymode_options_colorcolumn = 1
-    au FileType python let g:pymode_python = 'python3'
-    au FileType python let g:pymode_indent = 1
-    au FileType python let g:pymode_folding = 1
-    au FileType python let g:pymode_motion = 1
-    au FileType python let g:pymode_virtualenv = 0 " XXX virtualenv is disabled!
-    " run and debug
-    au FileType python let g:pymode_run = 1
-    au FileType python let g:pymode_run_bind = '<leader>r'
-    au FileType python let g:pymode_breakpoint = 1
-    au FileType python let g:pymode_breakpoint_bind = '<leader>b'
-    " linting
-    au FileType python let g:pymode_lint = 1
-    au FileType python let g:pymode_lint_on_write = 1
-    au FileType python let g:pymode_lint_unmodified = 0
-    au FileType python let g:pymode_lint_on_fly = 0
-    au FileType python let g:pymode_lint_message = 1
-    au FileType python let g:pymode_lint_checkers = ['pyflakes', 'pep8', 'mccabe']
-    au FileType python let g:pymode_lint_ignore = 'E501,E121,E126,E127,E128' "  Skip errors and warnings (E.g. 'E501,W002', 'E2,W' (Skip all Warnings and Errors startswith E2) and etc..)
-    " au FileType python let g:pymode_lint_select = "E501,W0011,W430"
-    au FileType python let g:pymode_lint_cwindow = 1
-    au FileType python let g:pymode_lint_signs = 1
-    " use symbols here XXX
-    au FileType python let g:pymode_lint_todo_symbol = 'WW'
-    au FileType python let g:pymode_lint_comment_symbol = 'CC'
-    au FileType python let g:pymode_lint_visual_symbol = 'RR'
-    au FileType python let g:pymode_lint_error_symbol = 'EE'
-    au FileType python let g:pymode_lint_info_symbol = 'II'
-    au FileType python let g:pymode_lint_pyflakes_symbol = 'FF'
-    " ROPE stuff
-    au FileType python let g:pymode_rope = 1
-    au FileType python let g:pymode_rope_lookup_project = 0
-    au FileType python let g:pymode_rope_show_doc_bind = ',K'
-    au FileType python let g:pymode_rope_regenerate_on_write = 1 " XXX save action!
-    " completion
-    au FileType python let g:pymode_rope_completion = 1
-    au FileType python let g:pymode_rope_complete_on_dot = 1
-    au FileType python let g:pymode_rope_completion_bind = '<C-Space>'
-    " autoimport
-    au FileType python let g:pymode_rope_autoimport = 1
-    au FileType python let g:pymode_rope_autoimport_modules = ['os', 'sys', 'shutil', 'datetime', 'time', 'subprocess']
-    au FileType python let g:pymode_rope_autoimport_import_after_complete = 1
-    " go to definition
-    au FileType python let g:pymode_rope_goto_definition_bind = 'gd'
-    au FileType python let g:pymode_rope_goto_definition_cmd = '' " could be new or vnew, but replacing buffer is as good!
-    " refactoring
-    let g:pymode_rope_rename_module_bind = ',rm'
-    let g:pymode_rope_organize_imports_bind = ',rio'
-    let g:pymode_rope_autoimport_bind = ',ria'
-    let g:pymode_rope_module_to_package_bind = ',rmp'
-    let g:pymode_rope_extract_method_bind = ',rem'
-    let g:pymode_rope_extract_variable_bind = ',rev'
-    let g:pymode_rope_use_function_bind = ',ruf'
-    let g:pymode_rope_move_bind = ',rmm'
-    let g:pymode_rope_change_signature_bind = ',rcs'
-    au FileType python map <Leader>ru :PymodeRopeUndo
-    au FileType python map <Leader>r<C-r> :PymodeRopeRedo
-    " syntax
-    let g:pymode_syntax = 1
-    let g:pymode_syntax_slow_sync = 1
-    let g:pymode_syntax_all = 1
-    let g:pymode_syntax_print_as_function = 1
-
-    " au FileType python " Execute the tests
-    " au FileType python map <Leader>RTf <Esc>:Pytest file<CR>
-    " au FileType python map <Leader>RTc <Esc>:Pytest class<CR>
-    " au FileType python map <Leader>RTm <Esc>:Pytest method<CR>
-    " au FileType python " cycle through test errors
-    " au FileType python map <Leader>RTn <Esc>:Pytest next<CR>
-    " au FileType python map <Leader>RTp <Esc>:Pytest previous<CR>
-    " au FileType python map <Leader>RTe <Esc>:Pytest error<CR>
-augroup END
-
-" Ruby Bundle {{{3
-NeoBundleLazy 'vim-ruby/vim-ruby', {'autoload':{'filetypes':['ruby','eruby']}}
-NeoBundleLazy 'tpope/vim-rails.git', {'autoload':{'filetypes':['ruby','eruby']}}
-NeoBundleLazy 'tpope/vim-bundler.git', {'autoload':{'filetypes':['ruby','eruby']}}
-NeoBundleLazy 'kingbin/vim-arduino', {'autoload':{'filetypes':['arduino']}}
-" Bundle Eclim (Java) {{{
-NeoBundleLazy 'ervandew/eclim', {'autoload':{'filetypes':['java']}}
-" 'open' on OSX will open the url in the default browser without issue
-let g:EclimBrowser='open'
-let g:EclimCompletionMethod = 'omnifunc'
-
-"
-
-" NeoBundle Prologue {{{2
-call neobundle#end()
-
-filetype plugin indent on     " required!
-
-NeoBundleCheck
-
-
-" Editing behaviour {{{1
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 " we use bash.. no no, I dont want
 set shell=zsh
@@ -500,7 +86,420 @@ set joinspaces
 set wildmenu
 set wildignore=.svn,CVS,.git,*.o,*.a,*.class,*.mo,*.la,*.so,*.obj,*.swp,*.jpg,*.png,*.xpm,*.gif
 
-" Editor's interface {{{1
+" {{{1 Locations
+
+" for better synchronization, I have only:
+"   ~/.vim/vimrc
+"   ~/.vim/neobundle.vim
+" and all the files specific to a machines are within:
+"   ~/.local/vim/bundle
+"   ~/.local/vim/swapfiles
+"   ~/.local/vim/undofiles
+
+" check and build .local directories
+if !!finddir(".local/vim/bundle", $HOME)
+    call mkdir ($HOME . "/.local/share/bundle", "p")
+endif
+if !!finddir(".local/vim/undofiles", $HOME)
+    call mkdir ($HOME . "/.local/share/undofiles", "p")
+endif
+if !!finddir(".local/vim/swapfiles", $HOME)
+    call mkdir ($HOME . "/.local/share/swapfiles", "p")
+endif
+
+" swap files
+set directory=~/.local/share/vim/swapfiles
+
+" undo file
+set undofile
+set undodir=~/.local/share/vim/undofiles
+set undolevels=2000
+set history=200
+
+" Vim plugins {{{1
+runtime macros/justify.vim
+runtime ftplugin/man.vim
+
+" Plug setup 
+filetype off
+
+" Plugs {{{2
+call plug#begin('~/.local/share/vim/bundle')
+" General plugins {{{3
+" Plug vim-etherpad {{{4
+
+" Plug 'guyzmo/vim-etherpad', { 'on': 'Etherpad' }
+
+" Plug VimProc {{{4
+
+Plug 'Shougo/vimproc.vim', { 'do' : 'make' }
+
+" Plug Unite {{{4
+
+Plug 'Shougo/Unite.vim'
+let g:unite_source_history_yank_enable = 1
+ " show buffer list
+nnoremap <leader>bl :<C-u>Unite -buffer-name=buffers -start-insert buffer<cr>
+" switch to alternate buffer
+nnoremap <Leader>bb :<C-u>Unite -buffer-name=buffers -start-insert buffer<cr><cr>
+" close buffer list when escaping in normal mode
+autocmd FileType unite nmap <buffer> <nowait> <esc> <Plug>(unite_exit)
+nnoremap <leader>t  :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/async:!<cr>
+nnoremap <leader>f  :<C-u>Unite -no-split -buffer-name=files   -start-insert file<cr>
+nnoremap <leader>bo  :<C-u>Unite -no-split -buffer-name=outline -start-insert outline<cr>
+nnoremap <leader>y  :<C-u>Unite -no-split -buffer-name=yank    history/yank<cr>
+
+Plug 'soh335/unite-qflist'
+nnoremap <leader>ql  :<C-u>Unite -buffer-name=quickfix qflist<cr>
+
+"call unite#filters#matcher_default#use(['matcher_fuzzy']) " XXX not working
+
+" Plug Unite-Outline {{{4
+
+Plug 'Shougo/unite-outline', { 
+            \ 'for': ['c','cpp','javascript','python','ruby','java','zsh','bash','sh']
+            \ }
+" Plug GrepCommands {{{4
+
+Plug 'vim-scripts/GrepCommands'
+
+nnoremap <leader>bg<space> :BufGrep<CR>
+nnoremap <leader>bg :BufGrep //<Left>
+
+" Plug Airline {{{4
+
+let g:airline_theme = 'wombat'
+let g:airline_powerline_fonts = 1 " I did compile the updated fonts!
+Plug 'vim-airline/vim-airline-themes'
+Plug 'vim-airline/vim-airline'
+
+" Plug bbye {{{4
+
+Plug 'moll/vim-bbye'
+
+" Plug easy-align {{{4
+
+Plug 'junegunn/vim-easy-align'
+
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+
+" Plug vim commentary {{{4
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-git'
+
+" Plug vim sleuth (detect indent) {{{4
+
+Plug 'tpope/vim-sleuth'
+
+" Plug GUndo {{{4
+Plug 'sjl/gundo.vim'
+nnoremap U :GundoToggle<CR>
+
+" Plug editing behaviour {{{4
+
+"Plug 'vim-scripts/showmarks--Politz'
+Plug 'tomtom/quickfixsigns_vim'
+Plug 'tmhedberg/matchit'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
+"Plug 'msanders/snipmate.vim'
+Plug 'kana/vim-operator-user'
+Plug 'kana/vim-operator-replace'
+nmap - <Plug>(operator-replace)
+Plug 'reinh/vim-makegreen'
+
+" Plug EnhancedJumps {{{4
+nmap <Leader>o  <Plug>EnhancedJumpsRemoteOlder
+nmap <Leader>i  <Plug>EnhancedJumpsRemoteNewer
+nmap <Plug>DisableEnhancedJumpsOlder <Plug>EnhancedJumpsOlder
+nmap <Plug>DisableEnhancedJumpsNewer <Plug>EnhancedJumpsNewer
+nmap <Plug>DisableEnhancedJumpsLocalOlder  <Plug>EnhancedJumpsLocalOlder
+nmap <Plug>DisableEnhancedJumpsLocalNewer  <Plug>EnhancedJumpsLocalNewer
+nmap <Plug>DisableEnhancedJumpsFarFallbackChangeNewer  <Plug>EnhancedJumpsFarFallbackChangeNewer
+nmap <Plug>DisableEnhancedJumpsFarFallbackChangeOlder  <Plug>EnhancedJumpsFarFallbackChangeOlder
+
+Plug 'vim-scripts/ingo-library' | Plug 'vim-scripts/EnhancedJumps'
+
+" Plug vim-slime {{{4
+""" Plugin to send selection or paragraph to screen session
+xmap <leader>s <Plug>SlimeRegionSend
+nmap <leader>s <Plug>SlimeMotionSend
+nmap <leader>sc <Plug>SlimeConfig
+
+Plug 'jpalardy/vim-slime'
+let g:slime_paste_file = "$HOME/.local/vim/.slime_paste"
+let g:slime_target = "screen"
+
+" Plug Rainbow parentheses {{{4
+
+let g:rainbow_active = 1
+let g:rainbow_operators = 1
+let g:rainbow_guifgs = ['RoyalBlue3', 'DarkOrange3', 'FireBrick3', 'Green1', 'DodgerBlue3', 'OrangeRed3', 'DeepPink3', 'SkyBlue3']
+
+Plug 'oblitum/rainbow'
+
+" Plug CamelCaseMotion {{{4
+"map <silent> w <Plug>CamelCaseMotion_w
+map <silent> b <Plug>CamelCaseMotion_b
+map <silent> e <Plug>CamelCaseMotion_e
+omap <silent> i_ <Plug>CamelCaseMotion_iw
+xmap <silent> i_ <Plug>CamelCaseMotion_iw
+omap <silent> i- <Plug>CamelCaseMotion_iw
+xmap <silent> i- <Plug>CamelCaseMotion_iw
+omap <silent> ib <Plug>CamelCaseMotion_ib
+xmap <silent> ib <Plug>CamelCaseMotion_ib
+omap <silent> ie <Plug>CamelCaseMotion_ie
+xmap <silent> ie <Plug>CamelCaseMotion_ie
+
+map <silent> <C-Right> <Plug>CamelCaseMotion_e
+map <silent> <C-Left> <Plug>CamelCaseMotion_b
+
+Plug 'bkad/CamelCaseMotion'
+
+" Plug abolish {{{4
+
+Plug 'tpope/vim-abolish'
+
+" Plug Large File {{{4
+
+let g:LargeFile = 512
+Plug 'vim-scripts/LargeFile'
+
+" Plug Editor Config {{{4
+
+let g:EditorConfig_exclude_patterns = ['fugitive://.*']
+let g:EditorConfig_exclude_patterns = ['scp://.*']
+let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
+
+Plug 'editorconfig/editorconfig-vim'
+
+" Plug Sunburst colorscheme {{{4
+
+Plug 'zanloy/vim-colors-sunburst'
+
+" Plug vim-test {{{4
+
+let test#strategy = 'neovim'
+Plug 'janko-m/vim-test', {'for': 'python'}
+
+" Plug filetype.vim {{{4
+
+Plug 'vim-scripts/filetype.vim'
+" Git plugs {{{3
+
+" Plug vimagit {{{4
+
+Plug 'jreybert/vimagit'
+map <Leader>gg :Magit<CR>
+
+" Plug Fugitive {{{4
+Plug 'tpope/vim-fugitive'
+map <Leader>gw :Gwrite<CR>
+map <Leader>gm :Grename<CR>
+map <Leader>gb :Gblame<CR>
+
+set diffopt=filler,vertical
+
+if has('gui_running')
+    if has('macunix')
+        command! CI !PWD=%:p:h gitx &
+    elseif has('unix')
+        command! CI !gitg --activity commit %:p:h
+    endif
+    map <Leader>gc :CI<CR>
+else
+    map <Leader>gc :Gcommit<CR>
+endif
+
+" Plug TaskList {{{4
+Plug 'vim-scripts/TaskList.vim'
+map <leader>T <Plug>TaskList
+
+" Development plugins {{{3
+
+" Plug lldb {{{4
+
+Plug 'critiqjo/lldb.nvim'
+
+" Plug vim arguments swap {{{4
+
+Plug 'vim-scripts/swap-parameters'
+
+" Plug DeoPlete {{{4
+
+let g:deoplete#enable_at_startup = 1
+Plug 'Shougo/deoplete.nvim', {
+            \ 'for': ['c','cpp','javascript','python','ruby','java','zsh','bash','sh','vim']
+            \ }
+Plug 'Shougo/neco-vim', { 'for': 'vim' }
+Plug 'Shougo/neoinclude.vim', { 'for': ['c','cpp'] }
+Plug 'Rip-Rip/clang_complete', { 'for': ['c','cpp'] }
+Plug 'zchee/deoplete-jedi', { 'for': 'python' }
+Plug 'carlitux/deoplete-ternjs', { 'for': 'javascript' }
+Plug 'Shougo/context_filetype.vim'
+
+" Plug Syntastic (disabled) {{{4
+" NeoBundleLazy 'scrooloose/syntastic', 
+            " \ {'autoload':
+            " \ {'filetypes':['python','javascript','cpp','c','ruby']}}
+" let g:syntastic_enable_signs=1
+" let g:syntastic_auto_jump=0
+" let g:syntastic_csslint_ignore="fallback-colors"
+" let g:syntastic_error_symbol='✘'
+" let g:syntastic_warning_symbol='⚠'
+" let g:syntastic_style_error_symbol="✗"
+" let g:syntastic_style_warning_symbol="⚑"
+" let g:syntastic_mode_map = { 'mode': 'active',
+            " \ 'active_filetypes': ['javascript','ruby'],
+            " \ 'passive_filetypes': ['python', 'cpp', 'c'] }
+" map <Leader>CT :SyntasticToggleMode<CR>
+
+Plug 'benekastah/neomake', {'for': ['python','javascript','cpp','c','ruby']}
+
+let g:neomake_warning_sign = { 'texthl': 'NeomakeWarning' }
+let g:neomake_error_sign = { 'texthl': 'NeomakeError' }
+let g:neomake_python_enabled_makers = ['pylint', 'pyflakes', 'pep8']
+let g:neomake_javascript_enabled_makers = ['jshint'] 
+
+" Plug YouCompleteMe [disabled] {{{4
+
+" Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
+" Plug 'Valloric/YouCompleteMe', { 'for': 
+"             \                    ['c','cpp','javascript','python','java','zsh',
+"             \                     'bash','sh','tji','tjp','taskjuggler','tj3','ruby'] }
+" autocmd! User YouCompleteMe if !has('vim_starting') | call youcompleteme#Enable() | endif
+
+" let g:ycm_add_preview_to_completeopt = 1
+" let g:ycm_autoclose_preview_window_after_completion = 1
+" let g:ycm_key_list_select_completion = ['<C>n']
+" let g:ycm_key_list_previous_completion = ['<C>-p']
+" nnoremap gsd :YcmCompleter GoTo<CR>
+" nnoremap gsD :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
+
+" Language specific plugins {{{3
+
+" Natural Language {{{4
+
+" ## vim Wordy plug {{{5
+
+let g:wordy#ring = [
+  \   'weak',
+  \   ['being', 'passive-voice', ],
+  \   'business-jargon',
+  \   'weasel',
+  \   'puffery',
+  \   ['problematic', 'redundant', ],
+  \   ['colloquial', 'idiomatic', 'similies', ],
+  \   'art-jargon',
+  \   ['contractions', 'opinion', 'vague-time', 'said-synonyms', ],
+  \ ]
+nnoremap <silent> <Leader>wn :NextWordy<cr>
+if !&wildcharm | set wildcharm=<C-z> | endif
+execute 'nnoremap <leader>wl :Wordy<space>'.nr2char(&wildcharm)
+Plug 'reedes/vim-wordy'
+
+" ## vim word lint plug
+
+" Plug 'wordlint.vim'
+
+" ## Markdown Language  {{{4
+
+" Plug VIM Calendar  {{{5
+let g:calendar_keys = {'close': 'q', 'do_action': '<CR>', 'goto_today': 't', 'show_help': '?', 'redisplay': 'r', 'goto_next_month': '<', 'goto_prev_month': '>', 'goto_next_year': '+', 'goto_prev_year': '-'}
+let g:calendar_monday = 1
+let g:calendar_weeknm = 5
+Plug 'mattn/calendar-vim', {'for':['markdown']}
+
+" Plug VIM Wiki  {{{5
+nnoremap <leader>ww :VimwikiIndex<CR>
+let wiki_notes = {}
+let wiki_notes.path = '~/Documents/Perso/Notes/'
+let wiki_notes.html_path = '~/Documents/Perso/Notes/html/'
+let wiki_notes.syntax = 'markdown'
+let wiki_notes.ext = '.md'
+let wiki_notes.auto_export = 1
+let wiki_notes.nested_syntaxes = {'python': 'python', 'c++': 'cpp', 'latex': 'latex'}
+let g:vimwiki_list = [wiki_notes]
+let g:vimwiki_folding = ''
+" let g:vimwiki_ext2syntax = {'.md': 'markdown',
+"             \ '.mkd': 'markdown',
+"             \ '.wiki': 'media'}
+
+Plug 'vimwiki/vimwiki', {
+            \   'for': ['markdown', 'mkd', 'vimwiki', 'pandoc'],
+            \   'on': 'VimwikiIndex'
+            \ }
+
+" Plug Vim pandoc  {{{5
+
+let g:pandoc#folding#fold_yaml=1
+let g:pandoc#folding#level=4
+let g:pandoc#folding#level=4
+let g:pandoc#custom_open="/usr/bin/open"
+let g:pandoc#default_langs=["english", "french"]
+let g:pandoc#modules#disabled=["bibliographies"]
+let g:pandoc#command#custom_open = "OSXOpen"
+
+function! OSXOpen(file)
+    return "open ". a:file
+endfunction
+
+function! XOpen(file)
+    return "xdg-open ". a:file
+endfunction
+
+Plug 'vim-pandoc/vim-pandoc', {
+            \ 'for': ['markdown', 'mkd', 'vimwiki', 'pandoc']
+            \ }
+Plug 'vim-pandoc/vim-pandoc-syntax', {
+            \ 'for': ['markdown', 'mkd', 'vimwiki', 'pandoc']
+            \ }
+
+" ## Task Juggler Language {{{4
+
+Plug 'guyzmo/vim-taskjuggler', {
+            \  'do' : 'sh install.sh',
+            \  'for': ['tji', 'tjp', 'taskjuggler', 'tj3']
+            \ }
+
+
+" ## Nix Language {{{4
+
+Plug 'MarcWeber/vim-addon-nix', {'for': 'nix'}
+
+
+" ## Applescript Language {{{4
+
+Plug 'vim-scripts/applescript.vim', { 'for': 'applescript' }
+
+
+" ## Coffee Script Language {{{4
+
+Plug 'kchmck/vim-coffee-script', {'for': 'coffee'}
+
+" ## Java Language (Eclim support)  {{{4
+
+Plug 'ervandew/eclim', {'for':['java']}
+" 'open' on OSX will open the url in the default browser without issue
+if has('macunix')
+    let g:EclimBrowser='open'
+else
+    let g:EclimBrowser='xdg-open'
+endif
+let g:EclimCompletionMethod = 'omnifunc'
+
+" Plug Prologue 
+call plug#end()
+
+filetype plugin on
+filetype plugin indent on     " required!
+
+
+" Editor's interface 
 
 set cursorline
 set cursorcolumn
@@ -540,20 +539,11 @@ set hidden
 
 set modelines=0
 
-" swap files
-set directory=~/.local/vim/swapfiles
-
-" undo file
-set undofile
-set undodir=~/.local/vim/undofiles
-set undolevels=2000
-set history=200
-
 "":help quickfix
 "set makeprg=jikes -nowarn -Xstdout +E %
 "set errorformat=%f:%l:%c:%*\d:%*\d:%*\s%m
 
-" X11 interaction {{{1
+" X11 interaction 
 
 "" all my old favorites ;-)
 "set guifont=Monospace\ 8
@@ -561,8 +551,9 @@ set history=200
 "set guifont=DejaVu\ Sans\ Mono:h9.00
 "set guifont=Andale\ Mono:h9
 
-set encoding=utf-8 " Necessary to show Unicode glyphs
-set t_Co=256 " Explicitly tell Vim that the terminal supports 256 colors
+if !has('nvim')
+    set encoding=utf-8 " Necessary to show Unicode glyphs
+endif
 
 highlight Cursor guifg=black guibg=white
 highlight iCursor guifg=white guibg=steelblue
@@ -572,20 +563,28 @@ set guicursor+=n-v-c:blinkon0
 set guicursor+=i:blinkwait10
 
 if !has('gui_running')
-    set nocursorcolumn
     " show which mode we're in
     set showmode
-    set t_Co=16
-    set t_Sf=[3%dm
-    set t_Sb=[4%dm
     set mouse=a
-    set ttymouse=xterm
-    set statusline=%t[%{strlen(&fenc)?&fenc:'none'},%{&ff}]%h%m%r%y%=%c,%l/%L\ %P\ %{fugitive#statusline()}
-    if &term =~ "xterm-debian" || &term =~ "xterm-xfree86" || &term =~ "xterm"
+    if !has('nvim')
+        set nocursorcolumn
+        set ttymouse=xterm
+        if &term =~ "xterm-debian" || &term =~ "xterm-xfree86" || &term =~ "xterm"
+            set t_Co=256 " Explicitly tell Vim that the terminal supports 256 colors
+            set t_Sf=^[[3%dm
+            set t_Sb=^[[4%dm
+        endif
         set t_Co=16
-        set t_Sf=^[[3%dm
-        set t_Sb=^[[4%dm
+        set t_Sf=[3%dm
+        set t_Sb=[4%dm
+    else
+        " neovim does not have gui_running yet
+        " Neovim-qt Guifont command
+        command! -nargs=? Guifont call rpcnotify(0, 'Gui', 'SetFont', "<args>") | let g:Guifont="<args>"
+        " Set the font to DejaVu Sans Mono:h13
+        Guifont Menlo for Powerline:h7
     endif
+    set statusline=%t[%{strlen(&fenc)?&fenc:'none'},%{&ff}]%h%m%r%y%=%c,%l/%L\ %P\ %{fugitive#statusline()}
 else
     if has('macunix')
         set guifont=Menlo\ for\ Powerline:h7
@@ -596,8 +595,123 @@ else
 
     " show which mode we're in
     set noshowmode
-    set t_Co=16
 endif
+
+" ## Scala Language {{{4
+
+Plug 'derekwyatt/vim-scala', {'for': 'scala'}
+
+" ## Javascript Lanuage {{{4
+
+Plug 'jelera/vim-javascript-syntax', {'for':'javascript'}
+Plug 'mxw/vim-jsx', {'for': 'javascript'}
+
+" ## HTML5 Syntax {{{4
+
+Plug 'othree/html5.vim', {'for':['html']}
+
+" ## Python Language {{{4
+
+" ### Plug gf in python {{{5
+
+let g:plug_url_format = 'git@github.com:%s.git'
+Plug 'guyzmo/vim-gf-python', {'for':['python']}
+unlet g:plug_url_format
+
+" ### Plug Python mode [disabled] {{{5
+" http://vimawesome.com/plugin/python-mode
+" Plug 'klen/python-mode', {'for':['python']}
+" :help ropevim.txt
+
+" augroup pythonmode
+"     au!
+"     au FileType python let g:pymode = 1
+"     au FileType python let g:pymode_warnings = 0
+"     au FileType python let g:pymode_trim_whitespaces = 1
+"     au FileType python let g:pymode_options = 1
+"     au FileType python let g:pymode_options_max_line_length = 80
+"     au FileType python let g:pymode_options_colorcolumn = 1
+"     au FileType python let g:pymode_options_colorcolumn = 1
+"     au FileType python let g:pymode_python = 'python3'
+"     au FileType python let g:pymode_indent = 1
+"     au FileType python let g:pymode_folding = 1
+"     au FileType python let g:pymode_motion = 1
+"     au FileType python let g:pymode_virtualenv = 0 " XXX virtualenv is disabled!
+"     " run and debug
+"     au FileType python let g:pymode_run = 1
+"     au FileType python let g:pymode_run_bind = '<leader>r'
+"     au FileType python let g:pymode_breakpoint = 1
+"     au FileType python let g:pymode_breakpoint_bind = '<leader>b'
+"     " linting
+"     au FileType python let g:pymode_lint = 1
+"     au FileType python let g:pymode_lint_on_write = 1
+"     au FileType python let g:pymode_lint_unmodified = 0
+"     au FileType python let g:pymode_lint_on_fly = 0
+"     au FileType python let g:pymode_lint_message = 1
+"     au FileType python let g:pymode_lint_checkers = ['pyflakes', 'pep8', 'mccabe']
+"     au FileType python let g:pymode_lint_ignore = 'E501,E121,E126,E127,E128' "  Skip errors and warnings (E.g. 'E501,W002', 'E2,W' (Skip all Warnings and Errors startswith E2) and etc..)
+"     " au FileType python let g:pymode_lint_select = "E501,W0011,W430"
+"     au FileType python let g:pymode_lint_cwindow = 1
+"     au FileType python let g:pymode_lint_signs = 1
+"     " use symbols here XXX
+"     au FileType python let g:pymode_lint_todo_symbol = 'WW'
+"     au FileType python let g:pymode_lint_comment_symbol = 'CC'
+"     au FileType python let g:pymode_lint_visual_symbol = 'RR'
+"     au FileType python let g:pymode_lint_error_symbol = 'EE'
+"     au FileType python let g:pymode_lint_info_symbol = 'II'
+"     au FileType python let g:pymode_lint_pyflakes_symbol = 'FF'
+"     " ROPE stuff
+"     au FileType python let g:pymode_rope = 1
+"     au FileType python let g:pymode_rope_lookup_project = 0
+"     au FileType python let g:pymode_rope_show_doc_bind = ',K'
+"     au FileType python let g:pymode_rope_regenerate_on_write = 1 " XXX save action!
+"     " completion
+"     au FileType python let g:pymode_rope_completion = 1
+"     au FileType python let g:pymode_rope_complete_on_dot = 1
+"     au FileType python let g:pymode_rope_completion_bind = '<C-Space>'
+"     " autoimport
+"     au FileType python let g:pymode_rope_autoimport = 1
+"     au FileType python let g:pymode_rope_autoimport_modules = ['os', 'sys', 'shutil', 'datetime', 'time', 'subprocess']
+"     au FileType python let g:pymode_rope_autoimport_import_after_complete = 1
+"     " go to definition
+"     au FileType python let g:pymode_rope_goto_definition_bind = 'gd'
+"     au FileType python let g:pymode_rope_goto_definition_cmd = '' " could be new or vnew, but replacing buffer is as good!
+"     " refactoring
+"     au FileType python let g:pymode_rope_rename_module_bind = ',rm'
+"     au FileType python let g:pymode_rope_organize_imports_bind = ',rio'
+"     au FileType python let g:pymode_rope_autoimport_bind = ',ria'
+"     au FileType python let g:pymode_rope_module_to_package_bind = ',rmp'
+"     au FileType python let g:pymode_rope_extract_method_bind = ',rem'
+"     au FileType python let g:pymode_rope_extract_variable_bind = ',rev'
+"     au FileType python let g:pymode_rope_use_function_bind = ',ruf'
+"     au FileType python let g:pymode_rope_move_bind = ',rmm'
+"     au FileType python let g:pymode_rope_change_signature_bind = ',rcs'
+"     au FileType python map <Leader>ru :PymodeRopeUndo
+"     au FileType python map <Leader>r<C-r> :PymodeRopeRedo
+"     " syntax
+"     au FileType python let g:pymode_syntax = 1
+"     au FileType python let g:pymode_syntax_slow_sync = 1
+"     au FileType python let g:pymode_syntax_all = 1
+"     au FileType python let g:pymode_syntax_print_as_function = 1
+
+"     " au FileType python " Execute the tests
+"     " au FileType python map <Leader>RTf <Esc>:Pytest file<CR>
+"     " au FileType python map <Leader>RTc <Esc>:Pytest class<CR>
+"     " au FileType python map <Leader>RTm <Esc>:Pytest method<CR>
+"     " au FileType python " cycle through test errors
+"     " au FileType python map <Leader>RTn <Esc>:Pytest next<CR>
+"     " au FileType python map <Leader>RTp <Esc>:Pytest previous<CR>
+"     " au FileType python map <Leader>RTe <Esc>:Pytest error<CR>
+" augroup END
+
+" ## Ruby Language {{{4
+Plug 'vim-ruby/vim-ruby', {'for':['ruby','eruby']}
+Plug 'tpope/vim-rails', {'for':['ruby','eruby']}
+Plug 'tpope/vim-bundler', {'for':['ruby','eruby']}
+
+" ## Arduino Syntax {{{4
+
+Plug 'kingbin/vim-arduino', {'for':['arduino']}
 
 " Mappings {{{1
 
@@ -606,6 +720,10 @@ cnoreabbrev <expr> wv ((getcmdtype() is# ':' && getcmdline() is# 'wv')?('w'):('w
 
 nmap Q @@
 nmap ,/ :noh<CR>
+
+if has('nvim')
+    tnoremap <ESC><C-g> <C-\><C-n>
+endif
 
 " Yank current line in register y and run it as an ex command
 nnoremap <Leader>!e "yyy@y
@@ -619,12 +737,12 @@ nnoremap <Leader>!s "yyy:let @y=":!".@y<CR>@y<CR>
 " Tune the cmdline with emacs mode
 nmap \n :setlocal number!<CR>
 nmap \p :set paste!<CR>
-nmap ,t2 :set expandtab tabstop=2 shiftwidth=2 softtabstop=2<CR>
-nmap ,t4 :set expandtab tabstop=4 shiftwidth=4 softtabstop=4<CR>
-nmap ,t8 :set expandtab tabstop=8 shiftwidth=8 softtabstop=4<CR>
-nmap ,T2 :set noexpandtab tabstop=2 softtabstop=2 shiftwidth=2<CR>
-nmap ,T4 :set noexpandtab tabstop=4 softtabstop=4 shiftwidth=4<CR>
-nmap ,T8 :set noexpandtab tabstop=8 softtabstop=8 shiftwidth=8<CR>
+nmap \t2 :set expandtab tabstop=2 shiftwidth=2 softtabstop=2<CR>
+nmap \t4 :set expandtab tabstop=4 shiftwidth=4 softtabstop=4<CR>
+nmap \t8 :set expandtab tabstop=8 shiftwidth=8 softtabstop=4<CR>
+nmap \T2 :set noexpandtab tabstop=2 softtabstop=2 shiftwidth=2<CR>
+nmap \T4 :set noexpandtab tabstop=4 softtabstop=4 shiftwidth=4<CR>
+nmap \T8 :set noexpandtab tabstop=8 softtabstop=8 shiftwidth=8<CR>
 
 nmap <Leader>gr :grep -r  .<left><left>
 " nmap <leader>gv :vimgrep ** | copen <cr>
@@ -641,7 +759,7 @@ inoremap <F1> <ESC>
 nnoremap <F1> <ESC>
 vnoremap <F1> <ESC>
 
-"map <Leader>, @:
+nnoremap <Leader>, @:
 
 nnoremap <Leader><SPACE> :bnext<CR>
 nnoremap <Leader>n :bnext<CR>
@@ -724,7 +842,7 @@ au FileType python set omnifunc=pythoncomplete#Complete
 set completeopt=menuone,longest,preview
 
 " add sudo command
-command! W w ! sudo tee % > /dev/null
+command! W w ! sudo tee % 2>&1 > /dev/null
 
 function! StripTrailingWhitespace()
   if !&binary && &filetype != 'diff'
@@ -741,10 +859,7 @@ endfunction
 nnoremap <leader>s<space> :call StripTrailingWhitespace()<CR>
 "nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
 
-
-" AutoCommands {{{1
-filetype plugin on
-filetype plugin indent on
+" AutoCommands  {{{2
 
 if has("autocmd")
     " restore cursor position
@@ -757,7 +872,7 @@ if has("autocmd")
       autocmd BufRead,BufNewFile *.nix setlocal ft=nix
     augroup END
 
-    " Markdown {{{2
+    " Markdown  {{{2
     " http://code.google.com/p/vimwiki/issues/detail?id=384
     au BufNewFile,BufRead *.md set filetype=markdown
     function! s:MDSettings()
@@ -786,7 +901,7 @@ if has("autocmd")
         noremap <buffer> <Leader>co :!open -a Preview "%<.pdf" 2>&1 >/dev/null &<CR>
     endfunction
 
-    augroup markdown
+    augroup markdown 
       au!
       au CursorHold *.md update
       " for markdown texts: adds a line of = under h1 titles
@@ -810,7 +925,7 @@ if has("autocmd")
       au!
       "au BufRead /tmp/mutt* source /home/guyzmo/.vim/after/ftplugin/yaposting.vim
     augroup END
-    " Shell files {{{2
+    " Shell files{{{2 
     augroup shell
       au!
       au BufWritePost *.sh :!chmod u+x <afile>
@@ -891,7 +1006,11 @@ if has("autocmd")
     au FileType changelog runtime ftplugin/changelog.vim
     au FileType let g:changelog_username = 'Guyzmo <guyzmo@m0g.net>'
     augroup END
-" C Files options {{{2
+
+
+" C files {{{2
+
+" C Files options {{{3
     augroup cfiletypedetect
         au!
         au BufNewFile,BufRead *.aadl    setf aadl
@@ -901,7 +1020,7 @@ if has("autocmd")
         au BufNewFile,BufRead *.h       setf cpp
     augroup END
 
-    " Set some sensible defaults for editing C-files
+    " Set some sensible defaults for editing C-files {{{3
     augroup cprog
         " Remove all cprog autocommands
         au!
@@ -941,22 +1060,22 @@ if has("autocmd")
     autocmd FileAppendPost                *.bz2 !mv <afile> <afile>:r
     autocmd FileAppendPost                *.bz2 !bzip2 -9 --repetitive-best <afile>:r
     augroup END
-" vimrc {{{2
+" vimrc 
     augroup vimrc
-    au BufReadPre   vimrc,.vimrc setlocal foldmethod=marker
-    au BufReadPre   vimrc,.vimrc setlocal ft=vim
-    au BufWritePost vimrc,.vimrc source %
+    au BufReadPre   vimrc,init.vim,.vimrc setlocal foldmethod=marker
+    au BufReadPre   vimrc,init.vim,.vimrc setlocal ft=vim
+    au BufWritePost vimrc,init.vim,.vimrc source %
     augroup END
 
 endif " has ("autocmd")
-"Syntax highlighting {{{1
 
-" color scheme
+" color scheme {{{1
+
 " colorscheme murphy
 colorscheme sunburst
 
 " i hate cyan comments :)
-hi Comment                        ctermfg=Black ctermbg=8    guifg=Grey80  guibg=grey12
+hi Comment                        ctermfg=244   ctermbg=233  guifg=Grey80  guibg=grey12
 "hi Normal                                                    guifg=white
 "hi Constant                                                  guifg=lightgreen
 hi Folded                         ctermfg=Cyan  ctermbg=0    guifg=Cyan    guibg=grey12
@@ -964,13 +1083,13 @@ hi FoldColumn                     ctermfg=Cyan  ctermbg=0    guifg=Cyan    guibg
 hi SignColumn      term=standout  ctermfg=11    ctermbg=8    guifg=Cyan    guibg=#222222
 hi Pmenu                                        ctermbg=Grey               guibg=DarkSlateGrey
 hi SpecialKey                     ctermfg=8                  guifg=#111155
-hi CursorLine      term=underline                                          guibg=Grey5
-hi CursorColumn    term=reverse                                            guibg=Grey5
-hi ColorColumn     term=reverse                 ctermbg=4                  guibg=#250000
+hi CursorLine      term=none      cterm=none    ctermbg=234                guibg=Grey5
+hi CursorColumn    term=none      cterm=none    ctermbg=234                guibg=Grey5
+hi ColorColumn                                  ctermbg=52                 guibg=#250000
 hi RedundantSpaces term=standout                ctermbg=red                guibg=red
 hi NonText                        ctermfg=8                  guifg=#111155
 hi TrailingSpaces  term=standout                ctermfg=red  guifg=red
-hi Search                                                                  guibg=#666600
+hi Search          term=none      cterm=none    ctermbg=94                 guibg=#666600
 
 call matchadd('TrailingSpaces', '\s\s*$')
 call matchadd('NonText', '$')
