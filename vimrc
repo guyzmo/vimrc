@@ -378,6 +378,11 @@ let g:neomake_javascript_enabled_makers = ['jshint']
 " nnoremap gsD :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 
+" Plug textobjts {{{4
+
+Plug 'kana/vim-textobj-user'
+Plug 'vim-scripts/argtextobj.vim'
+
 " Language specific plugins {{{3
 
 " Natural Language {{{4
