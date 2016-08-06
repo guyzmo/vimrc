@@ -161,8 +161,8 @@ Plug 'Shougo/unite-outline', {
 
 Plug 'vim-scripts/GrepCommands'
 
-nnoremap <leader>bg<space> :BufGrep<CR>
-nnoremap <leader>bg :BufGrep //<Left>
+nnoremap <leader>gb<space> :BufGrep<CR>
+nnoremap <leader>gb :BufGrep //<Left>
 
 " Plug Airline {{{4
 
