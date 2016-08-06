@@ -762,7 +762,6 @@ nnoremap <Leader>!r "yyy:let @y=":ru ".@y<CR>@y<CR>
 " Yank current line in register y and run it as a shell command
 nnoremap <Leader>!s "yyy:let @y=":!".@y<CR>@y<CR>
 
-" Tune the cmdline with emacs mode
 nmap \n :setlocal number!<CR>
 nmap \p :set paste!<CR>
 nmap \t2 :set expandtab tabstop=2 shiftwidth=2 softtabstop=2<CR>
@@ -773,9 +772,8 @@ nmap \T4 :set noexpandtab tabstop=4 softtabstop=4 shiftwidth=4<CR>
 nmap \T8 :set noexpandtab tabstop=8 softtabstop=8 shiftwidth=8<CR>
 
 nmap <Leader>gr :grep -r  .<left><left>
-" nmap <leader>gv :vimgrep ** | copen <cr>
-" nmap <leader>gv :Bgrep
 
+" Tune the cmdline with emacs mode
 cnoremap <C-A> <Home>
 cnoremap <C-E> <End>
 cnoremap <C-F> <Right>
