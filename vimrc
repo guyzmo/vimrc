@@ -627,6 +627,10 @@ let g:plug_url_format = 'git@github.com:%s.git'
 Plug 'guyzmo/vim-gf-python', {'for':['python']}
 unlet g:plug_url_format
 
+" ### Plug Python textobjects
+
+Plug 'bps/vim-textobj-python', {'for': 'python'}
+
 " ### Plug Python mode [disabled] {{{5
 " http://vimawesome.com/plugin/python-mode
 " Plug 'klen/python-mode', {'for':['python']}
