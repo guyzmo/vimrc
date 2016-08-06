@@ -605,6 +605,11 @@ endif
 
 Plug 'derekwyatt/vim-scala', {'for': 'scala'}
 
+" ## Elm Language {{{4
+
+Plug 'lambdatoast/elm.vim', {'for': 'elm'}
+
+
 " ## Javascript Lanuage {{{4
 
 Plug 'jelera/vim-javascript-syntax', {'for':'javascript'}
