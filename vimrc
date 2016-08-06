@@ -355,7 +355,7 @@ Plug 'Shougo/context_filetype.vim'
             " \ 'passive_filetypes': ['python', 'cpp', 'c'] }
 " map <Leader>CT :SyntasticToggleMode<CR>
 
-Plug 'benekastah/neomake', {'for': ['python','javascript','cpp','c','ruby']}
+Plug 'neomake/neomake', {'for': ['python','javascript','cpp','c','ruby','java']}
 
 let g:neomake_warning_sign = { 'texthl': 'NeomakeWarning' }
 let g:neomake_error_sign = { 'texthl': 'NeomakeError' }
