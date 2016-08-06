@@ -582,6 +582,7 @@ if !has('gui_running')
         set t_Sb=[4%dm
     else
         " neovim does not have gui_running yet
+        set termguicolors
         " Neovim-qt Guifont command
         command! -nargs=? Guifont call rpcnotify(0, 'Gui', 'SetFont', "<args>") | let g:Guifont="<args>"
         " Set the font to DejaVu Sans Mono:h13
