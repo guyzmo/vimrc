@@ -11,8 +11,6 @@ let mapleader = ","
 let maplocalleader = ","
 set pastetoggle=<F3>
 
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-
 " we use bash.. no no, I dont want
 set shell=zsh
 
