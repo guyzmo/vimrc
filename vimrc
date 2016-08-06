@@ -728,6 +728,15 @@ Plug 'kingbin/vim-arduino', {'for':['arduino']}
 
 " Mappings {{{1
 
+" custom text-objects that can be used as classic t-o (courtesy of @romainl) : ci\, vi+, da;, ya*
+
+for char in [ '_', '.', ':', ',', ';', '<bar>', '/', '<bslash>', '*', '+', '%', '`', '"""', "'''" ]
+    execute 'xnoremap i' . char . ' :<C-u>normal! T' . char . 'vt' . char . '<CR>'
+    execute 'onoremap i' . char . ' :normal vi' . char . '<CR>'
+    execute 'xnoremap a' . char . ' :<C-u>normal! F' . char . 'vf' . char . '<CR>'
+    execute 'onoremap a' . char . ' :normal va' . char . '<CR>'
+endfor
+
 " Map :wv to :w for when I mistype
 cnoreabbrev <expr> wv ((getcmdtype() is# ':' && getcmdline() is# 'wv')?('w'):('wv'))
 
