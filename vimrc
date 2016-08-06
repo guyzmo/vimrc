@@ -745,7 +745,13 @@ nmap ,/ :noh<CR>
 
 if has('nvim')
     tnoremap <ESC><C-g> <C-\><C-n>
+    tnoremap <ESC><ESC> <C-\><C-n>
+    tnoremap <C-g><C-g> <C-\><C-n><C-w><C-p>
 endif
+
+" Windows
+nnoremap <C-w><C-w> <C-w><C-p>
+nnoremap gw <C-w>w
 
 " Yank current line in register y and run it as an ex command
 nnoremap <Leader>!e "yyy@y
