@@ -141,23 +141,7 @@ Plug 'autozimu/LanguageClient-neovim', Cond(has('nvim'), {
       \ })
 endif
 
-" Plug Unite {{{4
 
-Plug 'Shougo/Unite.vim'
-let g:unite_source_history_yank_enable = 1
- " show buffer list
-nnoremap <leader>bl :<C-u>Unite -buffer-name=buffers -start-insert buffer<cr>
-" switch to alternate buffer
-nnoremap <Leader>bb :<C-u>Unite -buffer-name=buffers -start-insert buffer<cr><cr>
-" close buffer list when escaping in normal mode
-autocmd FileType unite nmap <buffer> <nowait> <esc> <Plug>(unite_exit)
-nnoremap <leader>t  :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/async:!<cr>
-nnoremap <leader>f  :<C-u>Unite -no-split -buffer-name=files   -start-insert file<cr>
-nnoremap <leader>bo  :<C-u>Unite -no-split -buffer-name=outline -start-insert outline<cr>
-nnoremap <leader>y  :<C-u>Unite -no-split -buffer-name=yank    history/yank<cr>
-
-Plug 'soh335/unite-qflist'
-nnoremap <leader>ql  :<C-u>Unite -buffer-name=quickfix qflist<cr>
 
 "call unite#filters#matcher_default#use(['matcher_fuzzy']) " XXX not working
 
