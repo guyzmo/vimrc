@@ -350,11 +350,8 @@ Plug 'critiqjo/lldb.nvim', Cond(has('nvim'), {
             \ 'for': ['c','cpp']
             \ })
 
-" Plug DeoPlete {{{4
 let g:lldb#remote_server = 0
 
-let g:deoplete#enable_at_startup = 1
-Plug 'Shougo/deoplete.nvim', {
 function! LLSpawn(target)
   if !system('pgrep "lldb-server"')
     if g:lldb#remote_server == 1
@@ -389,55 +386,20 @@ nnoremap <space>p :LL print <C-R>=expand('<cword>')<CR>
 vnoremap <space>p :<C-U>LL print <C-R>=lldb#util#get_selection()<CR><CR>
 nnoremap <space>b <Plug>LLBreakSwitch :call lldb#remote#__notify("breakswitch", bufnr("%"), getcurpos()[1])<CR>
 
+" Lang Server Protocol
+
+Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
+
+" (Optional) Multi-entry selection UI.
+Plug 'junegunn/fzf'
+" (Optional) Multi-entry selection UI.
+Plug 'Shougo/denite.nvim'
+
+" (Optional) Completion integration with deoplete.
+Plug 'Shougo/deoplete.nvim', Cond(has('nvim'), {
+            \ 'do': ':UpdateRemotePlugins',
             \ 'for': ['c','cpp','javascript','python','ruby','java','zsh','bash','sh','vim']
-            \ }
-Plug 'Shougo/neco-vim', { 'for': 'vim' }
-Plug 'Shougo/neoinclude.vim', { 'for': ['c','cpp'] }
-Plug 'Rip-Rip/clang_complete', { 'for': ['c','cpp'] }
-Plug 'zchee/deoplete-jedi', { 'for': 'python' }
-Plug 'carlitux/deoplete-ternjs', { 'for': 'javascript' }
-Plug 'Shougo/context_filetype.vim'
-
-" Plug Syntastic (disabled) {{{4
-" NeoBundleLazy 'scrooloose/syntastic', 
-            " \ {'autoload':
-            " \ {'filetypes':['python','javascript','cpp','c','ruby']}}
-" let g:syntastic_enable_signs=1
-" let g:syntastic_auto_jump=0
-" let g:syntastic_csslint_ignore="fallback-colors"
-" let g:syntastic_error_symbol='✘'
-" let g:syntastic_warning_symbol='⚠'
-" let g:syntastic_style_error_symbol="✗"
-" let g:syntastic_style_warning_symbol="⚑"
-" let g:syntastic_mode_map = { 'mode': 'active',
-            " \ 'active_filetypes': ['javascript','ruby'],
-            " \ 'passive_filetypes': ['python', 'cpp', 'c'] }
-" map <Leader>CT :SyntasticToggleMode<CR>
-
-Plug 'neomake/neomake', {'for': ['python','javascript','cpp','c','ruby','java']}
-
-let g:neomake_warning_sign = { 'texthl': 'NeomakeWarning' }
-let g:neomake_error_sign = { 'texthl': 'NeomakeError' }
-let g:neomake_python_enabled_makers = ['pylint', 'pyflakes', 'pep8']
-let g:neomake_javascript_enabled_makers = ['jshint'] 
-
-" Plug YouCompleteMe [disabled] {{{4
-
-" Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
-" Plug 'Valloric/YouCompleteMe', { 'for': 
-"             \                    ['c','cpp','javascript','python','java','zsh',
-"             \                     'bash','sh','tji','tjp','taskjuggler','tj3','ruby'] }
-" autocmd! User YouCompleteMe if !has('vim_starting') | call youcompleteme#Enable() | endif
-
-" let g:ycm_add_preview_to_completeopt = 1
-" let g:ycm_autoclose_preview_window_after_completion = 1
-" let g:ycm_key_list_select_completion = ['<C>n']
-" let g:ycm_key_list_previous_completion = ['<C>-p']
-" nnoremap gsd :YcmCompleter GoTo<CR>
-" nnoremap gsD :YcmCompleter GoToDefinitionElseDeclaration<CR>
-
-
-" Plug textobjts {{{4
+            \ })
 
 Plug 'kana/vim-textobj-user'
 Plug 'vim-scripts/argtextobj.vim'
