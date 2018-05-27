@@ -1052,6 +1052,7 @@ if has("autocmd")
         au FileType cpp,c set smartindent
         " t-pope vim-commentary plugin
         autocmd FileType c,cpp,cs,java setlocal commentstring=//\ %s
+        autocmd FileType c,cpp,cs,java set tags=./tags;,tags;TAGS
 
         " When starting to edit a file:
         "   For *.c and *.h files set formatting of comments and set C-indenting on.
