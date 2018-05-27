@@ -203,6 +203,9 @@ Plug 'bogado/file-line'
 
 Plug 'chrisbra/Recover.vim'
 
+" Plug vim-exchange operator {{{4
+
+Plug 'tommcdo/vim-exchange'
 
 " Plug editing behaviour {{{4
 
