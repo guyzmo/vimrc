@@ -141,7 +141,9 @@ Plug 'autozimu/LanguageClient-neovim', Cond(has('nvim'), {
       \ })
 endif
 
+" Plug echodoc {{{4
 
+Plug 'Shougo/echodoc.vim'
 
 "call unite#filters#matcher_default#use(['matcher_fuzzy']) " XXX not working
 
