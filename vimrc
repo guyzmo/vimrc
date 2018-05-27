@@ -255,6 +255,10 @@ map <silent> <C-Left> <Plug>CamelCaseMotion_b
 
 Plug 'bkad/CamelCaseMotion'
 
+" Plug textobj for a column (-ic, -ac, -iC, -aC) {{{4
+
+Plug 'coderifous/textobj-word-column.vim'
+
 " Plug abolish {{{4
 
 Plug 'tpope/vim-abolish'
