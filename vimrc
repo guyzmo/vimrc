@@ -305,7 +305,8 @@ Plug 'vim-scripts/filetype.vim'
 " Plug vimagit {{{4
 
 Plug 'jreybert/vimagit'
-map <Leader>gg :Magit<CR>
+nnoremap <Leader>gg :MagitOnly<CR>
+
 
 " Plug Fugitive {{{4
 Plug 'tpope/vim-fugitive'
