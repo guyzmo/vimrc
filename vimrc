@@ -541,11 +541,6 @@ Plug 'MarcWeber/vim-addon-nix', {'for': 'nix'}
 
 Plug 'vim-scripts/applescript.vim', { 'for': 'applescript' }
 
-
-" ## Coffee Script Language {{{4
-
-Plug 'kchmck/vim-coffee-script', {'for': 'coffee'}
-
 " ## Java Language (Eclim support)  {{{4
 
 Plug 'ervandew/eclim', {'for':['java']}
@@ -1085,7 +1080,6 @@ if has("autocmd")
     " Coffee script {{{2
     augroup coffee
         au!
-        au FileType coffee 'vim-coffee-script'
         au FileType coffee set smartindent
     augroup END
     " ChangeLog {{{2
