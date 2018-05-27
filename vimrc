@@ -748,6 +748,8 @@ if has('nvim')
     tnoremap <ESC><C-g> <C-\><C-n>
     tnoremap <ESC><ESC> <C-\><C-n>
     tnoremap <C-g><C-g> <C-\><C-n><C-w><C-p>
+else
+    nnoremap ZQ :cq<CR>
 endif
 
 " Windows
