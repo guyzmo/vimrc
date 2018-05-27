@@ -115,9 +115,9 @@ set history=200
 
 " Vim plugins {{{1
 runtime macros/justify.vim
-runtime ftplugin/man.vim
+" runtime ftplugin/man.vim
 
-" Plug setup 
+" Plug setup
 filetype off
 
 " Plugs {{{2
