@@ -333,7 +333,14 @@ map <leader>T <Plug>TaskList
 
 " Development plugins {{{3
 
+" ALE Linter {{{4
 
+let g:ale_sign_error = '🖕'
+let g:ale_sign_warning = '✋'
+" let g:ale_statusline_format = ['🖕 %d', '✋ %d', '👌 ok']
+"let g:ale_set_loclist = 0
+"let g:ale_set_quickfix = 1
+"Plug 'w0rp/ale'
 
 " Plug vim arguments swap {{{4
 " Plug lldb {{{4
