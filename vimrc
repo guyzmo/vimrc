@@ -158,8 +158,8 @@ nnoremap <leader>t :Files<CR>
 
 Plug 'vim-scripts/GrepCommands'
 
-nnoremap <leader>gb<space> :BufGrep<CR>
-nnoremap <leader>gb :BufGrep //<Left>
+nnoremap <leader>bg<space> :BufGrep<CR>
+nnoremap <leader>bg :BufGrep //<Left>
 
 " Plug Airline {{{4
 
