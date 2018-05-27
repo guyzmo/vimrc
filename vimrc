@@ -400,6 +400,46 @@ Plug 'Shougo/deoplete.nvim', Cond(has('nvim'), {
 
 Plug 'kana/vim-textobj-user'
 Plug 'vim-scripts/argtextobj.vim'
+" (Optional) Showing function signature and inline doc.
+Plug 'Shougo/echodoc.vim'
+
+let g:LanguageClient_serverCommands = {
+    \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
+    \ 'javascript': ['language-server-stdio'],
+    \ 'python': ['pyls'],
+    \ }
+
+" Automatically start language servers.
+let g:LanguageClient_autoStart = 1
+
+nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+nnoremap <silent> <Leader>ll :call LanguageClient_workspace_symbol()<CR>
+nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+nnoremap <silent> gr :call LanguageClient_textDocument_rename()<CR>
+nnoremap <silent> gu :call LanguageClient_workspace_symbol()<CR>
+set omnifunc=LanguageClient#complete
+
+" Plug DeoPlete {{{4"
+
+" let g:deoplete#enable_at_startup = 1
+" Plug 'Shougo/deoplete.nvim', Cond(has('nvim'), {
+"             \ 'for': ['c','cpp','javascript','python','ruby','java','zsh','bash','sh','vim']
+"             \ })
+" Plug 'Shougo/neco-vim', { 'for': 'vim' }
+" Plug 'Shougo/neoinclude.vim', { 'for': ['c','cpp'] }
+" Plug 'Rip-Rip/clang_complete', { 'for': ['c','cpp'] }
+" Plug 'zchee/deoplete-jedi', Cond(has('nvim'), { 'for': 'python' })
+" Plug 'carlitux/deoplete-ternjs', Cond(has('nvim'), { 'for': 'javascript' })
+" Plug 'Shougo/context_filetype.vim'
+
+"
+
+" Plug 'neomake/neomake', {'for': ['python','javascript','cpp','c','ruby','java']}
+
+" let g:neomake_warning_sign = { 'texthl': 'NeomakeWarning' }
+" let g:neomake_error_sign = { 'texthl': 'NeomakeError' }
+" let g:neomake_python_enabled_makers = ['pylint', 'pyflakes', 'pep8']
+" let g:neomake_javascript_enabled_makers = ['jshint']
 
 " Language specific plugins {{{3
 
