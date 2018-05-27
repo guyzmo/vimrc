@@ -122,6 +122,12 @@ filetype off
 
 " Plugs {{{2
 call plug#begin('~/.local/share/vim/bundle')
+
+function! Cond(cond, ...)
+  let opts = get(a:000, 0, {})
+  return a:cond ? opts : extend(opts, { 'on': [], 'for': [] })
+endfunction
+
 " General plugins {{{3
 " Plug vim-etherpad {{{4
 
