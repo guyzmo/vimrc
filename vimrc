@@ -680,8 +680,28 @@ autocmd FileType javascript setlocal keywordprg=:MdnQueryFirstMatch
 endif
 
 " ## Python Language {{{4
+" ## PHP Syntax {{{4
 
-" ### Plug gf in python {{{5
+Plug 'StanAngeloff/php.vim', {'for':['php']}
+Plug 'lumiliet/vim-twig', {'for':['twig']}
+
+" ## Ada language {{{4
+
+Plug 'vim-scripts/Ada-Bundle', {'for':['ada']}
+
+augroup ada
+  au FileType *.ads,*.adb let g:ada_folding="-cl3 -M79 -c2 -c3 -c4 -A1 -A2 -A3 -A4 -A5"
+  au FileType *.ads,*.adb let g:ada_omni_with_keywords=1
+  au FileType *.ads,*.adb let g:ada_line_errors=1
+  au FileType *.ads,*.adb let g:ada_spaces_errors=1
+  au FileType *.ads,*.adb setlocal foldmethod=syntax
+  au FileType *.ads,*.adb setlocal foldignore=--
+  au FileType *.ads,*.adb setlocal commentstring=--\ \ %s
+  au FileType *.ads,*.adb setlocal tabstop=8
+  au FileType *.ads,*.adb setlocal softtabstop=3
+  au FileType *.ads,*.adb setlocal shiftwidth=3
+  au FileType *.ads,*.adb syntax match adaComment "--.*$" contains=adaTodo,@Spell
+augroup END
 
 let g:plug_url_format = 'git@github.com:%s.git'
 Plug 'guyzmo/vim-gf-python', {'for':['python']}
