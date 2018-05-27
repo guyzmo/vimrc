@@ -951,11 +951,11 @@ if has("autocmd")
       au!
       "au BufRead /tmp/mutt* source /home/guyzmo/.vim/after/ftplugin/yaposting.vim
     augroup END
-    " Shell files{{{2 
+    " Shell files{{{2
     augroup shell
       au!
-      au BufWritePost *.sh :!chmod u+x <afile>
-      au BufWritePost * if getline(1) =~ "^#!/bin/[a-z]*sh" | silent !chmod u+x <afile> | endif
+      " au BufWritePost *.sh :!chmod u+x <afile>
+      au BufWritePost *.sh if getline(1) =~ "^#!/bin/[a-z]*sh" | execute("silent !chmod u+x % > /dev/null 2> /dev/null") | endif
       au BufEnter *.sh if getline(1) == "" | :call setline(1, "#!/bin/sh") | endif
       au BufEnter *.sh let g:is_posix = 1
     augroup END
