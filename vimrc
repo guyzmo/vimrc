@@ -900,12 +900,16 @@ if has("autocmd")
     function! s:MDSettings()
         "inoremap <buffer> <Leader>n \note[item]{}<Esc>i
 
-        PandocTemplate save specs pdf --atx-headers --chapters --template ~/Documents/Templates/document.tpl.latex
-        PandocTemplate save letter pdf --atx-headers --chapters --template ~/Documents/Templates/letter.tpl.latex
+        " PandocTemplate save specs pdf --atx-headers --chapters --template ~/Documents/Templates/document.tpl.latex
+        " PandocTemplate save letter pdf --atx-headers --chapters --template ~/Documents/Templates/letter.tpl.latex
 
         " nnoremap <buffer> <Leader>cs :Pandoc! #specs
         " nnoremap <buffer> <Leader>cl :Pandoc! #letter
 
+        " noremap <buffer> <Leader>cp :!pandoc
+        "             \ --template ~/Documents/Templates/beamer.tpl.latex
+        "             \ --from markdown "%" -t beamer -o "%<.pdf"<CR>
+        noremap <buffer> <Leader>cd :!pandoc --atx-headers --chapters
         " noremap <buffer> <Leader>cp :!pandoc
         "             \ --template ~/Documents/Templates/beamer.tpl.latex
         "             \ --from markdown "%" -t beamer -o "%<.pdf"<CR>
@@ -923,7 +927,7 @@ if has("autocmd")
         noremap <buffer> <Leader>co :!open -a Preview "%<.pdf" 2>&1 >/dev/null &<CR>
     endfunction
 
-    augroup markdown 
+    augroup markdown
       au!
       au CursorHold *.md update
       " for markdown texts: adds a line of = under h1 titles
