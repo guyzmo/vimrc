@@ -662,12 +662,22 @@ Plug 'lambdatoast/elm.vim', {'for': 'elm'}
 
 " ## Javascript Lanuage {{{4
 
-Plug 'jelera/vim-javascript-syntax', {'for':'javascript'}
+Plug 'pangloss/vim-javascript', {'for':'javascript'}
 Plug 'mxw/vim-jsx', {'for': 'javascript'}
+Plug 'prettier/vim-prettier', {
+  \ 'do': 'yarn install',
+  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue'] }
 
 " ## HTML5 Syntax {{{4
 
 Plug 'othree/html5.vim', {'for':['html']}
+if has('nvim')
+Plug 'jungomi/vim-mdnquery', {'for':['html', 'javascript', 'twig', 'jinja', 'css']}
+autocmd FileType html setlocal keywordprg=:MdnQueryFirstMatch
+autocmd FileType css setlocal keywordprg=:MdnQueryFirstMatch
+autocmd FileType twig setlocal keywordprg=:MdnQueryFirstMatch
+autocmd FileType javascript setlocal keywordprg=:MdnQueryFirstMatch
+endif
 
 " ## Python Language {{{4
 
