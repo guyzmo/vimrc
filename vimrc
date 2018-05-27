@@ -145,13 +145,8 @@ endif
 
 Plug 'Shougo/echodoc.vim'
 
-"call unite#filters#matcher_default#use(['matcher_fuzzy']) " XXX not working
 
-" Plug Unite-Outline {{{4
 
-Plug 'Shougo/unite-outline', { 
-            \ 'for': ['c','cpp','javascript','python','ruby','java','zsh','bash','sh']
-            \ }
 " Plug GrepCommands {{{4
 
 Plug 'vim-scripts/GrepCommands'
