@@ -1,11 +1,11 @@
-﻿" File:        $HOME/.vim/vimrc
+﻿"/ File:        $HOME/.vim/vimrc
 " Purpose:     Configuration file for VIM
 " Author:      Leon Breedt <leon@obsidian.co.za> (Sat Jul 03 13:02:07 SAST 1999)
 " Author:      G. Lejeune (Sat Jul 17 17:20:17 CET 2000)
 " Author:      PRATZ Bernard <bernard@pratz.net>
 " Last update: Sun Mar 20 19:23:02 CET 2016
 
-" General behaviour config{{{1 
+" General behaviour config{{{1
 
 let mapleader = ","
 let maplocalleader = ","
@@ -87,22 +87,21 @@ set wildignore=.svn,CVS,.git,*.o,*.a,*.class,*.mo,*.la,*.so,*.obj,*.swp,*.jpg,*.
 " {{{1 Locations
 
 " for better synchronization, I have only:
-"   ~/.vim/vimrc
-"   ~/.vim/neobundle.vim
+"   ~/.config/vim/vimrc
 " and all the files specific to a machines are within:
 "   ~/.local/vim/bundle
 "   ~/.local/vim/swapfiles
 "   ~/.local/vim/undofiles
 
 " check and build .local directories
-if !!finddir(".local/vim/bundle", $HOME)
-    call mkdir ($HOME . "/.local/share/bundle", "p")
+if !!finddir(".local/share/vim/bundle", $HOME)
+    call mkdir ($HOME . "/.local/share/vim/bundle", "p")
 endif
-if !!finddir(".local/vim/undofiles", $HOME)
-    call mkdir ($HOME . "/.local/share/undofiles", "p")
+if !!finddir(".local/share/vim/undofiles", $HOME)
+    call mkdir ($HOME . "/.local/share/vim/undofiles", "p")
 endif
-if !!finddir(".local/vim/swapfiles", $HOME)
-    call mkdir ($HOME . "/.local/share/swapfiles", "p")
+if !!finddir(".local/share/vim/swapfiles", $HOME)
+    call mkdir ($HOME . "/.local/share/vim/swapfiles", "p")
 endif
 
 " swap files
