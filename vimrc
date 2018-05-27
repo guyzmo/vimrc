@@ -846,13 +846,6 @@ iab YDATE <C-R>=strftime("%a %b %d %T %Z %Y")<CR>
 nmap <Leader>LU 1G/Last update:\s*/e+1<CR>CYDATE<ESC>
 nmap <Leader>LC 1G/Last change:\s*/e+1<CR>CYDATE<ESC>
 
-" Compile the source
-nnoremap <Leader>cp :w<CR>:set makeprg=g++ % -O<CR>:make<CR>
-nnoremap <Leader>cc :w<CR>:set makeprg=gcc % -O<CR>:make<CR>
-nnoremap <Leader>cl :update<CR>:set makeprg=pdflatex %<CR>:make<CR>
-nnoremap <Leader>cm :w<CR>:set makeprg=make<CR>:make<CR>
-"map <Leader>cc :!ctags -R -I --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
-
 " 1/4 of the screen movement
 nnoremap <expr> zT 'zt'
 " N.B. if flashes try with: winline()-winheight(0)/3 . <C-e>
