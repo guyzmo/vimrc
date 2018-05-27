@@ -235,8 +235,6 @@ nmap <Plug>DisableEnhancedJumpsLocalNewer  <Plug>EnhancedJumpsLocalNewer
 nmap <Plug>DisableEnhancedJumpsFarFallbackChangeNewer  <Plug>EnhancedJumpsFarFallbackChangeNewer
 nmap <Plug>DisableEnhancedJumpsFarFallbackChangeOlder  <Plug>EnhancedJumpsFarFallbackChangeOlder
 
-Plug 'vim-scripts/ingo-library' | Plug 'vim-scripts/EnhancedJumps'
-
 " Plug vim-slime {{{4
 """ Plugin to send selection or paragraph to screen session
 xmap <leader>s <Plug>SlimeRegionSend
@@ -254,6 +252,7 @@ let g:rainbow_operators = 1
 let g:rainbow_guifgs = ['RoyalBlue3', 'DarkOrange3', 'FireBrick3', 'Green1', 'DodgerBlue3', 'OrangeRed3', 'DeepPink3', 'SkyBlue3']
 
 Plug 'oblitum/rainbow'
+Plug 'guyzmo/ingo-library' | Plug 'guyzmo/EnhancedJumps'
 
 " Plug CamelCaseMotion {{{4
 "map <silent> w <Plug>CamelCaseMotion_w
