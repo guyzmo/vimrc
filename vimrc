@@ -548,7 +548,7 @@ filetype plugin on
 filetype plugin indent on     " required!
 
 
-" Editor's interface 
+" Editor's interface
 
 set cursorline
 set cursorcolumn
@@ -592,7 +592,7 @@ set modelines=0
 "set makeprg=jikes -nowarn -Xstdout +E %
 "set errorformat=%f:%l:%c:%*\d:%*\d:%*\s%m
 
-" X11 interaction 
+" X11 interaction
 
 "" all my old favorites ;-)
 "set guifont=Monospace\ 8
