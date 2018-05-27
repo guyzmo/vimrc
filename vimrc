@@ -146,6 +146,13 @@ endif
 Plug 'Shougo/echodoc.vim'
 
 
+Plug 'junegunn/fzf.vim'
+
+let g:fzf_layout = { 'window': 'enew' }
+
+nnoremap <leader>bh :History<CR>
+nnoremap <leader>bl :Buffers<CR>
+nnoremap <leader>t :Files<CR>
 
 " Plug GrepCommands {{{4
 
