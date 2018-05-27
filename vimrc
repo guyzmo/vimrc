@@ -795,7 +795,12 @@ nnoremap <Leader>n :bnext<CR>
 nnoremap <Leader>p :bprev<CR>
 "nmap <Leader>l :ls<CR>
 
-nnoremap <Leader>ba :badd
+nnoremap <Leader>ba :badd %
+"   Edit another file in the same directory as the current file
+"   uses expression to extract path from current file's path
+"  (thanks Douglas Potts)
+nnoremap <Leader>be :badd <C-R>=expand("%:p:h") . "/" <CR>
+
 nnoremap <Leader>bc :Bdelete<CR> " do not close window
 nnoremap <Leader>bd :bdelete<CR> " close window
 nnoremap <Leader>b1 :b1<CR>
@@ -825,11 +830,6 @@ nnoremap <Leader>lc :lclose<CR>
 nnoremap <Leader>fmm :set foldmethod=marker<CR>
 nnoremap <Leader>fms :set foldmethod=syntax<CR>
 nnoremap <Leader>fmi :set foldmethod=indent<CR>
-
-"   Edit another file in the same directory as the current file
-"   uses expression to extract path from current file's path
-"  (thanks Douglas Potts) [obsoleted by Unite bundle]
-"map <Leader>ee :e <C-R>=expand("%:p:h") . "/" <CR>
 
 map <Leader>ev :e ~/.vim/vimrc <CR>
 map <Leader>em :e ~/.muttrc <CR>
