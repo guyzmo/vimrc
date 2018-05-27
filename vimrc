@@ -679,7 +679,6 @@ autocmd FileType twig setlocal keywordprg=:MdnQueryFirstMatch
 autocmd FileType javascript setlocal keywordprg=:MdnQueryFirstMatch
 endif
 
-" ## Python Language {{{4
 " ## PHP Syntax {{{4
 
 Plug 'StanAngeloff/php.vim', {'for':['php']}
@@ -703,96 +702,11 @@ augroup ada
   au FileType *.ads,*.adb syntax match adaComment "--.*$" contains=adaTodo,@Spell
 augroup END
 
+" ## Python Language {{{4
 
 " ### Plug Python textobjects
 
-Plug 'bps/vim-textobj-python', {'for': 'python'}
-
-" ### Plug Python mode [disabled] {{{5
-" http://vimawesome.com/plugin/python-mode
-" Plug 'klen/python-mode', {'for':['python']}
-" :help ropevim.txt
-
-" augroup pythonmode
-"     au!
-"     au FileType python let g:pymode = 1
-"     au FileType python let g:pymode_warnings = 0
-"     au FileType python let g:pymode_trim_whitespaces = 1
-"     au FileType python let g:pymode_options = 1
-"     au FileType python let g:pymode_options_max_line_length = 80
-"     au FileType python let g:pymode_options_colorcolumn = 1
-"     au FileType python let g:pymode_options_colorcolumn = 1
-"     au FileType python let g:pymode_python = 'python3'
-"     au FileType python let g:pymode_indent = 1
-"     au FileType python let g:pymode_folding = 1
-"     au FileType python let g:pymode_motion = 1
-"     au FileType python let g:pymode_virtualenv = 0 " XXX virtualenv is disabled!
-"     " run and debug
-"     au FileType python let g:pymode_run = 1
-"     au FileType python let g:pymode_run_bind = '<leader>r'
-"     au FileType python let g:pymode_breakpoint = 1
-"     au FileType python let g:pymode_breakpoint_bind = '<leader>b'
-"     " linting
-"     au FileType python let g:pymode_lint = 1
-"     au FileType python let g:pymode_lint_on_write = 1
-"     au FileType python let g:pymode_lint_unmodified = 0
-"     au FileType python let g:pymode_lint_on_fly = 0
-"     au FileType python let g:pymode_lint_message = 1
-"     au FileType python let g:pymode_lint_checkers = ['pyflakes', 'pep8', 'mccabe']
-"     au FileType python let g:pymode_lint_ignore = 'E501,E121,E126,E127,E128' "  Skip errors and warnings (E.g. 'E501,W002', 'E2,W' (Skip all Warnings and Errors startswith E2) and etc..)
-"     " au FileType python let g:pymode_lint_select = "E501,W0011,W430"
-"     au FileType python let g:pymode_lint_cwindow = 1
-"     au FileType python let g:pymode_lint_signs = 1
-"     " use symbols here XXX
-"     au FileType python let g:pymode_lint_todo_symbol = 'WW'
-"     au FileType python let g:pymode_lint_comment_symbol = 'CC'
-"     au FileType python let g:pymode_lint_visual_symbol = 'RR'
-"     au FileType python let g:pymode_lint_error_symbol = 'EE'
-"     au FileType python let g:pymode_lint_info_symbol = 'II'
-"     au FileType python let g:pymode_lint_pyflakes_symbol = 'FF'
-"     " ROPE stuff
-"     au FileType python let g:pymode_rope = 1
-"     au FileType python let g:pymode_rope_lookup_project = 0
-"     au FileType python let g:pymode_rope_show_doc_bind = ',K'
-"     au FileType python let g:pymode_rope_regenerate_on_write = 1 " XXX save action!
-"     " completion
-"     au FileType python let g:pymode_rope_completion = 1
-"     au FileType python let g:pymode_rope_complete_on_dot = 1
-"     au FileType python let g:pymode_rope_completion_bind = '<C-Space>'
-"     " autoimport
-"     au FileType python let g:pymode_rope_autoimport = 1
-"     au FileType python let g:pymode_rope_autoimport_modules = ['os', 'sys', 'shutil', 'datetime', 'time', 'subprocess']
-"     au FileType python let g:pymode_rope_autoimport_import_after_complete = 1
-"     " go to definition
-"     au FileType python let g:pymode_rope_goto_definition_bind = 'gd'
-"     au FileType python let g:pymode_rope_goto_definition_cmd = '' " could be new or vnew, but replacing buffer is as good!
-"     " refactoring
-"     au FileType python let g:pymode_rope_rename_module_bind = ',rm'
-"     au FileType python let g:pymode_rope_organize_imports_bind = ',rio'
-"     au FileType python let g:pymode_rope_autoimport_bind = ',ria'
-"     au FileType python let g:pymode_rope_module_to_package_bind = ',rmp'
-"     au FileType python let g:pymode_rope_extract_method_bind = ',rem'
-"     au FileType python let g:pymode_rope_extract_variable_bind = ',rev'
-"     au FileType python let g:pymode_rope_use_function_bind = ',ruf'
-"     au FileType python let g:pymode_rope_move_bind = ',rmm'
-"     au FileType python let g:pymode_rope_change_signature_bind = ',rcs'
-"     au FileType python map <Leader>ru :PymodeRopeUndo
-"     au FileType python map <Leader>r<C-r> :PymodeRopeRedo
-"     " syntax
-"     au FileType python let g:pymode_syntax = 1
-"     au FileType python let g:pymode_syntax_slow_sync = 1
-"     au FileType python let g:pymode_syntax_all = 1
-"     au FileType python let g:pymode_syntax_print_as_function = 1
-
-"     " au FileType python " Execute the tests
-"     " au FileType python map <Leader>RTf <Esc>:Pytest file<CR>
-"     " au FileType python map <Leader>RTc <Esc>:Pytest class<CR>
-"     " au FileType python map <Leader>RTm <Esc>:Pytest method<CR>
-"     " au FileType python " cycle through test errors
-"     " au FileType python map <Leader>RTn <Esc>:Pytest next<CR>
-"     " au FileType python map <Leader>RTp <Esc>:Pytest previous<CR>
-"     " au FileType python map <Leader>RTe <Esc>:Pytest error<CR>
-" augroup END
+Plug 'bps/vim-textobj-python'
 
 " ## Ruby Language {{{4
 Plug 'vim-ruby/vim-ruby', {'for':['ruby','eruby']}
