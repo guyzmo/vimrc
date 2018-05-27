@@ -717,6 +717,8 @@ Plug 'tpope/vim-bundler', {'for':['ruby','eruby']}
 
 Plug 'kingbin/vim-arduino', {'for':['arduino']}
 
+call plug#end()
+
 " Mappings {{{1
 
 " custom text-objects that can be used as classic t-o (courtesy of @romainl) : ci\, vi+, da;, ya*
