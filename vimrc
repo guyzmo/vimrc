@@ -333,18 +333,55 @@ map <leader>T <Plug>TaskList
 
 " Development plugins {{{3
 
-" Plug lldb {{{4
 
-Plug 'critiqjo/lldb.nvim'
 
 " Plug vim arguments swap {{{4
+" Plug lldb {{{4
 
 Plug 'vim-scripts/swap-parameters'
+Plug 'critiqjo/lldb.nvim', Cond(has('nvim'), {
+            \ 'for': ['c','cpp']
+            \ })
 
 " Plug DeoPlete {{{4
+let g:lldb#remote_server = 0
 
 let g:deoplete#enable_at_startup = 1
 Plug 'Shougo/deoplete.nvim', {
+function! LLSpawn(target)
+  if !system('pgrep "lldb-server"')
+    if g:lldb#remote_server == 1
+      echomsg 'Respawning the server'
+      LL platform disconnect
+    endif
+    !lldb-server --listen localhost:42042&
+    sleep 1
+    LL platform select remote-linux
+    LL platform connect connect://localhost:42042
+    let g:lldb#remote_server = 1
+  endif
+  1wincmd w
+  vsplit
+  exe ":term ". a:target
+  exe ":LL process attach -p " . b:terminal_job_pid
+  2wincmd w
+  1wincmd r
+  2wincmd w
+endfunction
+
+nnoremap <space>N :LLsession new<CR>
+nnoremap <space>C :LLmode code<CR><BS>n<CR>
+nnoremap <space>D :LLmode debug<CR>
+nnoremap <space>S :call LLSpawn(input('Target: ') . ' ' . input('Arguments: '))<CR>
+nnoremap <space>i :LL process interrupt<CR>
+nnoremap <space>k :LL process kill<CR>
+nnoremap <space>c :LL continue<CR>
+nnoremap <space>n :LL next<CR>
+nnoremap <space>s :LL step<CR>
+nnoremap <space>p :LL print <C-R>=expand('<cword>')<CR>
+vnoremap <space>p :<C-U>LL print <C-R>=lldb#util#get_selection()<CR><CR>
+nnoremap <space>b <Plug>LLBreakSwitch :call lldb#remote#__notify("breakswitch", bufnr("%"), getcurpos()[1])<CR>
+
             \ 'for': ['c','cpp','javascript','python','ruby','java','zsh','bash','sh','vim']
             \ }
 Plug 'Shougo/neco-vim', { 'for': 'vim' }
