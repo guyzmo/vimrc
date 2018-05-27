@@ -292,8 +292,10 @@ Plug 'zanloy/vim-colors-sunburst'
 
 " Plug vim-test {{{4
 
+if has('nvim')
 let test#strategy = 'neovim'
 Plug 'janko-m/vim-test', {'for': 'python'}
+endif
 
 " Plug filetype.vim {{{4
 
