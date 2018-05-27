@@ -263,6 +263,12 @@ Plug 'coderifous/textobj-word-column.vim'
 
 Plug 'rhysd/vim-textobj-conflict'
 
+" ### Plug gf in python {{{5
+
+if has('nvim')
+Plug 'guyzmo/vim-gf-python'
+endif
+
 " Plug abolish {{{4
 
 Plug 'tpope/vim-abolish'
