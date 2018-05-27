@@ -141,9 +141,6 @@ Plug 'autozimu/LanguageClient-neovim', Cond(has('nvim'), {
       \ })
 endif
 
-" Plug echodoc {{{4
-
-Plug 'Shougo/echodoc.vim'
 
 
 Plug 'junegunn/fzf.vim'
