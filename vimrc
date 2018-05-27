@@ -199,6 +199,10 @@ nnoremap <Leader>u :UndotreeToggle<cr>
 
 Plug 'bogado/file-line'
 
+" Plug recover diff {{{4
+
+Plug 'chrisbra/Recover.vim'
+
 
 " Plug editing behaviour {{{4
 
