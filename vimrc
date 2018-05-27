@@ -733,6 +733,14 @@ endfor
 " Map :wv to :w for when I mistype
 cnoreabbrev <expr> wv ((getcmdtype() is# ':' && getcmdline() is# 'wv')?('w'):('wv'))
 
+function! ScratchEdit(cmd, options)
+  exe a:cmd tempname()
+  setl buftype=nofile bufhidden=wipe nobuflisted
+  if !empty(a:options) | exe 'setl' a:options | endif
+endfunction
+
+command! -bar -nargs=* Sedit call ScratchEdit('edit', <q-args>)
+
 nmap Q @@
 nmap ,/ :noh<CR>
 
