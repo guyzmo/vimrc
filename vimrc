@@ -133,9 +133,13 @@ endfunction
 
 " Plug 'guyzmo/vim-etherpad', { 'on': 'Etherpad' }
 
-" Plug VimProc {{{4
+" Plug Language Client Service {{{4
 
-Plug 'Shougo/vimproc.vim', { 'do' : 'make' }
+if has('nvim')
+Plug 'autozimu/LanguageClient-neovim', Cond(has('nvim'), {
+      \ 'do': ':UpdateRemotePlugins'
+      \ })
+endif
 
 " Plug Unite {{{4
 
