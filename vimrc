@@ -195,6 +195,10 @@ Plug 'tpope/vim-sleuth'
 " Plug undotree ~GUndo~ {{{4
 Plug 'mbbill/undotree'
 nnoremap <Leader>u :UndotreeToggle<cr>
+" Plug file:line {{{4
+
+Plug 'bogado/file-line'
+
 
 " Plug editing behaviour {{{4
 
