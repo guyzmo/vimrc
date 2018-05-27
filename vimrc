@@ -210,6 +210,13 @@ Plug 'tommcdo/vim-exchange'
 " Plug editing behaviour {{{4
 
 "Plug 'vim-scripts/showmarks--Politz'
+
+let g:indent_guides_enable_on_vim_startup = 1
+hi IndentGuidesOdd  guibg=#101010
+hi IndentGuidesEven guibg=#202020
+
+Plug 'nathanaelkane/vim-indent-guides'
+
 Plug 'tomtom/quickfixsigns_vim'
 Plug 'tmhedberg/matchit'
 Plug 'tpope/vim-surround'
