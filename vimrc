@@ -192,9 +192,9 @@ Plug 'tpope/vim-git'
 
 Plug 'tpope/vim-sleuth'
 
-" Plug GUndo {{{4
-Plug 'sjl/gundo.vim'
-nnoremap U :GundoToggle<CR>
+" Plug undotree ~GUndo~ {{{4
+Plug 'mbbill/undotree'
+nnoremap <Leader>u :UndotreeToggle<cr>
 
 " Plug editing behaviour {{{4
 
