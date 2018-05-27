@@ -165,8 +165,9 @@ nnoremap <leader>bg :BufGrep //<Left>
 
 let g:airline_theme = 'wombat'
 let g:airline_powerline_fonts = 1 " I did compile the updated fonts!
-Plug 'vim-airline/vim-airline-themes'
-Plug 'vim-airline/vim-airline'
+let g:airline#extensions#tabline#enabled = 1
+
+Plug 'vim-airline/vim-airline-themes' | Plug 'vim-airline/vim-airline'
 
 " Plug bbye {{{4
 
