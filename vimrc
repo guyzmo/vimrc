@@ -222,8 +222,7 @@ Plug 'tmhedberg/matchit'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 "Plug 'msanders/snipmate.vim'
-Plug 'kana/vim-operator-user'
-Plug 'kana/vim-operator-replace'
+Plug 'kana/vim-operator-user' | Plug 'kana/vim-operator-replace'
 nmap - <Plug>(operator-replace)
 Plug 'reinh/vim-makegreen'
 
