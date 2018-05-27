@@ -235,13 +235,6 @@ nmap <Plug>DisableEnhancedJumpsLocalNewer  <Plug>EnhancedJumpsLocalNewer
 nmap <Plug>DisableEnhancedJumpsFarFallbackChangeNewer  <Plug>EnhancedJumpsFarFallbackChangeNewer
 nmap <Plug>DisableEnhancedJumpsFarFallbackChangeOlder  <Plug>EnhancedJumpsFarFallbackChangeOlder
 
-" Plug Rainbow parentheses {{{4
-
-let g:rainbow_active = 1
-let g:rainbow_operators = 1
-let g:rainbow_guifgs = ['RoyalBlue3', 'DarkOrange3', 'FireBrick3', 'Green1', 'DodgerBlue3', 'OrangeRed3', 'DeepPink3', 'SkyBlue3']
-
-Plug 'oblitum/rainbow'
 Plug 'guyzmo/ingo-library' | Plug 'guyzmo/EnhancedJumps'
 
 " Plug CamelCaseMotion {{{4
