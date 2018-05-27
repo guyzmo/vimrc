@@ -259,6 +259,10 @@ Plug 'bkad/CamelCaseMotion'
 
 Plug 'coderifous/textobj-word-column.vim'
 
+" Plug textobj for git merge conflicts {{{4
+
+Plug 'rhysd/vim-textobj-conflict'
+
 " Plug abolish {{{4
 
 Plug 'tpope/vim-abolish'
