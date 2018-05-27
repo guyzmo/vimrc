@@ -476,34 +476,38 @@ let g:calendar_weeknm = 5
 Plug 'mattn/calendar-vim', {'for':['markdown']}
 
 " Plug VIM Wiki  {{{5
-nnoremap <leader>ww :VimwikiIndex<CR>
-let wiki_notes = {}
-let wiki_notes.path = '~/Documents/Perso/Notes/'
-let wiki_notes.html_path = '~/Documents/Perso/Notes/html/'
-let wiki_notes.syntax = 'markdown'
-let wiki_notes.ext = '.md'
-let wiki_notes.auto_export = 1
-let wiki_notes.nested_syntaxes = {'python': 'python', 'c++': 'cpp', 'latex': 'latex'}
-let g:vimwiki_list = [wiki_notes]
-let g:vimwiki_folding = ''
-" let g:vimwiki_ext2syntax = {'.md': 'markdown',
-"             \ '.mkd': 'markdown',
-"             \ '.wiki': 'media'}
+augroup vimwiki
+  au!
+  "au FileType markdown nnoremap <leader>ww :VimwikiIndex<CR>
+  au FileType markdown let wiki_notes = {}
+  au FileType markdown let wiki_notes.path = '~/Documents/Perso/Notes/'
+  au FileType markdown let wiki_notes.html_path = '~/Documents/Perso/Notes/html/'
+  au FileType markdown let wiki_notes.syntax = 'markdown'
+  au FileType markdown let wiki_notes.ext = '.md'
+  au FileType markdown let wiki_notes.auto_export = 1
+  au FileType markdown let wiki_notes.nested_syntaxes = {'python': 'python', 'c++': 'cpp', 'latex': 'latex'}
+  au FileType markdown let g:vimwiki_list = [wiki_notes]
+  au FileType markdown let g:vimwiki_folding = ''
+  " let g:vimwiki_ext2syntax = {'.md': 'markdown',
+  "             \ '.mkd': 'markdown',
+  "             \ '.wiki': 'media'}
 
-Plug 'vimwiki/vimwiki', {
-            \   'for': ['markdown', 'mkd', 'vimwiki', 'pandoc'],
-            \   'on': 'VimwikiIndex'
-            \ }
+  Plug 'vimwiki/vimwiki', {
+        \   'for': ['markdown', 'mkd', 'vimwiki', 'pandoc'],
+        \   'on': 'VimwikiIndex'
+        \ }
 
-" Plug Vim pandoc  {{{5
+  " Plug Vim pandoc  {{{5
 
-let g:pandoc#folding#fold_yaml=1
-let g:pandoc#folding#level=4
-let g:pandoc#folding#level=4
-let g:pandoc#custom_open="/usr/bin/open"
-let g:pandoc#default_langs=["english", "french"]
-let g:pandoc#modules#disabled=["bibliographies"]
-let g:pandoc#command#custom_open = "OSXOpen"
+  " au FileType markdown let g:pandoc#folding#fold_yaml=1
+  " au FileType markdown let g:pandoc#folding#level=4
+  " au FileType markdown let g:pandoc#folding#level=4
+  " au FileType markdown let g:pandoc#custom_open="/usr/bin/open"
+  " au FileType markdown let g:pandoc#default_langs=["english", "french"]
+  " au FileType markdown let g:pandoc#modules#disabled=["bibliographies"]
+  " au FileType markdown let g:pandoc#command#custom_open = "XOpen"
+
+augroup END
 
 function! OSXOpen(file)
     return "open ". a:file
