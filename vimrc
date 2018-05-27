@@ -703,9 +703,6 @@ augroup ada
   au FileType *.ads,*.adb syntax match adaComment "--.*$" contains=adaTodo,@Spell
 augroup END
 
-let g:plug_url_format = 'git@github.com:%s.git'
-Plug 'guyzmo/vim-gf-python', {'for':['python']}
-unlet g:plug_url_format
 
 " ### Plug Python textobjects
 
