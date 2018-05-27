@@ -1086,12 +1086,26 @@ if has("autocmd")
     autocmd FileAppendPost                *.bz2 !mv <afile> <afile>:r
     autocmd FileAppendPost                *.bz2 !bzip2 -9 --repetitive-best <afile>:r
     augroup END
-" vimrc 
+" vimrc
     augroup vimrc
     au BufReadPre   vimrc,init.vim,.vimrc setlocal foldmethod=marker
     au BufReadPre   vimrc,init.vim,.vimrc setlocal ft=vim
     au BufWritePost vimrc,init.vim,.vimrc source %
     augroup END
+
+    if has("nvim")
+      augroup terminal
+        au!
+        au BufEnter term://* nnoremap <buffer> I i<C-a>
+        au BufEnter term://* nnoremap <buffer> A i<C-e>
+        au BufLeave term://* silent! unmap! I
+        au BufLeave term://* silent! unmap! A
+        au BufEnter term://* setl nolist nonu
+        au BufLeave term://* setl list nonu
+        au BufEnter term://* QuickfixsignsDisable
+        au BufLeave term://* QuickfixsignsEnable
+      augroup END
+    endif
 
 endif " has ("autocmd")
 
