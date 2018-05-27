@@ -184,6 +184,8 @@ nmap ga <Plug>(EasyAlign)
 
 " Plug vim commentary {{{4
 Plug 'tpope/vim-commentary'
+
+" Plug vim git (syntax, indent, and filetype plugin files for git) {{{4
 Plug 'tpope/vim-git'
 
 " Plug vim sleuth (detect indent) {{{4
