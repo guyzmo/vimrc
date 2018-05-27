@@ -235,16 +235,6 @@ nmap <Plug>DisableEnhancedJumpsLocalNewer  <Plug>EnhancedJumpsLocalNewer
 nmap <Plug>DisableEnhancedJumpsFarFallbackChangeNewer  <Plug>EnhancedJumpsFarFallbackChangeNewer
 nmap <Plug>DisableEnhancedJumpsFarFallbackChangeOlder  <Plug>EnhancedJumpsFarFallbackChangeOlder
 
-" Plug vim-slime {{{4
-""" Plugin to send selection or paragraph to screen session
-xmap <leader>s <Plug>SlimeRegionSend
-nmap <leader>s <Plug>SlimeMotionSend
-nmap <leader>sc <Plug>SlimeConfig
-
-Plug 'jpalardy/vim-slime'
-let g:slime_paste_file = "$HOME/.local/vim/.slime_paste"
-let g:slime_target = "screen"
-
 " Plug Rainbow parentheses {{{4
 
 let g:rainbow_active = 1
