@@ -604,8 +604,8 @@ if !has('nvim')
     set encoding=utf-8 " Necessary to show Unicode glyphs
 endif
 
-highlight Cursor guifg=black guibg=white
-highlight iCursor guifg=white guibg=steelblue
+highlight Cursor guifg=black guibg=#ffffff
+highlight iCursor guifg=white guibg=#4682b4
 set guicursor=i-n-v-c:block-Cursor
 "set guicursor+=i:ver100-iCursor
 set guicursor+=n-v-c:blinkon0
@@ -627,12 +627,16 @@ if !has('gui_running')
         set t_Sf=[3%dm
         set t_Sb=[4%dm
     else
-        " neovim does not have gui_running yet
-        set termguicolors
-        " Neovim-qt Guifont command
-        command! -nargs=? Guifont call rpcnotify(0, 'Gui', 'SetFont', "<args>") | let g:Guifont="<args>"
-        " Set the font to DejaVu Sans Mono:h13
-        Guifont Menlo for Powerline:h7
+        if exists("g:GuiLoaded") && has('nvim')
+            " Neovim-qt Guifont command
+            command! -nargs=? Guifont call rpcnotify(0, 'Gui', 'SetFont', "<args>") | let g:Guifont="<args>"
+            " Set the font to DejaVu Sans Mono:h13
+            Guifont Menlo for Powerline:h9
+            nnoremap <S-Insert> "*P
+            inoremap <S-Insert> <C-o>"*P
+        else
+            set termguicolors
+        endif
     endif
     set statusline=%t[%{strlen(&fenc)?&fenc:'none'},%{&ff}]%h%m%r%y%=%c,%l/%L\ %P\ %{fugitive#statusline()}
 else
@@ -640,7 +644,7 @@ else
         set guifont=Menlo\ for\ Powerline:h7
         set transparency=10
     else
-        set guifont=Menlo\ for\ Powerline\ 10
+        set guifont=Menlo\ for\ Powerline\ 16
     endif
 
     " show which mode we're in
@@ -1146,21 +1150,26 @@ endif " has ("autocmd")
 colorscheme sunburst
 
 " i hate cyan comments :)
-hi Comment                        ctermfg=244   ctermbg=233  guifg=Grey80  guibg=grey12
+hi Comment                        ctermfg=244   ctermbg=233  guifg=#505050 guibg=#0c0c0c
 "hi Normal                                                    guifg=white
 "hi Constant                                                  guifg=lightgreen
-hi Folded                         ctermfg=Cyan  ctermbg=0    guifg=Cyan    guibg=grey12
-hi FoldColumn                     ctermfg=Cyan  ctermbg=0    guifg=Cyan    guibg=grey12
-hi SignColumn      term=standout  ctermfg=11    ctermbg=8    guifg=Cyan    guibg=#222222
-hi Pmenu                                        ctermbg=Grey               guibg=DarkSlateGrey
+hi Folded                         ctermfg=Cyan  ctermbg=0    guifg=#00eeee guibg=#0c0c0c
+hi FoldColumn                     ctermfg=Cyan  ctermbg=0    guifg=#00eeee guibg=#0c0c0c
+hi SignColumn      term=standout  ctermfg=11    ctermbg=8    guifg=#00eeee guibg=#222222
+hi Pmenu                                        ctermbg=Grey               guibg=#2f4f4f
 hi SpecialKey                     ctermfg=8                  guifg=#111155
-hi CursorLine      term=none      cterm=none    ctermbg=234                guibg=Grey5
-hi CursorColumn    term=none      cterm=none    ctermbg=234                guibg=Grey5
+hi CursorLine      term=none      cterm=none    ctermbg=234                guibg=#111111
+hi CursorColumn    term=none      cterm=none    ctermbg=234                guibg=#111111
 hi ColorColumn                                  ctermbg=52                 guibg=#250000
-hi RedundantSpaces term=standout                ctermbg=red                guibg=red
-hi NonText                        ctermfg=8                  guifg=#111155
-hi TrailingSpaces  term=standout                ctermfg=red  guifg=red
+hi RedundantSpaces term=standout                ctermbg=Red                guibg=#ff0000
+hi TrailingSpaces  term=standout                ctermbg=Red                guibg=#ff0000
 hi Search          term=none      cterm=none    ctermbg=94                 guibg=#666600
+if has('nvim')
+  hi Normal                                     ctermbg=none               guibg=none
+else
+  hi Normal                                     ctermbg=Black              guibg=#000000
+endif
+hi NonText                                                                 guifg=#000066
 
 call matchadd('TrailingSpaces', '\s\s*$')
 call matchadd('NonText', '$')
