@@ -541,18 +541,7 @@ Plug 'MarcWeber/vim-addon-nix', {'for': 'nix'}
 
 Plug 'vim-scripts/applescript.vim', { 'for': 'applescript' }
 
-" ## Java Language (Eclim support)  {{{4
-
-Plug 'ervandew/eclim', {'for':['java']}
-" 'open' on OSX will open the url in the default browser without issue
-if has('macunix')
-    let g:EclimBrowser='open'
-else
-    let g:EclimBrowser='xdg-open'
-endif
-let g:EclimCompletionMethod = 'omnifunc'
-
-" Plug Prologue 
+" Plug Prologue
 call plug#end()
 
 filetype plugin on
