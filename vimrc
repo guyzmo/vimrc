@@ -993,11 +993,12 @@ if has("autocmd")
     endfunction
     augroup js
         au!
-        au FileType javascript runtime ftplugin/javascript.vim
-        au FileType javascript runtime syntax/javascript.vim
-        au FileType javascript runtime indent/javascript.vim
-        au FileType javascript  set smartindent
-        au FileType javascript call JavaScriptFold()
+        set formatprg=prettier\ --stdin
+        " au FileType javascript runtime ftplugin/javascript.vim
+        " au FileType javascript runtime syntax/javascript.vim
+        " au FileType javascript runtime indent/javascript.vim
+        " au FileType javascript  set smartindent
+        " au FileType javascript call JavaScriptFold()
         "au FileType javascript setl fen
     augroup END
     " for HTML texts {{{2
