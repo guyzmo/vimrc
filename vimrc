@@ -256,6 +256,11 @@ Plug 'bkad/CamelCaseMotion'
 
 Plug 'coderifous/textobj-word-column.vim'
 
+" Plug textobjects {{{4
+
+Plug 'kana/vim-textobj-user'
+Plug 'vim-scripts/argtextobj.vim'
+
 " Plug textobj for git merge conflicts {{{4
 
 Plug 'rhysd/vim-textobj-conflict'
@@ -265,6 +270,10 @@ Plug 'rhysd/vim-textobj-conflict'
 if has('nvim')
 Plug 'guyzmo/vim-gf-python'
 endif
+
+" Plug vim arguments swap {{{4
+
+Plug 'vim-scripts/swap-parameters'
 
 " Plug abolish {{{4
 
@@ -339,10 +348,8 @@ let g:ale_sign_warning = '✋'
 "let g:ale_set_quickfix = 1
 "Plug 'w0rp/ale'
 
-" Plug vim arguments swap {{{4
 " Plug lldb {{{4
 
-Plug 'vim-scripts/swap-parameters'
 Plug 'critiqjo/lldb.nvim', Cond(has('nvim'), {
             \ 'for': ['c','cpp']
             \ })
@@ -398,8 +405,6 @@ Plug 'Shougo/deoplete.nvim', Cond(has('nvim'), {
             \ 'for': ['c','cpp','javascript','python','ruby','java','zsh','bash','sh','vim']
             \ })
 
-Plug 'kana/vim-textobj-user'
-Plug 'vim-scripts/argtextobj.vim'
 " (Optional) Showing function signature and inline doc.
 Plug 'Shougo/echodoc.vim'
 
