@@ -755,6 +755,42 @@ Plug 'kingbin/vim-arduino', {'for':['arduino']}
 
 call plug#end()
 
+" ## smali syntax {{{4
+
+Plug 'kelwin/vim-smali', {'for':['smali']}
+
+" Custom functions {{{1
+
+function! CodeSession()
+  vsplit
+  vsplit
+  vsplit
+  norm 200w
+  term
+  split
+  term
+  split
+  term
+  bprev
+  norm j
+  norm j
+  norm 1w
+endfunction
+
+function! FloatingWindow()
+  let width = float2nr(&columns * 0.8)
+  let height = &lines - 5
+  let buf = nvim_create_buf(v:false, v:true)
+  call setbufvar(buf, '&signcolumn', 'no')
+  call nvim_open_win(buf, v:true, {
+        \ 'relative': 'editor',
+        \ 'width': width,
+        \ 'height': height,
+        \ 'col': float2nr((&columns - width) / 2),
+        \ 'row': float2nr((&lines - height) / 2)
+        \ })
+endfunction
+
 " Mappings {{{1
 
 " custom text-objects that can be used as classic t-o (courtesy of @romainl) : ci\, vi+, da;, ya*
