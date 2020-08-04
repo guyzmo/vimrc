@@ -150,15 +150,6 @@ augroup END
 
 " Plug 'guyzmo/vim-etherpad', { 'on': 'Etherpad' }
 
-" Plug Language Client Service {{{4
-
-if has('nvim')
-Plug 'autozimu/LanguageClient-neovim', Cond(has('nvim'), {
-      \ 'do': ':UpdateRemotePlugins'
-      \ })
-endif
-
-
 
 Plug 'junegunn/fzf.vim'
 
