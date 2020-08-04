@@ -147,7 +147,6 @@ augroup termzoom
 augroup END
 
 " Plug vim-etherpad {{{4
-
 " Plug 'guyzmo/vim-etherpad', { 'on': 'Etherpad' }
 
 " Plug fzf {{{4
