@@ -666,21 +666,23 @@ Plug 'lambdatoast/elm.vim', {'for': 'elm'}
 " ## Javascript Lanuage {{{4
 
 Plug 'pangloss/vim-javascript', {'for':'javascript'}
-Plug 'mxw/vim-jsx', {'for': 'javascript'}
-Plug 'prettier/vim-prettier', {
-  \ 'do': 'yarn install',
-  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue'] }
+Plug 'mxw/vim-jsx', {'for': ['javascript', 'javascript.jsx']}
+Plug 'peitalin/vim-jsx-typescript', {'for': 'javascript.jsx'}
+" Plug 'prettier/vim-prettier', {
+"   \ 'do': 'yarn install',
+"   \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue'] }
 
 " ## HTML5 Syntax {{{4
 
 Plug 'othree/html5.vim', {'for':['html']}
-if has('nvim')
-Plug 'jungomi/vim-mdnquery', {'for':['html', 'javascript', 'twig', 'jinja', 'css']}
+
+Plug 'jungomi/vim-mdnquery', {'for':['html', 'typescript.tsx', 'javascript.jsx', 'eruby', 'twig', 'jinja', 'css']}
 autocmd FileType html setlocal keywordprg=:MdnQueryFirstMatch
 autocmd FileType css setlocal keywordprg=:MdnQueryFirstMatch
 autocmd FileType twig setlocal keywordprg=:MdnQueryFirstMatch
 autocmd FileType javascript setlocal keywordprg=:MdnQueryFirstMatch
-endif
+
+Plug 'vim-IDE/MatchTagAlways', {'for':['html', 'typescript.tsx', 'javascript.jsx', 'eruby', 'twig', 'jinja', 'css']}
 
 " ## PHP Syntax {{{4
 
