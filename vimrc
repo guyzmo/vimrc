@@ -462,7 +462,9 @@ let g:wordy#ring = [
   \   ['contractions', 'opinion', 'vague-time', 'said-synonyms', ],
   \ ]
 nnoremap <silent> <Leader>wn :NextWordy<cr>
-if !&wildcharm | set wildcharm=<C-z> | endif
+if !&wildcharm
+  set wildcharm=<C-z>
+endif
 execute 'nnoremap <leader>wl :Wordy<space>'.nr2char(&wildcharm)
 Plug 'reedes/vim-wordy'
 
