@@ -133,6 +133,19 @@ endfunction
 
 Plug 'lambdalisue/suda.vim'
 
+
+" Plug ZoomWinTab {{{4
+
+Plug 'troydm/zoomwintab.vim'
+:map <Leader>a :ZoomWinTabToggle<CR>
+
+augroup termzoom
+  au BufEnter term://* nnoremap <buffer> a :ZoomWinTabIn<CR>i
+  tnoremap <C-g><C-g> <C-\><C-n>:ZoomWinTabOut<CR><C-w><C-p>
+  nmap <C-g><C-g> <C-w><C-p>a
+  inoremap <C-g><C-g> <Esc>
+augroup END
+
 " Plug vim-etherpad {{{4
 
 " Plug 'guyzmo/vim-etherpad', { 'on': 'Etherpad' }
