@@ -804,6 +804,8 @@ endfor
 
 " Map :wv to :w for when I mistype
 cnoreabbrev <expr> wv ((getcmdtype() is# ':' && getcmdline() is# 'wv')?('w'):('wv'))
+cnoreabbrev <expr> w- ((getcmdtype() is# ':' && getcmdline() is# 'wv')?('w'):('wv'))
+
 
 function! ScratchEdit(cmd, options)
   exe a:cmd tempname()
