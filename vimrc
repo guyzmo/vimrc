@@ -392,61 +392,57 @@ nnoremap <space>p :LL print <C-R>=expand('<cword>')<CR>
 vnoremap <space>p :<C-U>LL print <C-R>=lldb#util#get_selection()<CR><CR>
 nnoremap <space>b <Plug>LLBreakSwitch :call lldb#remote#__notify("breakswitch", bufnr("%"), getcurpos()[1])<CR>
 
-" Lang Server Protocol
-
-Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
-
-" (Optional) Multi-entry selection UI.
+" Plug fzf {{{4
+" Multi-entry selection UI.
 Plug 'junegunn/fzf'
-" (Optional) Multi-entry selection UI.
-Plug 'Shougo/denite.nvim'
 
-" (Optional) Completion integration with deoplete.
-Plug 'Shougo/deoplete.nvim', Cond(has('nvim'), {
-            \ 'do': ':UpdateRemotePlugins',
-            \ 'for': ['c','cpp','javascript','python','ruby','java','zsh','bash','sh','vim']
-            \ })
-
+" Plug echodoc {{{4
 " (Optional) Showing function signature and inline doc.
 Plug 'Shougo/echodoc.vim'
 
-let g:LanguageClient_serverCommands = {
-    \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
-    \ 'javascript': ['language-server-stdio'],
-    \ 'python': ['pyls'],
-    \ }
+" LSP Configuration {{{4
+if has('nvim')
+  Plug 'neovim/nvim-lsp'
 
-" Automatically start language servers.
-let g:LanguageClient_autoStart = 1
+  function! LspSetup()
+      LspInstall html
+      LspInstall cssls
+      LspInstall bashls
+      LspInstall dockerls
+      LspInstall elixirls
+      LspInstall tsserver
+      LspInstall yamlls
+      LspInstall jsonls
+      LspInstall pyls
+      LspInstall solargraph
+  endfunction
+endif
 
-nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
-nnoremap <silent> <Leader>ll :call LanguageClient_workspace_symbol()<CR>
-nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-nnoremap <silent> gr :call LanguageClient_textDocument_rename()<CR>
-nnoremap <silent> gu :call LanguageClient_workspace_symbol()<CR>
-set omnifunc=LanguageClient#complete
+Plug 'w0rp/ale'
 
-" Plug DeoPlete {{{4"
+let g:ale_javascript_prettier_use_local_config = 1
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_sign_error = '🖕'
+let g:ale_sign_warning = '✋'
+let g:ale_statusline_format = ['🖕 %d', '✋ %d', '👌 ok']
+let g:ale_set_loclist = 0
+let g:ale_set_quickfix = 1
+let g:ale_fixers = {
+            \   '*': ['remove_trailing_lines', 'trim_whitespace'],
+            \   'javascript': ['prettier', 'eslint'],
+            \   'typescript': ['prettier', 'eslint'],
+            \   'javascript.jsx': ['prettier', 'eslint'],
+            \   'typescript.jsx': ['prettier', 'eslint'],
+            \   'ruby': ['rubocop'],
+            \   'elixir': ['mix_format'],
+            \}
 
-" let g:deoplete#enable_at_startup = 1
-" Plug 'Shougo/deoplete.nvim', Cond(has('nvim'), {
-"             \ 'for': ['c','cpp','javascript','python','ruby','java','zsh','bash','sh','vim']
-"             \ })
-" Plug 'Shougo/neco-vim', { 'for': 'vim' }
-" Plug 'Shougo/neoinclude.vim', { 'for': ['c','cpp'] }
-" Plug 'Rip-Rip/clang_complete', { 'for': ['c','cpp'] }
-" Plug 'zchee/deoplete-jedi', Cond(has('nvim'), { 'for': 'python' })
-" Plug 'carlitux/deoplete-ternjs', Cond(has('nvim'), { 'for': 'javascript' })
-" Plug 'Shougo/context_filetype.vim'
-
-"
-
-" Plug 'neomake/neomake', {'for': ['python','javascript','cpp','c','ruby','java']}
-
-" let g:neomake_warning_sign = { 'texthl': 'NeomakeWarning' }
-" let g:neomake_error_sign = { 'texthl': 'NeomakeError' }
-" let g:neomake_python_enabled_makers = ['pylint', 'pyflakes', 'pep8']
-" let g:neomake_javascript_enabled_makers = ['jshint']
+augroup ruby
+    "autocmd FileType ruby,eruby setl omnifunc=syntaxcompelete#Complete
+    autocmd FileType ruby,eruby,javascript,javascript.jsx nnoremap <silent> K :ALEHover<CR>
+    autocmd FileType ruby,eruby,javascript,javascript.jsx nnoremap <silent> <C-]> :ALEGoToDefinition<CR>
+    autocmd FileType ruby,eruby,javascript,javascript.jsx nnoremap <silent> ,ls :ALEFindReferences<CR>
+augroup END
 
 " Language specific plugins {{{3
 
