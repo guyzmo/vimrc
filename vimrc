@@ -150,6 +150,7 @@ augroup END
 
 " Plug 'guyzmo/vim-etherpad', { 'on': 'Etherpad' }
 
+" Plug fzf {{{4
 
 Plug 'junegunn/fzf.vim'
 
