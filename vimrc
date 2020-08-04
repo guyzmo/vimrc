@@ -718,6 +718,37 @@ Plug 'vim-ruby/vim-ruby', {'for':['ruby','eruby']}
 Plug 'tpope/vim-rails', {'for':['ruby','eruby']}
 Plug 'tpope/vim-bundler', {'for':['ruby','eruby']}
 
+" ## Elixir Language {{{4
+
+" Plug 'thinca/vim-ref'
+" Plug 'awetzel/elixir.nvim', { 'do': 'yes \| ./install.sh' }
+" Plug 'kbrw/elixir.nvim'
+
+Plug 'elixir-lang/vim-elixir'
+Plug 'GrzegorzKozub/vim-elixirls', { 'do': ':ElixirLsCompileSync' }
+
+if has('nvim')
+  let s:user_dir = stdpath('config')
+else
+  let s:user_dir = has('win32') ? expand('~/vimfiles') : expand('~/.vim')
+endif
+
+let g:ale_elixir_elixir_ls_release = $HOME . "/.local/share/vim/bundle/vim-elixirls/elixir-ls/release"
+
+" https://github.com/JakeBecker/elixir-ls/issues/54
+let g:ale_elixir_elixir_ls_config = { 'elixirLS': { 'dialyzerEnabled': v:false } }
+
+let g:ale_linters = {}
+let g:ale_linters.elixir = [ 'credo', 'elixir-ls' ]
+
+autocmd FileType elixir,eelixir nnoremap <C-]> :ALEGoToDefinition<CR>
+autocmd FileType elixir,eelixir nnoremap <C-\> :ALEFindReferences<CR>
+
+let g:ale_fixers = {}
+let g:ale_fixers.elixir = [ 'mix_format' ]
+
+autocmd FileType elixir,eelixir nnoremap <Leader>f :ALEFix<CR>
+
 " ## Arduino Syntax {{{4
 
 Plug 'kingbin/vim-arduino', {'for':['arduino']}
