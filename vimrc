@@ -545,6 +545,109 @@ Plug 'MarcWeber/vim-addon-nix', {'for': 'nix'}
 
 Plug 'vim-scripts/applescript.vim', { 'for': 'applescript' }
 
+" ## Scala Language {{{4
+
+Plug 'derekwyatt/vim-scala', {'for': 'scala'}
+
+" ## Elm Language {{{4
+
+Plug 'lambdatoast/elm.vim', {'for': 'elm'}
+
+
+" ## Javascript Lanuage {{{4
+
+Plug 'pangloss/vim-javascript', {'for':'javascript'}
+Plug 'mxw/vim-jsx', {'for': ['javascript', 'javascript.jsx']}
+Plug 'peitalin/vim-jsx-typescript', {'for': 'javascript.jsx'}
+" Plug 'prettier/vim-prettier', {
+"   \ 'do': 'yarn install',
+"   \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue'] }
+
+" ## HTML5 Syntax {{{4
+
+Plug 'othree/html5.vim', {'for':['html']}
+
+Plug 'jungomi/vim-mdnquery', {'for':['html', 'typescript.tsx', 'javascript.jsx', 'eruby', 'twig', 'jinja', 'css']}
+autocmd FileType html setlocal keywordprg=:MdnQueryFirstMatch
+autocmd FileType css setlocal keywordprg=:MdnQueryFirstMatch
+autocmd FileType twig setlocal keywordprg=:MdnQueryFirstMatch
+autocmd FileType javascript setlocal keywordprg=:MdnQueryFirstMatch
+
+Plug 'vim-IDE/MatchTagAlways', {'for':['html', 'typescript.tsx', 'javascript.jsx', 'eruby', 'twig', 'jinja', 'css']}
+
+" ## PHP Syntax {{{4
+
+Plug 'StanAngeloff/php.vim', {'for':['php']}
+Plug 'lumiliet/vim-twig', {'for':['twig']}
+
+" ## Ada language {{{4
+
+Plug 'vim-scripts/Ada-Bundle', {'for':['ada']}
+
+augroup ada
+  au FileType *.ads,*.adb let g:ada_folding="-cl3 -M79 -c2 -c3 -c4 -A1 -A2 -A3 -A4 -A5"
+  au FileType *.ads,*.adb let g:ada_omni_with_keywords=1
+  au FileType *.ads,*.adb let g:ada_line_errors=1
+  au FileType *.ads,*.adb let g:ada_spaces_errors=1
+  au FileType *.ads,*.adb setlocal foldmethod=syntax
+  au FileType *.ads,*.adb setlocal foldignore=--
+  au FileType *.ads,*.adb setlocal commentstring=--\ \ %s
+  au FileType *.ads,*.adb setlocal tabstop=8
+  au FileType *.ads,*.adb setlocal softtabstop=3
+  au FileType *.ads,*.adb setlocal shiftwidth=3
+  au FileType *.ads,*.adb syntax match adaComment "--.*$" contains=adaTodo,@Spell
+augroup END
+
+" ## Python Language {{{4
+
+" ### Plug Python textobjects
+
+Plug 'bps/vim-textobj-python'
+
+" ## Ruby Language {{{4
+Plug 'vim-ruby/vim-ruby', {'for':['ruby','eruby']}
+Plug 'tpope/vim-rails', {'for':['ruby','eruby']}
+Plug 'tpope/vim-bundler', {'for':['ruby','eruby']}
+
+" ## Elixir Language {{{4
+
+" Plug 'thinca/vim-ref'
+" Plug 'awetzel/elixir.nvim', { 'do': 'yes \| ./install.sh' }
+" Plug 'kbrw/elixir.nvim'
+
+Plug 'elixir-lang/vim-elixir'
+Plug 'GrzegorzKozub/vim-elixirls', { 'do': ':ElixirLsCompileSync' }
+
+if has('nvim')
+  let s:user_dir = stdpath('config')
+else
+  let s:user_dir = has('win32') ? expand('~/vimfiles') : expand('~/.vim')
+endif
+
+let g:ale_elixir_elixir_ls_release = $HOME . "/.local/share/vim/bundle/vim-elixirls/elixir-ls/release"
+
+" https://github.com/JakeBecker/elixir-ls/issues/54
+let g:ale_elixir_elixir_ls_config = { 'elixirLS': { 'dialyzerEnabled': v:false } }
+
+let g:ale_linters = {}
+let g:ale_linters.elixir = [ 'credo', 'elixir-ls' ]
+
+autocmd FileType elixir,eelixir nnoremap <C-]> :ALEGoToDefinition<CR>
+autocmd FileType elixir,eelixir nnoremap <C-\> :ALEFindReferences<CR>
+
+let g:ale_fixers = {}
+let g:ale_fixers.elixir = [ 'mix_format' ]
+
+autocmd FileType elixir,eelixir nnoremap <Leader>f :ALEFix<CR>
+
+" ## Arduino Syntax {{{4
+
+Plug 'kingbin/vim-arduino', {'for':['arduino']}
+
+" ## smali syntax {{{4
+
+Plug 'kelwin/vim-smali', {'for':['smali']}
+
 " Plug Prologue
 call plug#end()
 
@@ -653,111 +756,6 @@ else
     " show which mode we're in
     set noshowmode
 endif
-
-" ## Scala Language {{{4
-
-Plug 'derekwyatt/vim-scala', {'for': 'scala'}
-
-" ## Elm Language {{{4
-
-Plug 'lambdatoast/elm.vim', {'for': 'elm'}
-
-
-" ## Javascript Lanuage {{{4
-
-Plug 'pangloss/vim-javascript', {'for':'javascript'}
-Plug 'mxw/vim-jsx', {'for': ['javascript', 'javascript.jsx']}
-Plug 'peitalin/vim-jsx-typescript', {'for': 'javascript.jsx'}
-" Plug 'prettier/vim-prettier', {
-"   \ 'do': 'yarn install',
-"   \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue'] }
-
-" ## HTML5 Syntax {{{4
-
-Plug 'othree/html5.vim', {'for':['html']}
-
-Plug 'jungomi/vim-mdnquery', {'for':['html', 'typescript.tsx', 'javascript.jsx', 'eruby', 'twig', 'jinja', 'css']}
-autocmd FileType html setlocal keywordprg=:MdnQueryFirstMatch
-autocmd FileType css setlocal keywordprg=:MdnQueryFirstMatch
-autocmd FileType twig setlocal keywordprg=:MdnQueryFirstMatch
-autocmd FileType javascript setlocal keywordprg=:MdnQueryFirstMatch
-
-Plug 'vim-IDE/MatchTagAlways', {'for':['html', 'typescript.tsx', 'javascript.jsx', 'eruby', 'twig', 'jinja', 'css']}
-
-" ## PHP Syntax {{{4
-
-Plug 'StanAngeloff/php.vim', {'for':['php']}
-Plug 'lumiliet/vim-twig', {'for':['twig']}
-
-" ## Ada language {{{4
-
-Plug 'vim-scripts/Ada-Bundle', {'for':['ada']}
-
-augroup ada
-  au FileType *.ads,*.adb let g:ada_folding="-cl3 -M79 -c2 -c3 -c4 -A1 -A2 -A3 -A4 -A5"
-  au FileType *.ads,*.adb let g:ada_omni_with_keywords=1
-  au FileType *.ads,*.adb let g:ada_line_errors=1
-  au FileType *.ads,*.adb let g:ada_spaces_errors=1
-  au FileType *.ads,*.adb setlocal foldmethod=syntax
-  au FileType *.ads,*.adb setlocal foldignore=--
-  au FileType *.ads,*.adb setlocal commentstring=--\ \ %s
-  au FileType *.ads,*.adb setlocal tabstop=8
-  au FileType *.ads,*.adb setlocal softtabstop=3
-  au FileType *.ads,*.adb setlocal shiftwidth=3
-  au FileType *.ads,*.adb syntax match adaComment "--.*$" contains=adaTodo,@Spell
-augroup END
-
-" ## Python Language {{{4
-
-" ### Plug Python textobjects
-
-Plug 'bps/vim-textobj-python'
-
-" ## Ruby Language {{{4
-Plug 'vim-ruby/vim-ruby', {'for':['ruby','eruby']}
-Plug 'tpope/vim-rails', {'for':['ruby','eruby']}
-Plug 'tpope/vim-bundler', {'for':['ruby','eruby']}
-
-" ## Elixir Language {{{4
-
-" Plug 'thinca/vim-ref'
-" Plug 'awetzel/elixir.nvim', { 'do': 'yes \| ./install.sh' }
-" Plug 'kbrw/elixir.nvim'
-
-Plug 'elixir-lang/vim-elixir'
-Plug 'GrzegorzKozub/vim-elixirls', { 'do': ':ElixirLsCompileSync' }
-
-if has('nvim')
-  let s:user_dir = stdpath('config')
-else
-  let s:user_dir = has('win32') ? expand('~/vimfiles') : expand('~/.vim')
-endif
-
-let g:ale_elixir_elixir_ls_release = $HOME . "/.local/share/vim/bundle/vim-elixirls/elixir-ls/release"
-
-" https://github.com/JakeBecker/elixir-ls/issues/54
-let g:ale_elixir_elixir_ls_config = { 'elixirLS': { 'dialyzerEnabled': v:false } }
-
-let g:ale_linters = {}
-let g:ale_linters.elixir = [ 'credo', 'elixir-ls' ]
-
-autocmd FileType elixir,eelixir nnoremap <C-]> :ALEGoToDefinition<CR>
-autocmd FileType elixir,eelixir nnoremap <C-\> :ALEFindReferences<CR>
-
-let g:ale_fixers = {}
-let g:ale_fixers.elixir = [ 'mix_format' ]
-
-autocmd FileType elixir,eelixir nnoremap <Leader>f :ALEFix<CR>
-
-" ## Arduino Syntax {{{4
-
-Plug 'kingbin/vim-arduino', {'for':['arduino']}
-
-call plug#end()
-
-" ## smali syntax {{{4
-
-Plug 'kelwin/vim-smali', {'for':['smali']}
 
 " Custom functions {{{1
 
