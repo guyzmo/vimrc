@@ -129,6 +129,10 @@ function! Cond(cond, ...)
 endfunction
 
 " General plugins {{{3
+" Plug suda.vim {{{4
+
+Plug 'lambdalisue/suda.vim'
+
 " Plug vim-etherpad {{{4
 
 " Plug 'guyzmo/vim-etherpad', { 'on': 'Etherpad' }
