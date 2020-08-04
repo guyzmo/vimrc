@@ -541,7 +541,6 @@ Plug 'guyzmo/vim-taskjuggler', {
 
 Plug 'MarcWeber/vim-addon-nix', {'for': 'nix'}
 
-
 " ## Applescript Language {{{4
 
 Plug 'vim-scripts/applescript.vim', { 'for': 'applescript' }
