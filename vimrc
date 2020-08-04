@@ -769,7 +769,6 @@ function! CodeSession()
   term
   split
   term
-  bnext
   norm j
   norm j
   norm 1w
