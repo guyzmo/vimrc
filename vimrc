@@ -3,7 +3,7 @@
 " Author:      Leon Breedt <leon@obsidian.co.za> (Sat Jul 03 13:02:07 SAST 1999)
 " Author:      G. Lejeune (Sat Jul 17 17:20:17 CET 2000)
 " Author:      PRATZ Bernard <bernard@pratz.net>
-" Last update: Sun Mar 20 19:23:02 CET 2016
+" Last update: Tue Aug 04 14:55:31 CEST 2020
 
 " General behaviour config{{{1
 
