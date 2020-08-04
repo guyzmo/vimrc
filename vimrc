@@ -769,7 +769,7 @@ function! CodeSession()
   term
   split
   term
-  bprev
+  bnext
   norm j
   norm j
   norm 1w
