@@ -401,8 +401,25 @@ Plug 'junegunn/fzf'
 Plug 'Shougo/echodoc.vim'
 
 " LSP Configuration {{{4
-if has('nvim')
+if has("nvim")
   Plug 'neovim/nvim-lsp'
+
+  function SetMappings()
+    setlocal omnifunc=v:lua.vim.lsp.omnifunc
+    nnoremap <buffer><silent> gd    <cmd>lua vim.lsp.buf.definition()<CR>
+    nnoremap <buffer><silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
+    nnoremap <buffer><silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
+    nnoremap <buffer><silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
+    nnoremap <buffer><silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+    "nnoremap<buffer> <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
+    nnoremap <buffer><silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
+    nnoremap <buffer><silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
+    nnoremap <buffer><silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+  endfunction
+
+  function! LspCheck()
+    lua print(vim.inspect(vim.lsp.buf_get_clients()))
+  endfunction
 
   function! LspSetup()
       LspInstall html
@@ -416,6 +433,8 @@ if has('nvim')
       LspInstall pyls
       LspInstall solargraph
   endfunction
+
+  autocmd FileType ruby,eruby,html,css,docker,elixir,eelixir,yaml,json,python call SetMappings()
 endif
 
 Plug 'w0rp/ale'
