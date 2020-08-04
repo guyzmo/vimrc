@@ -241,8 +241,9 @@ nmap <Plug>DisableEnhancedJumpsLocalOlder  <Plug>EnhancedJumpsLocalOlder
 nmap <Plug>DisableEnhancedJumpsLocalNewer  <Plug>EnhancedJumpsLocalNewer
 nmap <Plug>DisableEnhancedJumpsFarFallbackChangeNewer  <Plug>EnhancedJumpsFarFallbackChangeNewer
 nmap <Plug>DisableEnhancedJumpsFarFallbackChangeOlder  <Plug>EnhancedJumpsFarFallbackChangeOlder
+let g:EnhancedJumps_CaptureJumpMessages = 0
 
-Plug 'guyzmo/ingo-library' | Plug 'guyzmo/EnhancedJumps'
+Plug 'inkarkat/vim-ingo-library' | Plug 'inkarkat/vim-EnhancedJumps'
 
 " Plug CamelCaseMotion {{{4
 "map <silent> w <Plug>CamelCaseMotion_w
