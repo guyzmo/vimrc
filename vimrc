@@ -551,54 +551,53 @@ call plug#end()
 filetype plugin on
 filetype plugin indent on     " required!
 
-
-" Editor's interface
+" Editor's interface {{{3
 
 set cursorline
 set cursorcolumn
 au WinLeave * set nocursorline nocursorcolumn
 au WinEnter * set cursorline cursorcolumn
 
-" show partial command in status line
+" show partial command in status line {{{4
 set showcmd
 
-" different syntax highlighting look
+" different syntax highlighting look {{{4
 set background=dark
 
-" show ruler (line & column numbers)
+" show ruler (line & column numbers) {{{4
 set ruler
 
-" always show status line, even when editing just one file
+" always show status line, even when editing just one file {{{4
 set laststatus=2
 
-" show short messages.  lessens the changes of ever getting a 'hit-return'
+" show short messages.  lessens the changes of ever getting a 'hit-return' {{{4
 " prompt
 set shortmess=at    " show short messages
 
-" display title in X - with screen this not useful, but sometimes, I launch it in a shell ;)
+" display title in X - with screen this not useful, but sometimes, I launch it in a shell ;) {{{4
 set title
 
-" smoother output, we're not on a 1200 dialup :)
+" smoother output, we're not on a 1200 dialup :) {{{4
 set ttyfast
 
-" Line number
+" Line number {{{4
 set nu
 
-" Size of the fold column
+" Size of the fold column {{{4
 set foldcolumn=1
 
-" keep buffers alive when not selected
+" keep buffers alive when not selected {{{4
 set hidden
 
 set modelines=0
 
-"":help quickfix
+"":help quickfix {{{4
 "set makeprg=jikes -nowarn -Xstdout +E %
 "set errorformat=%f:%l:%c:%*\d:%*\d:%*\s%m
 
-" X11 interaction
+" X11 interaction {{{3
 
-"" all my old favorites ;-)
+"" all my old favorites {{{4
 "set guifont=Monospace\ 8
 "set guifont=Courier\ 10\ Pitch\ 8 " Really tiny font, need good eyes or good screen or both ;)
 "set guifont=DejaVu\ Sans\ Mono:h9.00
