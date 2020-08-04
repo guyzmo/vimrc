@@ -1112,7 +1112,6 @@ if has("autocmd")
         au BufLeave term://* QuickfixsignsEnable
       augroup END
     endif
-
 endif " has ("autocmd")
 
 " color scheme {{{1
@@ -1145,4 +1144,3 @@ hi NonText                                                                 guifg
 call matchadd('TrailingSpaces', '\s\s*$')
 call matchadd('NonText', '$')
 call matchadd('NonText', '	')
-
