@@ -253,6 +253,8 @@ Plug 'tpope/vim-repeat'
 Plug 'kana/vim-operator-user' | Plug 'kana/vim-operator-replace'
 nmap - <Plug>(operator-replace)
 
+Plug 'inkarkat/vim-ingo-library' | Plug 'inkarkat/vim-EnhancedJumps'
+
 " Plug EnhancedJumps {{{4
 nmap <Leader>o  <Plug>EnhancedJumpsRemoteOlder
 nmap <Leader>i  <Plug>EnhancedJumpsRemoteNewer
@@ -263,8 +265,6 @@ nmap <Plug>DisableEnhancedJumpsLocalNewer  <Plug>EnhancedJumpsLocalNewer
 nmap <Plug>DisableEnhancedJumpsFarFallbackChangeNewer  <Plug>EnhancedJumpsFarFallbackChangeNewer
 nmap <Plug>DisableEnhancedJumpsFarFallbackChangeOlder  <Plug>EnhancedJumpsFarFallbackChangeOlder
 let g:EnhancedJumps_CaptureJumpMessages = 0
-
-Plug 'inkarkat/vim-ingo-library' | Plug 'inkarkat/vim-EnhancedJumps'
 
 " Plug CamelCaseMotion {{{4
 "map <silent> w <Plug>CamelCaseMotion_w
