@@ -1190,9 +1190,6 @@ map <leader>?h :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> 
 au FileType python set omnifunc=pythoncomplete#Complete
 set completeopt=menuone,longest,preview
 
-" add sudo command
-command! W w ! sudo tee % 2>&1 > /dev/null
-
 function! StripTrailingWhitespace()
   if !&binary && &filetype != 'diff'
     normal mz
@@ -1324,9 +1321,6 @@ if has("autocmd")
         " Remove all cprog autocommands
         au!
         au FileType cpp,c set smartindent
-        " t-pope vim-commentary plugin
-        autocmd FileType c,cpp,cs,java setlocal commentstring=//\ %s
-        autocmd FileType c,cpp,cs,java set tags=./tags;,tags;TAGS
 
         " When starting to edit a file:
         "   For *.c and *.h files set formatting of comments and set C-indenting on.
