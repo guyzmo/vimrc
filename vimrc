@@ -817,18 +817,52 @@ Plug 'peitalin/vim-jsx-typescript', {'for': 'javascript.jsx'}
 " Plug 'prettier/vim-prettier', {
 "   \ 'do': 'yarn install',
 "   \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue'] }
+Plug 'HerringtonDarkholme/yats.vim', {'for': ['typescript', 'typescriptreact', 'typescript.tsx']}
+
+
+
+function! JSLoadModule(fname)
+    let nodeModules = "./node_modules/"
+    let packageJsonPath = nodeModules . a:fname . "/package.json"
+
+    if filereadable(packageJsonPath)
+        return nodeModules . a:fname . "/" . json_decode(join(readfile(packageJsonPath))).main
+    endif
+
+    if filereadable(a:fname . '/' . 'index.js')
+      return a:fname . '/' . 'index.js'
+    endif
+
+    if filereadable(a:fname . '/' . 'index.jsx')
+      return a:fname . '/' . 'index.jsx'
+    endif
+
+    if filereadable(a:fname . '/' . 'index.ts')
+      return a:fname . '/' . 'index.ts'
+    endif
+
+    if filereadable(a:fname . '/' . 'index.tsx')
+      return a:fname . '/' . 'index.tsx'
+    endif
+
+    return nodeModules . a:fname
+endfunction
+
+autocmd FileType javascript set path=.,src
+autocmd FileType javascript set suffixesadd=.js,.jsx
+autocmd FileType javascript set includeexpr=JSLoadModule(v:fname)
 
 " ## HTML5 Syntax {{{4
 
 Plug 'othree/html5.vim', {'for':['html']}
 
-Plug 'jungomi/vim-mdnquery', {'for':['html', 'typescript.tsx', 'javascript.jsx', 'eruby', 'twig', 'jinja', 'css']}
+Plug 'jungomi/vim-mdnquery', {'for':['html', 'typescript.tsx', 'typescriptreact', 'javascript.jsx', 'eruby', 'twig', 'jinja', 'css']}
 autocmd FileType html setlocal keywordprg=:MdnQueryFirstMatch
 autocmd FileType css setlocal keywordprg=:MdnQueryFirstMatch
 autocmd FileType twig setlocal keywordprg=:MdnQueryFirstMatch
 autocmd FileType javascript setlocal keywordprg=:MdnQueryFirstMatch
 
-Plug 'vim-IDE/MatchTagAlways', {'for':['html', 'typescript.tsx', 'javascript.jsx', 'eruby', 'twig', 'jinja', 'css']}
+Plug 'vim-IDE/MatchTagAlways', {'for':['html', 'typescript.tsx', 'typescriptreact', 'javascript.jsx', 'eruby', 'twig', 'jinja', 'css']}
 
 " ## PHP Syntax {{{4
 
