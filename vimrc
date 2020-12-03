@@ -65,7 +65,7 @@ set noerrorbells
 " show matching brackets
 "set showmatch
 "set matchtime=3
-set matchpairs=(:),{:},[:],<:>,":",':',«:»,/*:*/,""":""",''':'''
+set matchpairs=(:),{:},[:],<:>,":",':',«:»,/*:*/
 
 " don't ignore case while searching
 set noignorecase
