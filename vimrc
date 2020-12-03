@@ -131,7 +131,14 @@ endfunction
 " General plugins {{{3
 " Plug suda.vim {{{4
 
-Plug 'lambdalisue/suda.vim'
+
+if has('nvim')
+  Plug 'lambdalisue/suda.vim'
+  command! W SudoWrite
+else
+  " add sudo command
+  command! W w ! sudo tee % 2>&1 > /dev/null
+end
 
 
 " Plug ZoomWinTab {{{4
