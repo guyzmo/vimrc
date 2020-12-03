@@ -1101,7 +1101,7 @@ nmap \T2 :set noexpandtab tabstop=2 softtabstop=2 shiftwidth=2<CR>
 nmap \T4 :set noexpandtab tabstop=4 softtabstop=4 shiftwidth=4<CR>
 nmap \T8 :set noexpandtab tabstop=8 softtabstop=8 shiftwidth=8<CR>
 
-nmap <Leader>gr :grep -r  .<left><left>
+nmap <Leader>gr :Rg 
 
 " Tune the cmdline with emacs mode
 cnoremap <C-A> <Home>
