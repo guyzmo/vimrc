@@ -67,6 +67,8 @@ set noerrorbells
 "set matchtime=3
 set matchpairs=(:),{:},[:],<:>,":",':',«:»,/*:*/
 
+set updatetime=750
+
 " don't ignore case while searching
 set noignorecase
 
