@@ -291,6 +291,75 @@ Plug 'coderifous/textobj-word-column.vim'
 " Plug textobjects {{{4
 
 Plug 'kana/vim-textobj-user'
+
+" call textobj#user#plugin('datetime', {
+" \   'date': {
+" \     'pattern': '\<\d\d\d\d-\d\d-\d\d\>',
+" \     'select': ['ad', 'id'],
+" \   },
+" \   'time': {
+" \     'pattern': '\<\d\d:\d\d:\d\d\>',
+" \     'select': ['at', 'it'],
+" \   },
+" \ })
+
+" call textobj#user#plugin('pytriplestrings', {
+" \   'angle': {
+" \     'pattern': ['"""', '"""'],
+" \     'select-a': 'aS',
+" \     'select-i': 'iS',
+" \   },
+" \ })
+
+" call textobj#user#plugin('line', {
+" \   '-': {
+" \     'select-a-function': 'CurrentLineA',
+" \     'select-a': 'al',
+" \     'select-i-function': 'CurrentLineI',
+" \     'select-i': 'il',
+" \   },
+" \ })
+
+
+function! CurrentLineA()
+  normal! 0
+  let head_pos = getpos('.')
+  normal! $
+  let tail_pos = getpos('.')
+  return ['v', head_pos, tail_pos]
+endfunction
+
+function! CurrentLineI()
+  normal! ^
+  let head_pos = getpos('.')
+  normal! g_
+  let tail_pos = getpos('.')
+  let non_blank_char_exists_p = getline('.')[head_pos[2] - 1] !~# '\s'
+  return
+  \ non_blank_char_exists_p
+  \ ? ['v', head_pos, tail_pos]
+  \ : 0
+endfunction
+
+" ie: inside block
+" ae: outside block
+Plug 'amiralies/vim-textobj-elixir', {'for':['elixir']}
+
+" af: a function
+" if: inner function
+" ac: a class
+" ic: inner class
+" It also provides a few motions in normal and operator-pending mode:
+" [pf / ]pf: move to next/previous function
+" [pc / ]pc: move to next/previous class
+Plug 'bps/vim-textobj-python', {'for':['python']}
+
+" ir and ar are used for a block;
+" if and af for a function,
+" ic, ac for a class and an for a name
+let g:textobj_ruby_inner_branch=1
+Plug 'tek/vim-textobj-ruby', {'for':['ruby']}
+
 Plug 'vim-scripts/argtextobj.vim'
 
 " Plug textobj for git merge conflicts {{{4
