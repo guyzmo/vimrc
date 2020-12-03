@@ -1058,8 +1058,6 @@ endfor
 cnoreabbrev <expr> wv ((getcmdtype() is# ':' && getcmdline() is# 'wv')?('w'):('wv'))
 cnoreabbrev <expr> w- ((getcmdtype() is# ':' && getcmdline() is# 'wv')?('w'):('wv'))
 
-nnoremap <Leader>w :silent w\|silent ALEFix\|w
-
 function! ScratchEdit(cmd, options)
   exe a:cmd tempname()
   setl buftype=nofile bufhidden=wipe nobuflisted
