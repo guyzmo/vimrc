@@ -683,7 +683,59 @@ let g:calendar_monday = 1
 let g:calendar_weeknm = 5
 Plug 'mattn/calendar-vim', {'for':['markdown']}
 
-" Plug VIM Wiki  {{{5
+" Plug Markdown VIM Wiki  {{{5
+" http://code.google.com/p/vimwiki/issues/detail?id=384
+function! s:MDSettings()
+    "inoremap <buffer> <Leader>n \note[item]{}<Esc>i
+
+    " PandocTemplate save specs pdf --atx-headers --chapters --template ~/Documents/Templates/document.tpl.latex
+    " PandocTemplate save letter pdf --atx-headers --chapters --template ~/Documents/Templates/letter.tpl.latex
+
+    " nnoremap <buffer> <Leader>cs :Pandoc! #specs
+    " nnoremap <buffer> <Leader>cl :Pandoc! #letter
+
+    " noremap <buffer> <Leader>cp :!pandoc
+    "             \ --template ~/Documents/Templates/beamer.tpl.latex
+    "             \ --from markdown "%" -t beamer -o "%<.pdf"<CR>
+    noremap <buffer> <Leader>cd :!pandoc --atx-headers --chapters
+    " noremap <buffer> <Leader>cp :!pandoc
+    "             \ --template ~/Documents/Templates/beamer.tpl.latex
+    "             \ --from markdown "%" -t beamer -o "%<.pdf"<CR>
+    noremap <buffer> <Leader>cd :!pandoc --atx-headers --chapters
+                \ --template ~/Documents/Templates/document.tpl.latex
+                \ --from markdown "%" -t latex -o "%<.pdf"<CR>
+
+    noremap <buffer> <Leader>cl :!pandoc --atx-headers
+                  \ --template ~/Documents/Templates/lettre.tpl.latex
+                  \ --from markdown "%" -t latex -o "%<.pdf"<CR>
+    " noremap <buffer> <Leader>ch :!pandoc --atx-headers
+    "             \ --template ~/Documents/Templates/html.tpl.html
+    "             \ --from markdown "%" -t html -o "%<.html"<CR>
+    noremap <buffer> <Leader>cv :!qlmanage -p "%<.pdf" 2>&1 >/dev/null &<CR>
+    noremap <buffer> <Leader>co :!open -a Preview "%<.pdf" 2>&1 >/dev/null &<CR>
+endfunction
+
+augroup markdown
+  au!
+  au BufNewFile,BufRead *.md set filetype=markdown
+  au CursorHold *.md update
+  " for markdown texts: adds a line of = under h1 titles
+  au FileType markdown set noswapfile
+  au FileType markdown nmap <leader>st :TOC<CR>
+  au FileType markdown nmap ,] <Plug>VimwikiFollowLink
+  au FileType markdown vmap ,] <Plug>VimwikiNormalizeLinkVisualCR
+  au FileType markdown nmap ,[ <Plug>VimwikiGoBackLink
+  au FileType markdown nmap g] <Plug>VimwikiFollowLink
+  au FileType markdown vmap g] <Plug>VimwikiNormalizeLinkVisualCR
+  au FileType markdown nmap g[ <Plug>VimwikiGoBackLink
+  au FileType markdown nmap g[ <Plug>VimwikiGoBackLink
+  au FileType markdown nmap <Leader>wn <Plug>VimwikiNextLink
+  au FileType markdown nmap <Leader>wp <Plug>VimwikiPrevLink
+
+  "au BufRead,BufNewFile *.md setfiletype markdown
+  au FileType markdown :call <SID>MDSettings()
+augroup END
+
 augroup vimwiki
   au!
   "au FileType markdown nnoremap <leader>ww :VimwikiIndex<CR>
@@ -1169,58 +1221,6 @@ if has("autocmd")
       autocmd BufRead,BufNewFile *.nix setlocal ft=nix
     augroup END
 
-    " Markdown  {{{2
-    " http://code.google.com/p/vimwiki/issues/detail?id=384
-    au BufNewFile,BufRead *.md set filetype=markdown
-    function! s:MDSettings()
-        "inoremap <buffer> <Leader>n \note[item]{}<Esc>i
-
-        " PandocTemplate save specs pdf --atx-headers --chapters --template ~/Documents/Templates/document.tpl.latex
-        " PandocTemplate save letter pdf --atx-headers --chapters --template ~/Documents/Templates/letter.tpl.latex
-
-        " nnoremap <buffer> <Leader>cs :Pandoc! #specs
-        " nnoremap <buffer> <Leader>cl :Pandoc! #letter
-
-        " noremap <buffer> <Leader>cp :!pandoc
-        "             \ --template ~/Documents/Templates/beamer.tpl.latex
-        "             \ --from markdown "%" -t beamer -o "%<.pdf"<CR>
-        noremap <buffer> <Leader>cd :!pandoc --atx-headers --chapters
-        " noremap <buffer> <Leader>cp :!pandoc
-        "             \ --template ~/Documents/Templates/beamer.tpl.latex
-        "             \ --from markdown "%" -t beamer -o "%<.pdf"<CR>
-        noremap <buffer> <Leader>cd :!pandoc --atx-headers --chapters
-                    \ --template ~/Documents/Templates/document.tpl.latex
-                    \ --from markdown "%" -t latex -o "%<.pdf"<CR>
-
-        noremap <buffer> <Leader>cl :!pandoc --atx-headers
-                     \ --template ~/Documents/Templates/lettre.tpl.latex
-                     \ --from markdown "%" -t latex -o "%<.pdf"<CR>
-        " noremap <buffer> <Leader>ch :!pandoc --atx-headers
-        "             \ --template ~/Documents/Templates/html.tpl.html
-        "             \ --from markdown "%" -t html -o "%<.html"<CR>
-        noremap <buffer> <Leader>cv :!qlmanage -p "%<.pdf" 2>&1 >/dev/null &<CR>
-        noremap <buffer> <Leader>co :!open -a Preview "%<.pdf" 2>&1 >/dev/null &<CR>
-    endfunction
-
-    augroup markdown
-      au!
-      au CursorHold *.md update
-      " for markdown texts: adds a line of = under h1 titles
-      au FileType markdown set noswapfile
-      au FileType markdown nmap <leader>st :TOC<CR>
-      au FileType markdown nmap ,] <Plug>VimwikiFollowLink
-      au FileType markdown vmap ,] <Plug>VimwikiNormalizeLinkVisualCR
-      au FileType markdown nmap ,[ <Plug>VimwikiGoBackLink
-      au FileType markdown nmap g] <Plug>VimwikiFollowLink
-      au FileType markdown vmap g] <Plug>VimwikiNormalizeLinkVisualCR
-      au FileType markdown nmap g[ <Plug>VimwikiGoBackLink
-      au FileType markdown nmap g[ <Plug>VimwikiGoBackLink
-      au FileType markdown nmap <Leader>wn <Plug>VimwikiNextLink
-      au FileType markdown nmap <Leader>wp <Plug>VimwikiPrevLink
-
-      "au BufRead,BufNewFile *.md setfiletype markdown
-      au FileType markdown :call <SID>MDSettings()
-    augroup END
     " Mail {{{2
     augroup mail
       au!
