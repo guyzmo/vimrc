@@ -1047,7 +1047,7 @@ endfunction
 
 " custom text-objects that can be used as classic t-o (courtesy of @romainl) : ci\, vi+, da;, ya*
 
-for char in [ '_', '.', ':', ',', ';', '<bar>', '/', '<bslash>', '*', '+', '%', '`', '"""', "'''" ]
+for char in [ '_', '.', ':', ',', ';', '<bar>', '/', '<bslash>', '*', '+', '%', '`' ]
     execute 'xnoremap i' . char . ' :<C-u>normal! T' . char . 'vt' . char . '<CR>'
     execute 'onoremap i' . char . ' :normal vi' . char . '<CR>'
     execute 'xnoremap a' . char . ' :<C-u>normal! F' . char . 'vf' . char . '<CR>'
