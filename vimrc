@@ -1043,6 +1043,28 @@ function! FloatingWindow()
         \ })
 endfunction
 
+" Rotate a window horizontally to the left
+function! MoveLeft()
+    let l:firstbuf = bufnr('%')
+    wincmd h
+    let l:secondbuf = bufnr('%')
+    exe 'buf' l:firstbuf
+    wincmd l
+    exe 'buf' l:secondbuf
+    wincmd h
+endfunc
+
+" Rotate a window horizontally to the right
+function! MoveRight()
+    let l:firstbuf = bufnr('%')
+    wincmd l
+    let l:secondbuf = bufnr('%')
+    exe 'buf' l:firstbuf
+    wincmd h
+    exe 'buf' l:secondbuf
+    wincmd l
+endfunc
+
 " Mappings {{{1
 
 " custom text-objects that can be used as classic t-o (courtesy of @romainl) : ci\, vi+, da;, ya*
