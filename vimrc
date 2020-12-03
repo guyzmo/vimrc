@@ -1071,13 +1071,10 @@ command! -bar -nargs=* Sedit call ScratchEdit('edit', <q-args>)
 nmap Q @@
 nmap ,/ :noh<CR>
 
-if has('nvim')
-    tnoremap <ESC><C-g> <C-\><C-n>
-    tnoremap <ESC><ESC> <C-\><C-n>
-    tnoremap <C-g><C-g> <C-\><C-n><C-w><C-p>
-else
-    nnoremap ZQ :cq<CR>
-endif
+tnoremap <ESC><C-g> <C-\><C-n>
+tnoremap <ESC><ESC> <C-\><C-n>
+tnoremap <C-g><C-g> <C-\><C-n><C-w><C-p>
+nnoremap ZQ :cq<CR>
 
 " Windows
 nnoremap <C-w><C-w> <C-w><C-p>
