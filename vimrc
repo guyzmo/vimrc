@@ -194,8 +194,18 @@ xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
 
+" Plug vim script tease
+
+Plug 'tpope/vim-scriptease'
+
 " Plug vim commentary {{{4
 Plug 'tpope/vim-commentary'
+
+" t-pope vim-commentary plugin
+autocmd FileType c,cpp,cs,java setlocal commentstring=//\ %s
+autocmd FileType c,cpp,cs,java set tags=./tags;,tags;TAGS
+
+Plug 'suy/vim-context-commentstring'
 
 " Plug vim git (syntax, indent, and filetype plugin files for git) {{{4
 Plug 'tpope/vim-git'
@@ -203,6 +213,10 @@ Plug 'tpope/vim-git'
 " Plug vim sleuth (detect indent) {{{4
 
 Plug 'tpope/vim-sleuth'
+
+" Plug vim eunuch
+
+Plug 'tpope/vim-eunuch'
 
 " Plug undotree ~GUndo~ {{{4
 Plug 'mbbill/undotree'
