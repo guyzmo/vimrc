@@ -492,19 +492,43 @@ Plug 'Shougo/echodoc.vim'
 
 " LSP Configuration {{{4
 if has("nvim")
-  Plug 'neovim/nvim-lsp'
+  Plug 'neovim/nvim-lspconfig'
+  Plug 'nvim-lua/completion-nvim'
+  Plug 'nvim-lua/diagnostic-nvim'
 
   function SetMappings()
     setlocal omnifunc=v:lua.vim.lsp.omnifunc
-    nnoremap <buffer><silent> gd    <cmd>lua vim.lsp.buf.definition()<CR>
+    nnoremap <buffer><silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
     nnoremap <buffer><silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
     nnoremap <buffer><silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
+    nnoremap <buffer><silent> gpd   <cmd>lua vim.lsp.buf.peek_definition()<CR>
+    nnoremap <buffer><silent> gtd   <cmd>lua vim.lsp.buf.type_definition()<CR>
     nnoremap <buffer><silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
     nnoremap <buffer><silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
-    "nnoremap<buffer> <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
+    nnoremap <buffer><silent> ,gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
     nnoremap <buffer><silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
     nnoremap <buffer><silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
     nnoremap <buffer><silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+    nnoremap <buffer><silent> gR    <cmd>lua vim.lsp.buf.rename()<CR>
+    nnoremap <buffer><silent> gH    <cmd>lua vim.lsp.buf.document_highlight()<CR>
+    nnoremap <buffer><silent> gl    <cmd>lua vim.lsp.util.show_line_diagnostics()<CR>
+    autocmd BufEnter * lua require'completion'
+    if &filetype != "tex"
+        inoremap <buffer><silent> (     <cmd>lua vim.lsp.buf.signature_help()<CR>(
+    endif
+    autocmd CursorHold <buffer> lua vim.lsp.util.show_line_diagnostics()
+  endfunction
+
+  function ConfigureStyle()
+    highlight link LspDiagnosticsError User8
+    sign define LspDiagnosticsErrorSign text=🖕
+    sign define LspDiagnosticsWarningSign text=⚠️
+    sign define LspDiagnosticsInformationSign text=ℹ️
+    sign define LspDiagnosticsHintSign text=➤
+    set omnifunc=v:lua.vim.lsp.omnifunc
+    set completeopt=menuone,noinsert,noselect
+    set shortmess+=c
+    " let g:completion_enable_auto_popup = 0
   endfunction
 
   function! LspCheck()
@@ -524,34 +548,102 @@ if has("nvim")
       LspInstall solargraph
   endfunction
 
-  autocmd FileType ruby,eruby,html,css,docker,elixir,eelixir,yaml,json,python call SetMappings()
+  function LspLoadServer(arg)
+    call SetMappings()
+    call ConfigureStyle()
+    lua << EOF
+on_attach_vim = function(client)
+    require'completion'.on_attach(client)
+    require'diagnostic'.on_attach(client)
+end
+EOF
+    if a:arg == "typescript" || a:arg == "typescript.tsx" || a:arg == "typescriptreact"
+      if !exists("g:lsp_did_load_typescript")
+        lua require'nvim_lsp'.tsserver.setup{on_attach=on_attach_vim;cmd={"typescript-language-server", "--stdio", "--tsserver-log-file", "/tmp/tsserver.log"}}
+        exec "let g:lsp_did_load_typescript=1"
+      endif
+    elseif a:arg == "python"
+      if !exists("g:lsp_did_load_".a:arg)
+        lua require'nvim_lsp'.pyls.setup{on_attach=on_attach_vim}
+        exec "let g:lsp_did_load_".a:arg."=1"
+      endif
+    elseif a:arg == "ruby"
+      if !exists("g:lsp_did_load_".a:arg)
+        lua require'nvim_lsp'.solargraph.setup{on_attach=on_attach_vim}
+        exec "let g:lsp_did_load_".a:arg."=1"
+      endif
+    elseif a:arg == "yaml"
+      if !exists("g:lsp_did_load_".a:arg)
+        lua require'nvim_lsp'.yamlls.setup{on_attach=on_attach_vim}
+        exec "let g:lsp_did_load_".a:arg."=1"
+      endif
+    elseif a:arg == "json"
+      if !exists("g:lsp_did_load_".a:arg)
+        lua require'nvim_lsp'.jsonls.setup{on_attach=on_attach_vim}
+        exec "let g:lsp_did_load_".a:arg."=1"
+      endif
+    elseif a:arg == "elixir"
+      if !exists("g:lsp_did_load_".a:arg)
+        lua require'nvim_lsp'.elixirls.setup{on_attach=on_attach_vim}
+        let g:LanguageClient_rootMarkers = { 'elixir': ['mix.exs'] }
+        exec "let g:lsp_did_load_".a:arg."=1"
+      endif
+    elseif a:arg == "docker"
+      if !exists("g:lsp_did_load_".a:arg)
+        lua require'nvim_lsp'.dockerls.setup{on_attach=on_attach_vim}
+        exec "let g:lsp_did_load_".a:arg."=1"
+      endif
+    elseif a:arg == "bash"
+      if !exists("g:lsp_did_load_".a:arg)
+        lua require'nvim_lsp'.bashls.setup{on_attach=on_attach_vim}
+        exec "let g:lsp_did_load_".a:arg."=1"
+      endif
+    elseif a:arg == "css"
+      if !exists("g:lsp_did_load_".a:arg)
+        lua require'nvim_lsp'.cssls.setup{on_attach=on_attach_vim}
+        exec "let g:lsp_did_load_".a:arg."=1"
+      endif
+    elseif a:arg == "html"
+      if !exists("g:lsp_did_load_".a:arg)
+        lua require'nvim_lsp'.html.setup{on_attach=on_attach_vim}
+        exec "let g:lsp_did_load_".a:arg."=1"
+      endif
+    endif
+    set completeopt=menuone,noinsert,noselect
+    set shortmess+=c
+    nnoremap <Leader>w :lua vim.lsp.buf.formatting_sync(nil, 1000)<CR>:w<CR>
+  endfunction
+
+
+  autocmd FileType ruby,eruby,html,css,docker,elixir,eelixir,yaml,json,python,typescript,typescript.tsx,typescriptreact call LspLoadServer(&filetype)
 endif
 
-Plug 'w0rp/ale'
+" Plug 'w0rp/ale'
 
-let g:ale_javascript_prettier_use_local_config = 1
-let g:ale_lint_on_text_changed = 'never'
-let g:ale_sign_error = '🖕'
-let g:ale_sign_warning = '✋'
-let g:ale_statusline_format = ['🖕 %d', '✋ %d', '👌 ok']
-let g:ale_set_loclist = 0
-let g:ale_set_quickfix = 1
-let g:ale_fixers = {
-            \   '*': ['remove_trailing_lines', 'trim_whitespace'],
-            \   'javascript': ['prettier', 'eslint'],
-            \   'typescript': ['prettier', 'eslint'],
-            \   'javascript.jsx': ['prettier', 'eslint'],
-            \   'typescript.jsx': ['prettier', 'eslint'],
-            \   'ruby': ['rubocop'],
-            \   'elixir': ['mix_format'],
-            \}
+" let g:ale_javascript_prettier_use_local_config = 1
+" let g:ale_lint_on_text_changed = 'never'
+" let g:ale_sign_error = '🖕'
+" let g:ale_sign_warning = '✋'
+" let g:ale_statusline_format = ['🖕 %d', '✋ %d', '👌 ok']
+" let g:ale_set_loclist = 0
+" let g:ale_set_quickfix = 1
+" let g:ale_fixers = {
+"             \   '*': ['remove_trailing_lines', 'trim_whitespace'],
+"             \   'javascript': ['prettier', 'eslint'],
+"             \   'typescript': ['prettier', 'eslint'],
+"             \   'javascript.jsx': ['prettier', 'eslint'],
+"             \   'typescript.jsx': ['prettier', 'eslint'],
+"             \   'ruby': ['rubocop'],
+"             \   'elixir': ['mix_format'],
+"             \}
 
-augroup ruby
-    "autocmd FileType ruby,eruby setl omnifunc=syntaxcompelete#Complete
-    autocmd FileType ruby,eruby,javascript,javascript.jsx nnoremap <silent> K :ALEHover<CR>
-    autocmd FileType ruby,eruby,javascript,javascript.jsx nnoremap <silent> <C-]> :ALEGoToDefinition<CR>
-    autocmd FileType ruby,eruby,javascript,javascript.jsx nnoremap <silent> ,ls :ALEFindReferences<CR>
-augroup END
+"augroup ruby
+"    "autocmd FileType ruby,eruby setl omnifunc=syntaxcompelete#Complete
+"    autocmd FileType ruby,eruby,javascript,javascript.jsx nnoremap <silent> K :ALEHover<CR>
+"    autocmd FileType ruby,eruby,javascript,javascript.jsx nnoremap <silent> <C-]> :ALEGoToDefinition<CR>
+"    autocmd FileType ruby,eruby,javascript,javascript.jsx nnoremap <silent> ,ls :ALEFindReferences<CR>
+"augroup END
+"    nnoremap <Leader>w :silent w\|silent ALEFix\|w
 
 " Language specific plugins {{{3
 
