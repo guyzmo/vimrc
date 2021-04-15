@@ -163,6 +163,7 @@ augroup END
 Plug 'junegunn/fzf.vim'
 
 let g:fzf_layout = { 'window': 'enew' }
+let g:fzf_preview_window = ['up:40%', 'ctrl-/']
 
 nnoremap <leader>bh :History<CR>
 nnoremap <leader>bl :Buffers<CR>
@@ -496,7 +497,6 @@ Plug 'Shougo/echodoc.vim'
 if has("nvim")
   Plug 'neovim/nvim-lspconfig'
   Plug 'nvim-lua/completion-nvim'
-  Plug 'nvim-lua/diagnostic-nvim'
 
   function SetMappings()
     setlocal omnifunc=v:lua.vim.lsp.omnifunc
@@ -513,20 +513,25 @@ if has("nvim")
     nnoremap <buffer><silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
     nnoremap <buffer><silent> gR    <cmd>lua vim.lsp.buf.rename()<CR>
     nnoremap <buffer><silent> gH    <cmd>lua vim.lsp.buf.document_highlight()<CR>
-    nnoremap <buffer><silent> gl    <cmd>lua vim.lsp.util.show_line_diagnostics()<CR>
+
+    nnoremap <leader>d<space> <cmd>lua vim.lsp.diagnostic.goto_next { wrap = false }<CR>
+    nnoremap <leader>dn <cmd>lua vim.lsp.diagnostic.goto_next { wrap = false }<CR>
+    nnoremap <leader>dp <cmd>lua vim.lsp.diagnostic.goto_prev { wrap = false }<CR>
+    nnoremap <leader>do <cmd>lua vim.lsp.diagnostic.set_loclist()<CR>
+    nnoremap <buffer><silent> dl    <cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
     autocmd BufEnter * lua require'completion'
     if &filetype != "tex"
         inoremap <buffer><silent> (     <cmd>lua vim.lsp.buf.signature_help()<CR>(
     endif
-    autocmd CursorHold <buffer> lua vim.lsp.util.show_line_diagnostics()
   endfunction
 
   function ConfigureStyle()
     highlight link LspDiagnosticsError User8
-    sign define LspDiagnosticsErrorSign text=🖕
-    sign define LspDiagnosticsWarningSign text=⚠️
-    sign define LspDiagnosticsInformationSign text=ℹ️
-    sign define LspDiagnosticsHintSign text=➤
+    sign define LspDiagnosticsSignError text=🖕 texthl=LspDiagnosticsSignError linehl= numhl=
+    sign define LspDiagnosticsSignWarning text=⚠️ texthl=LspDiagnosticsSignWarning linehl= numhl=
+    sign define LspDiagnosticsSignInformation text=ℹ️ texthl=LspDiagnosticsSignInformation linehl= numhl=
+    sign define LspDiagnosticsSignHint text=➤ texthl=LspDiagnosticsSignHint linehl= numhl=
+
     set omnifunc=v:lua.vim.lsp.omnifunc
     set completeopt=menuone,noinsert,noselect
     set shortmess+=c
@@ -554,60 +559,75 @@ if has("nvim")
     call SetMappings()
     call ConfigureStyle()
     lua << EOF
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+  vim.lsp.diagnostic.on_publish_diagnostics, {
+    underline = true,
+    virtual_text = false,
+
+    -- This is similar to:
+    -- let g:diagnostic_show_sign = 1
+    -- To configure sign display,
+    --  see: ":help vim.lsp.diagnostic.set_signs()"
+    signs = true,
+    update_in_insert = false,
+  }
+)
+EOF
+    lua << EOF
 on_attach_vim = function(client)
     require'completion'.on_attach(client)
-    require'diagnostic'.on_attach(client)
 end
 EOF
     if a:arg == "typescript" || a:arg == "typescript.tsx" || a:arg == "typescriptreact"
       if !exists("g:lsp_did_load_typescript")
-        lua require'nvim_lsp'.tsserver.setup{on_attach=on_attach_vim;cmd={"typescript-language-server", "--stdio", "--tsserver-log-file", "/tmp/tsserver.log"}}
+        lua require'lspconfig'.tsserver.setup{on_attach=on_attach_vim;cmd={"typescript-language-server", "--stdio"}}
+        " , '--tsserver-log-file', '/tmp/tsserver.log'
         exec "let g:lsp_did_load_typescript=1"
       endif
     elseif a:arg == "python"
       if !exists("g:lsp_did_load_".a:arg)
-        lua require'nvim_lsp'.pyls.setup{on_attach=on_attach_vim}
+        lua require'lspconfig'.pyls.setup{on_attach=on_attach_vim}
         exec "let g:lsp_did_load_".a:arg."=1"
       endif
     elseif a:arg == "ruby"
       if !exists("g:lsp_did_load_".a:arg)
-        lua require'nvim_lsp'.solargraph.setup{on_attach=on_attach_vim}
+        lua require'lspconfig'.solargraph.setup{on_attach=on_attach_vim}
         exec "let g:lsp_did_load_".a:arg."=1"
       endif
     elseif a:arg == "yaml"
       if !exists("g:lsp_did_load_".a:arg)
-        lua require'nvim_lsp'.yamlls.setup{on_attach=on_attach_vim}
+        lua require'lspconfig'.yamlls.setup{on_attach=on_attach_vim}
         exec "let g:lsp_did_load_".a:arg."=1"
       endif
     elseif a:arg == "json"
       if !exists("g:lsp_did_load_".a:arg)
-        lua require'nvim_lsp'.jsonls.setup{on_attach=on_attach_vim}
+        lua require'lspconfig'.jsonls.setup{on_attach=on_attach_vim}
         exec "let g:lsp_did_load_".a:arg."=1"
       endif
     elseif a:arg == "elixir"
       if !exists("g:lsp_did_load_".a:arg)
-        lua require'nvim_lsp'.elixirls.setup{on_attach=on_attach_vim}
+        lua require'lspconfig'.elixirls.setup{on_attach=on_attach_vim;cmd={"elixir-ls"}}
         let g:LanguageClient_rootMarkers = { 'elixir': ['mix.exs'] }
         exec "let g:lsp_did_load_".a:arg."=1"
       endif
     elseif a:arg == "docker"
       if !exists("g:lsp_did_load_".a:arg)
-        lua require'nvim_lsp'.dockerls.setup{on_attach=on_attach_vim}
+        lua require'lspconfig'.dockerls.setup{on_attach=on_attach_vim}
         exec "let g:lsp_did_load_".a:arg."=1"
       endif
     elseif a:arg == "bash"
       if !exists("g:lsp_did_load_".a:arg)
-        lua require'nvim_lsp'.bashls.setup{on_attach=on_attach_vim}
+        lua require'lspconfig'.bashls.setup{on_attach=on_attach_vim}
         exec "let g:lsp_did_load_".a:arg."=1"
       endif
     elseif a:arg == "css"
       if !exists("g:lsp_did_load_".a:arg)
-        lua require'nvim_lsp'.cssls.setup{on_attach=on_attach_vim}
+        lua require'lspconfig'.cssls.setup{on_attach=on_attach_vim}
         exec "let g:lsp_did_load_".a:arg."=1"
       endif
     elseif a:arg == "html"
       if !exists("g:lsp_did_load_".a:arg)
-        lua require'nvim_lsp'.html.setup{on_attach=on_attach_vim}
+        lua require'lspconfig'.html.setup{on_attach=on_attach_vim}
         exec "let g:lsp_did_load_".a:arg."=1"
       endif
     endif
@@ -619,33 +639,6 @@ EOF
 
   autocmd FileType ruby,eruby,html,css,docker,elixir,eelixir,yaml,json,python,typescript,typescript.tsx,typescriptreact call LspLoadServer(&filetype)
 endif
-
-" Plug 'w0rp/ale'
-
-" let g:ale_javascript_prettier_use_local_config = 1
-" let g:ale_lint_on_text_changed = 'never'
-" let g:ale_sign_error = '🖕'
-" let g:ale_sign_warning = '✋'
-" let g:ale_statusline_format = ['🖕 %d', '✋ %d', '👌 ok']
-" let g:ale_set_loclist = 0
-" let g:ale_set_quickfix = 1
-" let g:ale_fixers = {
-"             \   '*': ['remove_trailing_lines', 'trim_whitespace'],
-"             \   'javascript': ['prettier', 'eslint'],
-"             \   'typescript': ['prettier', 'eslint'],
-"             \   'javascript.jsx': ['prettier', 'eslint'],
-"             \   'typescript.jsx': ['prettier', 'eslint'],
-"             \   'ruby': ['rubocop'],
-"             \   'elixir': ['mix_format'],
-"             \}
-
-"augroup ruby
-"    "autocmd FileType ruby,eruby setl omnifunc=syntaxcompelete#Complete
-"    autocmd FileType ruby,eruby,javascript,javascript.jsx nnoremap <silent> K :ALEHover<CR>
-"    autocmd FileType ruby,eruby,javascript,javascript.jsx nnoremap <silent> <C-]> :ALEGoToDefinition<CR>
-"    autocmd FileType ruby,eruby,javascript,javascript.jsx nnoremap <silent> ,ls :ALEFindReferences<CR>
-"augroup END
-"    nnoremap <Leader>w :silent w\|silent ALEFix\|w
 
 " Language specific plugins {{{3
 
@@ -734,23 +727,22 @@ augroup markdown
 
   "au BufRead,BufNewFile *.md setfiletype markdown
   au FileType markdown :call <SID>MDSettings()
+  au FileType markdown :set nospell
 augroup END
 
-augroup vimwiki
-  au!
-  "au FileType markdown nnoremap <leader>ww :VimwikiIndex<CR>
-  au FileType markdown let wiki_notes = {}
-  au FileType markdown let wiki_notes.path = '~/Documents/Perso/Notes/'
-  au FileType markdown let wiki_notes.html_path = '~/Documents/Perso/Notes/html/'
-  au FileType markdown let wiki_notes.syntax = 'markdown'
-  au FileType markdown let wiki_notes.ext = '.md'
-  au FileType markdown let wiki_notes.auto_export = 1
-  au FileType markdown let wiki_notes.nested_syntaxes = {'python': 'python', 'c++': 'cpp', 'latex': 'latex'}
-  au FileType markdown let g:vimwiki_list = [wiki_notes]
-  au FileType markdown let g:vimwiki_folding = ''
-  " let g:vimwiki_ext2syntax = {'.md': 'markdown',
-  "             \ '.mkd': 'markdown',
-  "             \ '.wiki': 'media'}
+nnoremap <leader>ww :VimwikiIndex<CR>
+let wiki_notes = {}
+let wiki_notes.path = '~/Documents/Perso/Notes/'
+let wiki_notes.html_path = '~/Documents/Perso/Notes/html/'
+let wiki_notes.syntax = 'markdown'
+let wiki_notes.ext = '.md'
+let wiki_notes.auto_export = 0
+let wiki_notes.nested_syntaxes = {'python': 'python', 'c++': 'cpp', 'latex': 'latex'}
+let g:vimwiki_list = [wiki_notes]
+let g:vimwiki_folding = 'list' " expr or syntax or list
+" let g:vimwiki_ext2syntax = {'.md': 'markdown',
+"             \ '.mkd': 'markdown',
+"             \ '.wiki': 'media'}
 
   Plug 'vimwiki/vimwiki', {
         \   'for': ['markdown', 'mkd', 'vimwiki', 'pandoc'],
@@ -766,8 +758,6 @@ augroup vimwiki
   " au FileType markdown let g:pandoc#default_langs=["english", "french"]
   " au FileType markdown let g:pandoc#modules#disabled=["bibliographies"]
   " au FileType markdown let g:pandoc#command#custom_open = "XOpen"
-
-augroup END
 
 function! OSXOpen(file)
     return "open ". a:file
@@ -812,12 +802,16 @@ Plug 'lambdatoast/elm.vim', {'for': 'elm'}
 " ## Javascript Lanuage {{{4
 
 Plug 'pangloss/vim-javascript', {'for':'javascript'}
-Plug 'mxw/vim-jsx', {'for': ['javascript', 'javascript.jsx']}
-Plug 'peitalin/vim-jsx-typescript', {'for': 'javascript.jsx'}
+Plug 'leafgarland/typescript-vim', {'for': ['typescript', 'typescriptreact', 'typescript.tsx']} " TypeScript syntax
+Plug 'maxmellon/vim-jsx-pretty', {'for': ['typescript', 'typescriptreact', 'typescript.tsx', 'javascript', 'javascript.jsx']}   " JS and JSX syntax
+Plug 'jparise/vim-graphql'        " GraphQL syntax
+
+" Plug 'mxw/vim-jsx', {'for': ['javascript', 'javascript.jsx']}
+" Plug 'peitalin/vim-jsx-typescript', {'for': 'javascript.jsx'}
 " Plug 'prettier/vim-prettier', {
 "   \ 'do': 'yarn install',
 "   \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue'] }
-Plug 'HerringtonDarkholme/yats.vim', {'for': ['typescript', 'typescriptreact', 'typescript.tsx']}
+" Plug 'HerringtonDarkholme/yats.vim', {'for': ['typescript', 'typescriptreact', 'typescript.tsx']}
 
 
 
